@@ -10,6 +10,7 @@ class App extends Component {
 				<header className="App-header">
 					<div>
 						<ShapeContainer />
+						{/* <Canvas /> */}
 					</div>
 				</header>
 			</div>
