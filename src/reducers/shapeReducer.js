@@ -1,8 +1,8 @@
 const initialState = [
     {
-        radius: 100,
-        x: 300,
-        y: 300
+        radius: 50,
+        x: 100,
+        y: 100
     }
 ]
 
@@ -12,8 +12,8 @@ const shapeReducer = (state = initialState, action) => {
         case 'ADD_SHAPE':
             newShapes.push({
                 radius: action.radius,
-                x: 500,
-                y: 500
+                x: Math.random()*900,
+                y: Math.random()*900
             })
             console.log(newShapes)
             return newShapes

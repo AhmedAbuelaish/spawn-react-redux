@@ -5,21 +5,42 @@ class ShapeContainer extends Component {
 
     constructor(props) {
         super(props)
-        this.state={radius:100}
+        this.state={radius:''}
     }
 
     handleCreateShape = (e) => {
         e.preventDefault()
-        this.props.createShape(this.state.radius)
+        // this.props.createShape(this.state.radius)
+        this.props.createShape(Math.random()*100)
+        this.setState({radius:''})
+    }
+
+    handleFormChange = (e) => {
+        this.setState({radius:e.target.value})
     }
 
     render() {
         return (
             <div>
                 <form onSubmit={(e)=>{this.handleCreateShape(e)}}>
-                    <input type="text" value={this.state.radius} onChange={(e)=>this.handleCreateShape(e)}/>
-                    <input type="submit" value="+" disabled={!this.state.radius}/>
+                    <input type="text" value={this.state.radius} onChange={(e)=>this.handleFormChange(e)}/>
                 </form>
+
+                {this.props.shapes.map((currentShape, i) => {
+                    const styles = {
+                        width: currentShape.radius*2,
+                        height: currentShape.radius*2,
+                        borderRadius: '50%',
+                        borderWidth: 1,
+                        borderColor: 'black',
+                        borderStyle: 'solid',
+                        backgroundColor: 'hsl('+ Math.floor(Math.random() * 360).toString(16)+',80%,70%)',
+                        position: 'absolute',
+                        left: currentShape.x,
+                        top: currentShape.y
+                    }
+                    return <div style={styles} key={i} />
+                })}
             </div>
         )
     }
@@ -28,14 +49,11 @@ class ShapeContainer extends Component {
 
 // If you mutate state, these functions do not get called. Do not mutate
 const mapStateToProps = (state) => ({
-    // todos is a prop, equivalent to <ShapeContainer todos="..." />
-    // todos: state.todos
+    shapes: state
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    // equivalent to <ShapeContainer createShape={(todoText) => dispatch({type: 'ADD_TODO', text: todoText})} />
     createShape: (shapeSize) => dispatch({type: 'ADD_SHAPE', radius: shapeSize}),
-    // toggleDone: (todoIndex) => dispatch({type: 'TOGGLE_DONE', index: todoIndex})
 })
 
 // The connect function allows the container to reference the store created by Provider
