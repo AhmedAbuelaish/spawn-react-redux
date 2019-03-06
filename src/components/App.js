@@ -9,7 +9,6 @@ class App extends Component {
 			<div className="App">
 				<header className="App-header">
 					<div>
-						Up and running!
 						<ShapeContainer />
 					</div>
 				</header>
