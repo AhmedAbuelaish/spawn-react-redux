@@ -14,20 +14,20 @@ const initialState = {
     },
     grandParents: [{
         radius: 50,
-        x: 50,
-        y: 50,
+        coordX: 50,
+        coordY: 50,
         angle: 0
     }],
     activeParents: [{
         radius: 50,
-        x: 50,
-        y: 50,
+        coordX: 50,
+        coordY: 50,
         angle: 0
     }],
     youngChildren: [{
         radius: 50,
-        x: 50,
-        y: 50,
+        coordX: 50,
+        coordY: 50,
         angle: 0
     }]
 }
@@ -42,8 +42,8 @@ const shapeReducer = (state = initialState, action) => {
             for(let i=0;i<1000;i++){    
                 newChildren.push({
                     radius: action.radius,
-                    x: Math.random()*900,
-                    y: Math.random()*900,
+                    coordX: Math.random()*900,
+                    coordY: Math.random()*900,
                     angle: Math.random()*2*Math.PI
                 })}
             console.log()

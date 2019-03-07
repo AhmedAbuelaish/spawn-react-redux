@@ -36,8 +36,8 @@ class ShapeContainer extends Component {
                     const styles = {
                         width: currentShape.radius*2,
                         height: currentShape.radius*2,
-                        left: currentShape.x,
-                        top: currentShape.y,
+                        left: currentShape.coordX,
+                        top: currentShape.coordY,
                         borderRadius: '50%',
                         borderWidth: 1,
                         borderColor: 'black',
