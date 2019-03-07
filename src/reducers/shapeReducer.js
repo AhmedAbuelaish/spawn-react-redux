@@ -24,7 +24,7 @@ const initialState = {
         y: 50,
         angle: 0
     }],
-    shapes: [{
+    youngChildren: [{
         radius: 50,
         x: 50,
         y: 50,
@@ -33,19 +33,30 @@ const initialState = {
 }
 
 const shapeReducer = (state = initialState, action) => {
-    const newShapes = state.shapes.slice()
+    const newParents = state.activeParents.slice()
+    var newGrandParents = state.grandParents.slice()
+    const newChildren = []
     switch (action.type) {
-        case 'ADD_SHAPE':
+        case 'CREATE_CHILDREN':
+            // Call the function that gets passed an element in an array and returns a new array based on the element's values 
             for(let i=0;i<1000;i++){    
-            newShapes.push({
-                radius: action.radius,
-                x: Math.random()*900,
-                y: Math.random()*900
-            })}
-            console.log(newShapes)
-            return {shapes: newShapes}
-        case 'DELETE_SHAPE':
-            return {shapes: newShapes}
+                newChildren.push({
+                    radius: action.radius,
+                    x: Math.random()*900,
+                    y: Math.random()*900,
+                    angle: Math.random()*2*Math.PI
+                })}
+            console.log()
+            return {youngChildren: newChildren}
+        case 'RAISE_CHILDREN':
+            // Call the function that gets passed an element in an array and returns a new array based on the element's values 
+            return {activeParents: newParents}
+        case 'AGE_PARENTS':
+            // This appends activeParents to grandParents
+            console.log('newGP', newGrandParents)
+            newGrandParents = newGrandParents.concat(newParents)
+            console.log('newGP + Parents', newGrandParents)
+            return {grandParents: newGrandParents}
         default:
             return state
     }

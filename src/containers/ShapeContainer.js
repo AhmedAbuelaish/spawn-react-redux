@@ -18,17 +18,21 @@ class ShapeContainer extends Component {
     }
 
     componentDidMount() {
-        // const int = setInterval(()=>{this.handleCreateShape()},1000)
+        const int = setInterval(()=>{this.handleAgeParents()},1000)
 	}
 
     handleCreateShape = () => { 
-        this.props.createShape(Math.random()*100)
+        this.props.createChildren(Math.random()*100)
+    }
+
+    handleAgeParents = () => {
+        this.props.ageParents()
     }
 
     render() {
         return (
             <div>
-                {this.props.shapes.map((currentShape, i) => {
+                {this.props.grandParents.map((currentShape, i) => {
                     const styles = {
                         width: currentShape.radius*2,
                         height: currentShape.radius*2,
@@ -49,11 +53,14 @@ class ShapeContainer extends Component {
 
 
 const mapStateToProps = (state) => ({
-    shapes: state.shapes
+    grandParents: state.grandParents,
+    activeParents: state.activeParents,
+    youngChildren: state.youngChildren
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    createShape: (shapeSize) => dispatch({type: 'ADD_SHAPE', radius: shapeSize}),
+    createChildren: (shapeSize) => dispatch({type: 'CREATE_CHILDREN', radius: shapeSize}),
+    ageParents: () => dispatch({type: 'AGE_PARENTS'}),
 })
 
 
