@@ -35,16 +35,22 @@ const initialState = {
         coordY: 50,
         angle: 0
     }],
+    leaves : [{
+        radius: 50,
+        coordX: 50,
+        coordY: 50,
+        angle: 0
+    }],
 }
 
 const shapeReducer = (state = initialState, action) => {
     var newNodes = state.nodes.slice()
-    var newChildren = []
+    var newLeaves = []
     switch (action.type) {
         case 'CREATE_NODES':
-            newChildren = fragment.createFragmentedArray(state.nodes,state.settings)
-            newNodes = newNodes.concat(newChildren)
-            return {nodes: newNodes}
+            newLeaves = fragment.createFragmentedArray(state.leaves,state.settings)
+            newNodes = newNodes.concat(newLeaves)
+            return {nodes: newNodes, leaves: newLeaves}
         default:
             return state
     }
