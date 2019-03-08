@@ -50,7 +50,8 @@ class ShapeContainer extends Component {
 						borderRadius: '50%',
 						borderWidth: 1,
 						borderColor: 'black',
-						borderStyle: 'solid',
+                        borderStyle: 'solid',
+                        backgroundColor: 'black',
 						position: 'absolute'
 					}
 					return <div style={styles} key={i} />

@@ -27,7 +27,7 @@ const initialState = {
     settings: {
         angleRange: [[0,180],[180,360]],
         minSize: 1,
-        distFactor: 1.3
+        distFactor: 1.5
     },
     nodes: [{
         radius: 50,
@@ -36,9 +36,9 @@ const initialState = {
         angle: 0
     }],
     leaves : [{
-        radius: 500,
-        coordX: 50,
-        coordY: 50,
+        radius: 50,
+        coordX: 500,
+        coordY: 500,
         angle: 0
     }]
 }

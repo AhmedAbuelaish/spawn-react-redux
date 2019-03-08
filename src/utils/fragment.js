@@ -1,16 +1,14 @@
 // ~~~~~~~~~~~ CREATE FRAGMENTED ARRAY ~~~~~~~~~~~~~~~//
 function createFragmentedArray(oldArray, settings) {
 	var newArray = oldArray.map((currentItem, index) => {
-		let parentX = currentItem.coordX
-		let parentY = currentItem.coordY
-		return distributeValue(currentItem.radius, settings)
+		return distributeValue(currentItem.radius, settings, currentItem.coordX, currentItem.coordY)
 	})
 	newArray = flatten(newArray)
 	return newArray
 }
 
 // ~~~~~~~~~~~~~~ DISTRIBUTE VALUE ~~~~~~~~~~~~~~~~~~~//
-function distributeValue(startValue, settings) {
+function distributeValue(startValue, settings, parentX, parentY) {
 	// settings is an object containing minSize & distFactor
 	// <1 distFactor for decreasing sizes but greater quantity (0.2 min)
 	// >1 distFactor for chances of increasing sizes but fewer quantity (1.5+ is unstable)
@@ -23,21 +21,29 @@ function distributeValue(startValue, settings) {
 
 	let remainder = startValue
 	let currentValue = 0
-	let resultArray = []
+    let resultArray = []
+    let angle = 0
 
 	// Checks:
-	let processSteps = 0
-	let retotalizer = 0
+	// let processSteps = 0
+	// let retotalizer = 0
 
 	if (startValue <= settings.minSize) {
 		return resultArray
 	} else {
 		while (remainder >= settings.minSize) {
-			processSteps += 1
-			currentValue = Math.trunc(remainder * Math.random() * distFactor * 1000) / 1000
+            // processSteps += 1
+            angle = Math.random() * 2 * Math.PI
+            currentValue = Math.trunc(remainder * Math.random() * distFactor * 1000) / 1000
+            
 			if (currentValue >= settings.minSize) {
-				resultArray.push({ radius: currentValue })
-				retotalizer += currentValue
+				resultArray.push({
+                    radius: currentValue,
+                    coordX: parentX + (startValue * Math.cos(angle)),
+                    coordY: parentY + (startValue * Math.sin(angle)),
+                    angle: angle
+                })
+				// retotalizer += currentValue
 			}
 			remainder -= currentValue
 		}
