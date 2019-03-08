@@ -9,8 +9,6 @@ function createFragmentedArray(oldArray, settings) {
 		let parentY = currentItem.coordY
 		return distributeValue(currentItem.radius, settings)
 	})
-	// console.log(newArray)
-	// console.log(newArray.length)
 	newArray = utility.flatten(newArray)
 	return newArray
 }
@@ -54,6 +52,13 @@ function distributeValue(startValue, settings) {
 }
 
 module.exports = {createFragmentedArray}
+
+
+
+
+
+
+
 
 
 // tests

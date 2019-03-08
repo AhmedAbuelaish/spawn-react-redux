@@ -18,15 +18,29 @@ class ShapeContainer extends Component {
 	componentDidMount() {
         // const int = setInterval(() => {this.handleCreateShape()}, 1000)
         this.handleCreateShape()
-	}
+    }
 
 	handleCreateShape = () => {
 		this.props.createNodes()
 	}
 
-	render() {
-		return (
-			<div>
+    handleFormChange = (e) => {
+        this.setState({value: e.target.value})
+    }
+
+    handleFormSubmission = (e) => {
+        e.preventDefault()
+        this.props.settings(this.state.value)
+        this.setState({value:''})
+    }
+
+    render() {
+        return (
+            <div>
+                <form onSubmit={(e)=>{this.handleFormSubmission(e)}}>
+                    <input type="text" value={this.state.value} onChange={(e)=>this.handleFormChange(e)}/>
+                </form>
+
 				{this.props.nodes.map((currentShape, i) => {
 					const styles = {
 						width: currentShape.radius * 2,
@@ -47,7 +61,8 @@ class ShapeContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-	nodes: state.nodes,
+    nodes: state.nodes,
+    settings: state.settings
 })
 
 const mapDispatchToProps = dispatch => ({
