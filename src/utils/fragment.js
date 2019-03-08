@@ -9,7 +9,8 @@ function createFragmentedArray(oldArray, settings) {
 		let parentY = currentItem.coordY
 		return distributeValue(currentItem.radius, settings)
 	})
-	newArray = utility.flatten(newArray)
+    newArray = utility.flatten(newArray)
+    console.log(newArray.length)
 	return newArray
 }
 
