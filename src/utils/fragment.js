@@ -1,7 +1,3 @@
-// import {flatten} from './utilityFunctions'
-const utility = require('./utilityFunctions')
-
-
 // ~~~~~~~~~~~ CREATE FRAGMENTED ARRAY ~~~~~~~~~~~~~~~//
 function createFragmentedArray(oldArray, settings) {
 	var newArray = oldArray.map((currentItem, index) => {
@@ -9,8 +5,7 @@ function createFragmentedArray(oldArray, settings) {
 		let parentY = currentItem.coordY
 		return distributeValue(currentItem.radius, settings)
 	})
-    newArray = utility.flatten(newArray)
-    console.log(newArray.length)
+	newArray = flatten(newArray)
 	return newArray
 }
 
@@ -19,11 +14,11 @@ function distributeValue(startValue, settings) {
 	// settings is an object containing minSize & distFactor
 	// <1 distFactor for decreasing sizes but greater quantity (0.2 min)
 	// >1 distFactor for chances of increasing sizes but fewer quantity (1.5+ is unstable)
-	if (!settings.distFactor) {
-		settings.distFactor = 1
-	}
-	if (settings.distFactor < 0.2) {
-		settings.distFactor = 0.2
+	var distFactor = settings.distFactor
+	if (!distFactor) {
+		distFactor = 1
+	} else if (distFactor < 0.2) {
+		distFactor = 0.2
 	}
 
 	let remainder = startValue
@@ -39,7 +34,7 @@ function distributeValue(startValue, settings) {
 	} else {
 		while (remainder >= settings.minSize) {
 			processSteps += 1
-			currentValue = Math.trunc(remainder * Math.random() * settings.distFactor * 1000) / 1000
+			currentValue = Math.trunc(remainder * Math.random() * distFactor * 1000) / 1000
 			if (currentValue >= settings.minSize) {
 				resultArray.push({ radius: currentValue })
 				retotalizer += currentValue
@@ -52,29 +47,24 @@ function distributeValue(startValue, settings) {
 	return resultArray
 }
 
-module.exports = {createFragmentedArray}
+function flatten(arr, val) {
+	return arr.reduce((acc, val) => acc.concat(val), [])
+}
 
-
-
-
-
-
-
-
+module.exports = { createFragmentedArray }
 
 // tests
 
 // const settings = { distFactor: 1.4, minSize: 1 }
 
 // for(let i=0;i<1000;i++){
-//     var arr = [{ 
+//     var arr = [{
 //         radius: 1000,
 //         coordX: 500,
 //         coordY: 500,
-//         angle: 0 
+//         angle: 0
 //     }]
 //     while (arr.length > 0) {
 //         var arr = createFragmentedArray(arr, settings)
 //     }
 // }
-

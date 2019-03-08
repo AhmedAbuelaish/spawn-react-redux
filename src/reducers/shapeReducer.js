@@ -26,7 +26,7 @@ const tree = {
 const initialState = {
     settings: {
         angleRange: [[0,180],[180,360]],
-        minSize: 3,
+        minSize: 1,
         distFactor: 1.3
     },
     nodes: [{
@@ -36,7 +36,7 @@ const initialState = {
         angle: 0
     }],
     leaves : [{
-        radius: 100,
+        radius: 500,
         coordX: 50,
         coordY: 50,
         angle: 0
@@ -51,8 +51,7 @@ const shapeReducer = (state = initialState, action) => {
         case 'CREATE_NODES':
             newLeaves = fragment.createFragmentedArray(newLeaves,newSettings)
             newNodes = newNodes.concat(newLeaves)
-            console.log(newLeaves)
-            return {nodes: newNodes, leaves: newLeaves}
+            return {settings: state.settings, nodes: newNodes, leaves: newLeaves}
         default:
             return state
         }
