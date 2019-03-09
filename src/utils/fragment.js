@@ -16,14 +16,14 @@ function distributeParentValue(parent, settings) {
 	let parentX = parent.coordX
 	let parentY = parent.coordY
 	let parentAngle = parent.angle
-	
+
 	let minSize = settings.minSize
 	let distFactor = settings.distFactor
-	
+
 	let remainder = parentSize
 	let mySize = 0
 	let myAngle = parentAngle
-	let myDistance = parentSize + 0 // Adjust this to move children off of circumferance
+	let myDistance = parentSize + 10 // Adjust this to move children off of circumferance
 	let currentChildrenArray = []
 
 	// Checks:
@@ -36,18 +36,20 @@ function distributeParentValue(parent, settings) {
 		while (remainder >= minSize) {
 			// processSteps += 1
 			mySize = Math.trunc(remainder * Math.random() * distFactor * 1000) / 1000
-			let tempAngle = myAngle + Math.acos(Math.PI/180*(parentSize^2 + myDistance^2 - mySize^2)/(2*myDistance*parentSize))
+			let tempAngle =
+				Math.acos((parentSize ^ (2 + myDistance) ^ (2 - mySize) ^ 2) / (2 * myDistance * parentSize)) / (2 * Math.PI)
 			console.log(myAngle)
 			remainder -= mySize
 			if (mySize >= minSize) {
 				// retotalizer += mySize
-				myAngle = tempAngle
+				myAngle += tempAngle // Find my center
 				currentChildrenArray.push({
 					radius: mySize,
 					coordX: parentX + myDistance * Math.cos(myAngle),
 					coordY: parentY + myDistance * Math.sin(myAngle),
 					angle: myAngle
 				})
+				myAngle += tempAngle // Setup for next center
 			}
 		}
 	}
