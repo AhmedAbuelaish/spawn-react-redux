@@ -58,7 +58,10 @@ class SettingsForm extends Component {
 							value={this.state.minSize}
 							onChange={e => {
 								this.handleFormChange(e.target.value, 'minSize')
-							}}
+                            }}
+                            onMouseUp={e => {
+                                this.handleFormSubmission(e)
+                            }}
 						/>
 						<input
                             className="textFields"
@@ -78,7 +81,10 @@ class SettingsForm extends Component {
 							value={this.state.distFactor * 100}
 							onChange={e => {
 								this.handleFormChange(e.target.value / 100, 'distFactor')
-							}}
+                            }}
+                            onMouseUp={e => {
+                                this.handleFormSubmission(e)
+                            }}
 						/>
 						<input
                             className="textFields"
@@ -90,7 +96,7 @@ class SettingsForm extends Component {
 							}}
 						/>
 					</div>
-					<input type="submit" value="Reset" />
+					<input className="reset-button" type="submit" value="Reset" />
 				</form>
 			</div>
 		)

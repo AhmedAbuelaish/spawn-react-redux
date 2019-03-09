@@ -12,13 +12,7 @@ function distributeValue(startValue, settings, parentX, parentY) {
 	// settings is an object containing minSize & distFactor
 	// <1 distFactor for decreasing sizes but greater quantity (0.2 min)
 	// >1 distFactor for chances of increasing sizes but fewer quantity (1.5+ is unstable)
-	var distFactor = settings.distFactor
-	if (!distFactor) {
-		distFactor = 1
-	} else if (distFactor < 0.2) {
-		distFactor = 0.2
-	}
-
+	let distFactor = settings.distFactor
 	let remainder = startValue
 	let currentValue = 0
 	let resultArray = []
@@ -35,17 +29,16 @@ function distributeValue(startValue, settings, parentX, parentY) {
 			// processSteps += 1
 			angle = Math.random() * 2 * Math.PI
 			currentValue = Math.trunc(remainder * Math.random() * distFactor * 1000) / 1000
-
+			remainder -= currentValue
 			if (currentValue >= settings.minSize) {
+				// retotalizer += currentValue
 				resultArray.push({
 					radius: currentValue,
 					coordX: parentX + startValue * Math.cos(angle),
 					coordY: parentY + startValue * Math.sin(angle),
 					angle: angle
 				})
-				// retotalizer += currentValue
 			}
-			remainder -= currentValue
 		}
 	}
 	// console.log(Math.trunc((100 * resultArray.length) / processSteps), '% distribution score')
