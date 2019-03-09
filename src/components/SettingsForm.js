@@ -92,7 +92,7 @@ class SettingsForm extends Component {
 							id="distFactor"
 							value={Math.trunc(this.state.distFactor * 100)}
 							onChange={e => {
-								this.handleFormChange(e.target.value, 'distFactor')
+								this.handleFormChange(e.target.value / 100, 'distFactor')
 							}}
 						/>
 					</div>
