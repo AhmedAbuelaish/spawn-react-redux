@@ -9,10 +9,14 @@ class ShapeContainer extends Component {
 
 	componentDidMount() {
 		this.handlePlantSeed()
-		const intId = setInterval(() => {this.handleCreateShape()}, 50)
-		setTimeout(()=>{clearInterval(intId)},10000)
+		const intId = setInterval(() => {
+			this.handleCreateShape()
+		}, 50)
+		setTimeout(() => {
+			clearInterval(intId)
+		}, 10000)
 	}
-	
+
 	handlePlantSeed = () => {
 		this.props.createRoot()
 	}
@@ -21,9 +25,9 @@ class ShapeContainer extends Component {
 		this.props.createNodes()
 	}
 
-    render() {
-        return (
-            <div>
+	render() {
+		return (
+			<div>
 				{this.props.nodes.map((currentShape, i) => {
 					const styles = {
 						width: currentShape.radius * 2,
@@ -33,11 +37,11 @@ class ShapeContainer extends Component {
 						borderRadius: '50%',
 						// borderWidth: 1,
 						// borderColor: 'black',
-                        // borderStyle: 'solid',
+						// borderStyle: 'solid',
 						background: 'radial-gradient(rgba(210, 77, 87, 0.1),rgba(210, 77, 87, 0.2) , rgba(210, 77, 87, 0.8))',
 						// backgroundColor: 'rgba(210, 77, 87, 0.5)',
 						position: 'absolute',
-						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`,
+						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`
 					}
 					return <div style={styles} key={i} />
 				})}
@@ -47,13 +51,13 @@ class ShapeContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-    settings: state.settings,
-    nodes: state.nodes,
-    leaves: state.leaves
+	settings: state.settings,
+	nodes: state.nodes,
+	leaves: state.leaves
 })
 
 const mapDispatchToProps = dispatch => ({
-	createRoot: () => dispatch({ type: 'CREATE_ROOT'}),
+	createRoot: () => dispatch({ type: 'CREATE_ROOT' }),
 	createNodes: () => dispatch({ type: 'CREATE_NODES' })
 })
 

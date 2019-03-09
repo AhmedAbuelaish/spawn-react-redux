@@ -21,8 +21,8 @@ function distributeValue(startValue, settings, parentX, parentY) {
 
 	let remainder = startValue
 	let currentValue = 0
-    let resultArray = []
-    let angle = 0
+	let resultArray = []
+	let angle = 0
 
 	// Checks:
 	// let processSteps = 0
@@ -32,17 +32,17 @@ function distributeValue(startValue, settings, parentX, parentY) {
 		return resultArray
 	} else {
 		while (remainder >= settings.minSize) {
-            // processSteps += 1
-            angle = Math.random() * 2 * Math.PI
-            currentValue = Math.trunc(remainder * Math.random() * distFactor * 1000) / 1000
-            
+			// processSteps += 1
+			angle = Math.random() * 2 * Math.PI
+			currentValue = Math.trunc(remainder * Math.random() * distFactor * 1000) / 1000
+
 			if (currentValue >= settings.minSize) {
 				resultArray.push({
-                    radius: currentValue,
-                    coordX: parentX + (startValue * Math.cos(angle)),
-                    coordY: parentY + (startValue * Math.sin(angle)),
-                    angle: angle
-                })
+					radius: currentValue,
+					coordX: parentX + startValue * Math.cos(angle),
+					coordY: parentY + startValue * Math.sin(angle),
+					angle: angle
+				})
 				// retotalizer += currentValue
 			}
 			remainder -= currentValue

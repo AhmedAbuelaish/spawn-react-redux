@@ -50,6 +50,7 @@ class SettingsForm extends Component {
 				>
 					<div>
 						<input
+							className="slider"
 							type="range"
 							id="minSizeSlider"
 							min="1"
@@ -60,17 +61,16 @@ class SettingsForm extends Component {
 							}}
 						/>
 						<input
-                            type="number"
+                            className="textFields"
+							type="text"
 							id="minSize"
 							value={this.state.minSize}
-							step="1"
-							min="1"
-							max="10"
 							onChange={e => {
 								this.handleFormChange(e.target.value, 'minSize')
 							}}
 						/>
 						<input
+							className="slider"
 							type="range"
 							id="distFactorSlider"
 							min="10"
@@ -81,12 +81,10 @@ class SettingsForm extends Component {
 							}}
 						/>
 						<input
-							type="number"
+                            className="textFields"
+							type="text"
 							id="distFactor"
 							value={Math.trunc(this.state.distFactor * 100)}
-							step="5"
-							min="10"
-							max="150"
 							onChange={e => {
 								this.handleFormChange(e.target.value, 'distFactor')
 							}}

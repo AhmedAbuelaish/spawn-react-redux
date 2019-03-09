@@ -22,3 +22,42 @@
 .settings-form * {
 	margin: 20px;
 }
+
+.textFields {
+  background: none;
+  width: 5%;
+  border: none;
+  font-size: 1.2rem;
+  font: bold;
+  color: white;
+}
+
+.slider {
+	-webkit-appearance: none;
+	width: 50%;
+	height: 5px;
+	border-radius: 5px;
+	background: white;
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: 0.2s;
+	transition: opacity 0.2s;
+}
+
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	background: white;
+	cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	background: white;
+	cursor: pointer;
+}
