@@ -4,15 +4,13 @@ import { connect } from 'react-redux'
 class ShapeContainer extends Component {
 	constructor(props) {
 		super(props)
-		this.state = { radius: '' }
+		// this.state = ''
 	}
 
 	componentDidMount() {
 		this.handlePlantSeed()
 		const intId = setInterval(() => {this.handleCreateShape()}, 50)
 		setTimeout(()=>{clearInterval(intId)},10000)
-		// this.handleCreateShape()
-		
 	}
 	
 	handlePlantSeed = () => {
@@ -23,23 +21,9 @@ class ShapeContainer extends Component {
 		this.props.createNodes()
 	}
 
-    // handleFormChange = (e) => {
-        // this.setState({value: e.target.value})
-    // }
-
-    // handleFormSubmission = (e) => {
-    //     e.preventDefault()
-        // this.props.settings(this.state.value)
-        // this.setState({value:''})
-    // }
-
     render() {
         return (
             <div>
-                {/* <form onSubmit={(e)=>{this.handleFormSubmission(e)}}>
-                    <input type="text" value={this.state.value} onChange={(e)=>this.handleFormChange(e)}/>
-                </form> */}
-
 				{this.props.nodes.map((currentShape, i) => {
 					const styles = {
 						width: currentShape.radius * 2,
@@ -50,9 +34,10 @@ class ShapeContainer extends Component {
 						// borderWidth: 1,
 						// borderColor: 'black',
                         // borderStyle: 'solid',
-                        backgroundColor: 'rgba(210, 77, 87, 0.5)',
+						background: 'radial-gradient(rgba(210, 77, 87, 0.1),rgba(210, 77, 87, 0.2) , rgba(210, 77, 87, 0.8))',
+						// backgroundColor: 'rgba(210, 77, 87, 0.5)',
 						position: 'absolute',
-						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`
+						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`,
 					}
 					return <div style={styles} key={i} />
 				})}
