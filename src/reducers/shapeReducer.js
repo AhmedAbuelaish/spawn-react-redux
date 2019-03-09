@@ -27,16 +27,11 @@ const initialState = {
     settings: {
         angleRange: [[0,180],[180,360]],
         minSize: 1,
-        distFactor: 1.5
+        distFactor: 1.4
     },
-    nodes: [{
-        radius: 50,
-        coordX: 50,
-        coordY: 50,
-        angle: 0
-    }],
+    nodes: [],
     leaves : [{
-        radius: 50,
+        radius: 100,
         coordX: 500,
         coordY: 500,
         angle: 0
@@ -48,7 +43,11 @@ const shapeReducer = (state = initialState, action) => {
     var newLeaves = state.leaves.slice()
     var newSettings = {... state.settings}
     switch (action.type) {
+        case 'CREATE_ROOT':
+            newNodes = newNodes.concat(newLeaves)
+            return {settings: state.settings, nodes: newNodes, leaves: newLeaves}
         case 'CREATE_NODES':
+            console.log(newNodes)
             newLeaves = fragment.createFragmentedArray(newLeaves,newSettings)
             newNodes = newNodes.concat(newLeaves)
             return {settings: state.settings, nodes: newNodes, leaves: newLeaves}
