@@ -7,23 +7,17 @@ const initialState = {
 	settings: {
 		angleRange: [[0, 180], [180, 360]],
 		minSize: 1,
-		distFactor: 1.4
+		distFactor: 1.5
 	},
 	nodes: [],
-	leaves: [
-		{
-			radius: 100,
-			coordX: 500,
-			coordY: 500,
-			angle: 0
-		}
-	]
+	leaves: []
 }
 
 const shapeReducer = (state = initialState, action) => {
 	var newNodes = state.nodes.slice()
 	var newLeaves = state.leaves.slice()
-	var newSettings = { ...state.settings }
+    var newSettings = { ...state.settings }
+    var singleNewLeaves = []
 	switch (action.type) {
 		case 'RESET':
 			return { settings: state.settings, nodes: [], leaves: [] }
@@ -39,10 +33,11 @@ const shapeReducer = (state = initialState, action) => {
 			newLeaves = newNodes
 			return { settings: state.settings, nodes: newNodes, leaves: newLeaves }
 		case 'CREATE_NODES':
-			console.log(newNodes.length)
-			newLeaves = fragment.createFragmentedArray(newLeaves, newSettings)
-			newNodes = newNodes.concat(newLeaves)
-			return { settings: state.settings, nodes: newNodes, leaves: newLeaves }
+            singleNewLeaves = fragment.popSingleLeaf(newLeaves, newSettings)
+            newNodes = newNodes.concat(singleNewLeaves)
+            newLeaves = newLeaves.concat(singleNewLeaves)
+            newLeaves.shift()
+            return { settings: state.settings, nodes: newNodes, leaves: newLeaves }
 		case 'UPDATE_SETTINGS':
 			newSettings = action.settings
 			console.log(newSettings)

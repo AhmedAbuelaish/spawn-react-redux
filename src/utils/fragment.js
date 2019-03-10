@@ -1,10 +1,17 @@
-// ~~~~~~~~~~~ CREATE FRAGMENTED ARRAY ~~~~~~~~~~~~~~~//
+// ~~~~~~~~~~~ Option 1: FRAGMENTED ENTIRE ARRAY ~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 function createFragmentedArray(parentsArr, settings) {
 	var allChildrenArray = parentsArr.map((currentParent, index) => {
 		return distributeParentValue(currentParent, settings)
 	})
 	allChildrenArray = flatten(allChildrenArray)
 	return allChildrenArray
+}
+
+// ~~~~~~~~~~~ Option 2: FRAGMENT FIRST ELEMENT IN THE ARRAY ~~~~~~~~~~~~~~~//
+function popSingleLeaf(parentsArr, settings) {
+	var singleChildArray = distributeParentValue(parentsArr[0], settings)
+	singleChildArray = flatten(singleChildArray)
+	return singleChildArray
 }
 
 // ~~~~~~~~~~~~~~ DISTRIBUTE VALUE ~~~~~~~~~~~~~~~~~~~//
@@ -38,7 +45,6 @@ function distributeParentValue(parent, settings) {
 			mySize = Math.trunc(remainder * Math.random() * distFactor * 1000) / 1000
 			let tempAngle =
 				Math.acos((parentSize ^ (2 + myDistance) ^ (2 - mySize) ^ 2) / (2 * myDistance * parentSize)) / (2 * Math.PI)
-			console.log(myAngle)
 			remainder -= mySize
 			if (mySize >= minSize) {
 				// retotalizer += mySize
@@ -62,7 +68,7 @@ function flatten(arr, val) {
 	return arr.reduce((acc, val) => acc.concat(val), [])
 }
 
-module.exports = { createFragmentedArray }
+module.exports = { createFragmentedArray,popSingleLeaf }
 
 // tests
 

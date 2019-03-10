@@ -25,7 +25,7 @@ class SettingsForm extends Component {
 		this.plantSeed()
 		const intId = setInterval(() => {
 			this.handleCreateShape()
-		}, 50)
+		}, 1)
 		setTimeout(() => {
 			clearInterval(intId)
 		}, 10000)
@@ -36,7 +36,8 @@ class SettingsForm extends Component {
 	}
 
 	handleCreateShape = () => {
-		this.props.createNodes()
+        this.props.createNodes()
+        // this.props.popLeaf()
 	}
 
 	render() {
@@ -58,13 +59,13 @@ class SettingsForm extends Component {
 							value={this.state.minSize}
 							onChange={e => {
 								this.handleFormChange(e.target.value, 'minSize')
-                            }}
-                            onMouseUp={e => {
-                                this.handleFormSubmission(e)
-                            }}
+							}}
+							onMouseUp={e => {
+								this.handleFormSubmission(e)
+							}}
 						/>
 						<input
-                            className="textFields"
+							className="textFields"
 							type="text"
 							id="minSize"
 							value={this.state.minSize}
@@ -81,13 +82,13 @@ class SettingsForm extends Component {
 							value={this.state.distFactor * 100}
 							onChange={e => {
 								this.handleFormChange(e.target.value / 100, 'distFactor')
-                            }}
-                            onMouseUp={e => {
-                                this.handleFormSubmission(e)
-                            }}
+							}}
+							onMouseUp={e => {
+								this.handleFormSubmission(e)
+							}}
 						/>
 						<input
-                            className="textFields"
+							className="textFields"
 							type="text"
 							id="distFactor"
 							value={Math.trunc(this.state.distFactor * 100)}
@@ -113,7 +114,7 @@ const mapDispatchToProps = dispatch => ({
 	updateSettings: settingsObj => dispatch({ type: 'UPDATE_SETTINGS', settings: settingsObj }),
 	reset: () => dispatch({ type: 'RESET' }),
 	createRoot: () => dispatch({ type: 'CREATE_ROOT' }),
-	createNodes: () => dispatch({ type: 'CREATE_NODES' })
+	createNodes: () => dispatch({ type: 'CREATE_NODES' }),
 })
 
 export default connect(
