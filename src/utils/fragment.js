@@ -12,6 +12,7 @@ function distributeParentValue(parent, settings) {
 	// settings is an object containing minSize & distFactor
 	// <1 distFactor for decreasing sizes but greater quantity (0.2 min)
 	// >1 distFactor for chances of increasing sizes but fewer quantity (1.5+ is unstable)
+	let parentId = parent.id
 	let parentSize = parent.radius
 	let parentX = parent.coordX
 	let parentY = parent.coordY
@@ -23,37 +24,39 @@ function distributeParentValue(parent, settings) {
 	let remainder = parentSize
 	let mySize = 0
 	let myAngle = parentAngle
-	let myDistance = parentSize + 10 // Adjust this to move children off of circumferance
+	let myDistance = parentSize * 1.1 // Adjust this to move children off of circumferance
 	let currentChildrenArray = []
+	let siblingCounter = 0
 
 	// Checks:
-	// let processSteps = 0
 	// let retotalizer = 0
 
 	if (parentSize <= minSize) {
 		return currentChildrenArray
 	} else {
 		while (remainder >= minSize) {
-			// processSteps += 1
 			mySize = Math.trunc(remainder * Math.random() * distFactor * 1000) / 1000
-			let tempAngle =
-				Math.acos((parentSize ^ (2 + myDistance) ^ (2 - mySize) ^ 2) / (2 * myDistance * parentSize)) / (2 * Math.PI)
-			console.log(myAngle)
+			// let tempAngle =
+			// Math.acos(((parentSize ^ 2) + (myDistance ^ 2) - (mySize ^ 2)) / (2 * myDistance * parentSize)) / (2 * Math.PI)
+			let tempAngle =	Math.atan(mySize/myDistance)
+			if (!tempAngle){console.log('tempAngle', tempAngle, 'myDistance', myDistance, 'mySize', mySize, 'parentSize', parentSize)}
 			remainder -= mySize
 			if (mySize >= minSize) {
 				// retotalizer += mySize
 				myAngle += tempAngle // Find my center
 				currentChildrenArray.push({
+					id: parentId+''+siblingCounter,
 					radius: mySize,
 					coordX: parentX + myDistance * Math.cos(myAngle),
 					coordY: parentY + myDistance * Math.sin(myAngle),
-					angle: myAngle
+					angle: myAngle,
 				})
+				siblingCounter += 1
 				myAngle += tempAngle // Setup for next center
 			}
 		}
 	}
-	// console.log(Math.trunc((100 * currentChildrenArray.length) / processSteps), '% distribution score')
+	// console.log(Math.trunc((100 * currentChildrenArray.length) / siblingCounter), '% distribution score')
 	// console.log(Math.trunc((100 * retotalizer) / parentSize), '% total score')
 	return currentChildrenArray
 }

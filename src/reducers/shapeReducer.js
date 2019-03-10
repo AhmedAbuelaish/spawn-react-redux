@@ -10,14 +10,7 @@ const initialState = {
 		distFactor: 1.4
 	},
 	nodes: [],
-	leaves: [
-		{
-			radius: 100,
-			coordX: 500,
-			coordY: 500,
-			angle: 0
-		}
-	]
+	leaves: []
 }
 
 const shapeReducer = (state = initialState, action) => {
@@ -30,16 +23,17 @@ const shapeReducer = (state = initialState, action) => {
 		case 'CREATE_ROOT':
 			newNodes = [
 				{
+                    id: 0,
 					radius: 100,
 					coordX: 500,
 					coordY: 500,
-					angle: Math.PI
+                    angle: Math.PI,
 				}
 			]
 			newLeaves = newNodes
 			return { settings: state.settings, nodes: newNodes, leaves: newLeaves }
 		case 'CREATE_NODES':
-			console.log(newNodes.length)
+			// console.log(newNodes.length)
 			newLeaves = fragment.createFragmentedArray(newLeaves, newSettings)
 			newNodes = newNodes.concat(newLeaves)
 			return { settings: state.settings, nodes: newNodes, leaves: newLeaves }
