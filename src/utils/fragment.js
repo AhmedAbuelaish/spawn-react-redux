@@ -18,13 +18,15 @@ function distributeParentValue(parent, settings) {
 	let parentY = parent.coordY
 	let parentAngle = parent.angle
 
+	let radialSpace = settings.angleRange
+	let totalRadialSpace = totalizeAngleRange(radialSpace)
 	let minSize = settings.minSize
 	let distFactor = settings.distFactor
 
 	let remainder = parentSize
 	let mySize = 0
 	let myAngle = parentAngle
-	let myDistance = parentSize * 1.1 // Adjust this to move children off of circumferance
+	let myDistance = parentSize + 20 // Adjust this to move children off of circumferance
 	let currentChildrenArray = []
 	let siblingCounter = 0
 
@@ -39,7 +41,7 @@ function distributeParentValue(parent, settings) {
 			// let tempAngle =
 			// Math.acos(((parentSize ^ 2) + (myDistance ^ 2) - (mySize ^ 2)) / (2 * myDistance * parentSize)) / (2 * Math.PI)
 			let tempAngle =	Math.atan(mySize/myDistance)
-			if (!tempAngle){console.log('tempAngle', tempAngle, 'myDistance', myDistance, 'mySize', mySize, 'parentSize', parentSize)}
+			if (!tempAngle){console.log('tempAngle', tempAngle, 'myDistance', myDistance, 'mySize', mySize, 'parentSize', parentSize, 'Size/Distance', mySize/myDistance)}
 			remainder -= mySize
 			if (mySize >= minSize) {
 				// retotalizer += mySize
@@ -63,6 +65,14 @@ function distributeParentValue(parent, settings) {
 
 function flatten(arr, val) {
 	return arr.reduce((acc, val) => acc.concat(val), [])
+}
+
+function totalizeAngleRange(angleArr) {
+	let totalAngleArr = angleArr.map((currentRangeArr, index)=>{
+		return currentRangeArr[1]-currentRangeArr[0]
+	})
+	let totalAngle = totalAngleArr.reduce((partial_sum, a) => partial_sum + a)
+	return totalAngle
 }
 
 module.exports = { createFragmentedArray }

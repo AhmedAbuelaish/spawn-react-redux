@@ -6,8 +6,8 @@ var fragment = require('../utils/fragment')
 const initialState = {
 	settings: {
 		angleRange: [[0, 180], [180, 360]],
-		minSize: 1,
-		distFactor: 1.4
+		minSize: 10,
+		distFactor: 1.0
 	},
 	nodes: [],
 	leaves: []
