@@ -18,13 +18,13 @@ function distributeParentValue(parent, settings) {
 
 	let mySize = 0
 	let myAngle = parent.angle
-	let myDistance = parent.radius + 20 // Adjust this to move children off of circumferance
+	let myDistance = parent.radius + 30 // Adjust this to move children off of circumferance
 	let currentChildrenArray = []
 	let siblingCounter = 0
 
 	let remainder = multiplier * parent.radius
 
-	if (parent.radius <= settings.minSize) {
+	if (parent.radius <= settings.minSize || parent.id.length ===20) {
 		return currentChildrenArray
 	} else {
 		while (remainder >= settings.minSize) {
