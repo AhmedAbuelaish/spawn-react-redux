@@ -10,8 +10,8 @@ class ShapeContainer extends Component {
 	componentDidMount() {
 		this.handlePlantSeed()
 		const intId = setInterval(() => {
-			// this.handleCreateShape()
 			console.log('launched')
+			this.handleCreateShape()
 		}, 1000)
 		setTimeout(() => {
 			clearInterval(intId)
