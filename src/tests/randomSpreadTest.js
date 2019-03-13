@@ -1,5 +1,5 @@
 
-console.log(randomSpread(1,0.2,100,0.4,2))
+console.log(randomSpread(1,0.5,5,1,-1))
 
 function randomSpread(factor, precision, originalValue, spread, direction){
 	// factor is the % of the originalValue as a value between 0 & 1

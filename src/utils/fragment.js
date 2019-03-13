@@ -13,7 +13,7 @@ function createFragmentedArray(parentsArr, settings) {
 function distributeParentValue(parent, settings) {
 	console.log('distributeParentValue')
 	let totalRadialSpace = totalizeAngleRange(settings.angleRange)
-	let multiplier = randomSpread(settings.multiplier, settings.multiplierPrecision, settings.multiplier, 1, -1)
+	let multiplier = randomSpread(1, settings.multiplierPrecision, settings.multiplier, 1, -1)
 
 	let mySize = 0
 	let myAngle = parent.angle
