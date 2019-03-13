@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 // settings: {
 //     angleRange: [[0,180],[180,360]],
 //     minSize: 1,
-//     distFactor: 1.4
+//     decayFactor: 1.4
 // },
 
 class SettingsForm extends Component {
@@ -75,12 +75,12 @@ class SettingsForm extends Component {
 						<input
 							className="slider"
 							type="range"
-							id="distFactorSlider"
-							min="10"
-							max="150"
-							value={this.state.distFactor * 100}
+							id="decayFactorSlider"
+							min="0.1"
+							max="100"
+							value={this.state.decayFactor * 100}
 							onChange={e => {
-								this.handleFormChange(e.target.value / 100, 'distFactor')
+								this.handleFormChange(e.target.value / 100, 'decayFactor')
                             }}
                             onMouseUp={e => {
                                 this.handleFormSubmission(e)
@@ -89,10 +89,10 @@ class SettingsForm extends Component {
 						<input
                             className="textFields"
 							type="text"
-							id="distFactor"
-							value={Math.trunc(this.state.distFactor * 100)}
+							id="decayFactor"
+							value={Math.trunc(this.state.decayFactor * 100)}
 							onChange={e => {
-								this.handleFormChange(e.target.value / 100, 'distFactor')
+								this.handleFormChange(e.target.value / 100, 'decayFactor')
 							}}
 						/>
 					</div>
