@@ -1,12 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-// settings: {
-//     angleRange: [[0,180],[180,360]],
-//     minSize: 1,
-//     decayFactor: 1.4
-// },
-
 class SettingsForm extends Component {
 	constructor(props) {
 		super(props)
@@ -52,12 +46,12 @@ class SettingsForm extends Component {
 						<input
 							className="slider"
 							type="range"
-							id="minSizeSlider"
-							min="1"
-							max="10"
-							value={this.state.minSize}
+							id="decaySlider"
+							min="0.1"
+							max="1"
+							value={this.state.decay}
 							onChange={e => {
-								this.handleFormChange(e.target.value, 'minSize')
+								this.handleFormChange(e.target.value, 'decay')
                             }}
                             onMouseUp={e => {
                                 this.handleFormSubmission(e)
@@ -66,10 +60,10 @@ class SettingsForm extends Component {
 						<input
                             className="textFields"
 							type="text"
-							id="minSize"
-							value={this.state.minSize}
+							id="decay"
+							value={this.state.decay}
 							onChange={e => {
-								this.handleFormChange(e.target.value, 'minSize')
+								this.handleFormChange(e.target.value, 'decay')
 							}}
 						/>
 						<input
