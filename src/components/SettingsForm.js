@@ -71,7 +71,7 @@ class SettingsForm extends Component {
 							type="range"
 							id="multiplierSlider"
 							min="0"
-							max="100"
+							max="2"
 							value={this.state.multiplier}
 							onChange={e => {
 								this.handleFormChange(e.target.value, 'multiplier')

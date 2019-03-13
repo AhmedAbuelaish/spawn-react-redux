@@ -72,14 +72,14 @@ function randomSpread(targetValue, precision, originalValue, spread, direction) 
 	// direction= 2: centered around targetValue. 1:Positive bias. -1:negative bias
 	console.log('randomSpread')
 	let range = originalValue * spread
-	let randomizer
+	let randomizer = 0
 
 	if (direction === 2) {
 		randomizer = Math.random() - Math.random()
-	} else if (direction === 1 || -1) {
+	} else if (direction === 1 || direction === -1) {
 		randomizer = direction * Math.abs(Math.random() - Math.random())
 	} else {
-		direction = 1
+		direction = -1
 	}
 	return targetValue * originalValue + Math.trunc(randomizer * range * (1 - precision))
 }
