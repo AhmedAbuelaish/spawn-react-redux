@@ -9,9 +9,6 @@ function createFragmentedArray(parentsArr, settings) {
 
 // ~~~~~~~~~~~~~~ DISTRIBUTE VALUE ~~~~~~~~~~~~~~~~~~~//
 function distributeParentValue(parent, settings) {
-	// settings is an object containing minSize & decayFactor
-	// <1 decayFactor for decreasing sizes but greater quantity (0.2 min)
-	// >1 decayFactor for chances of increasing sizes but fewer quantity (1.5+ is unstable)
 	let parentId = parent.id
 	let parentSize = parent.radius
 	let parentX = parent.coordX
@@ -21,9 +18,10 @@ function distributeParentValue(parent, settings) {
 	let radialSpace = settings.angleRange
 	let totalRadialSpace = totalizeAngleRange(radialSpace)
 	let minSize = settings.minSize
+	let multiplier = settings.multiplier
 
-	let decaySpread = parentSize * 0.2 // Hard coded spread
-	let decay = settings.decayFactor
+	let decayFactor = settings.decayFactor
+	let decayPrecision = settings.decayPrecision
 
 	let remainder = parentSize
 	let mySize = 0
@@ -39,21 +37,32 @@ function distributeParentValue(parent, settings) {
 		return currentChildrenArray
 	} else {
 		while (remainder >= minSize) {
-			mySize = remainder * decay
-			// let tempAngle =
-			// Math.acos(((parentSize ^ 2) + (myDistance ^ 2) - (mySize ^ 2)) / (2 * myDistance * parentSize)) / (2 * Math.PI)
-			let tempAngle =	Math.atan(mySize/myDistance)
-			if (!tempAngle){console.log('tempAngle', tempAngle, 'myDistance', myDistance, 'mySize', mySize, 'parentSize', parentSize, 'Size/Distance', mySize/myDistance)}
+			mySize = randomSpread(decayFactor,decayPrecision,remainder,0.2,2)
+			let tempAngle = Math.atan(mySize / myDistance)
+			if (!tempAngle) {
+				console.log(
+					'tempAngle',
+					tempAngle,
+					'myDistance',
+					myDistance,
+					'mySize',
+					mySize,
+					'parentSize',
+					parentSize,
+					'Size/Distance',
+					mySize / myDistance
+				)
+			}
 			remainder -= mySize
 			if (mySize >= minSize) {
 				// retotalizer += mySize
 				myAngle += tempAngle // Find my center
 				currentChildrenArray.push({
-					id: parentId+''+siblingCounter,
+					id: parentId + '' + siblingCounter,
 					radius: mySize,
 					coordX: parentX + myDistance * Math.cos(myAngle),
 					coordY: parentY + myDistance * Math.sin(myAngle),
-					angle: myAngle,
+					angle: myAngle
 				})
 				siblingCounter += 1
 				myAngle += tempAngle // Setup for next center
@@ -68,11 +77,30 @@ function flatten(arr, val) {
 }
 
 function totalizeAngleRange(angleArr) {
-	let totalAngleArr = angleArr.map((currentRangeArr, index)=>{
-		return currentRangeArr[1]-currentRangeArr[0]
+	let totalAngleArr = angleArr.map((currentRangeArr, index) => {
+		return currentRangeArr[1] - currentRangeArr[0]
 	})
 	let totalAngle = totalAngleArr.reduce((partial_sum, a) => partial_sum + a)
 	return totalAngle
+}
+
+function randomSpread(accuracy, precision, originalValue, spread, direction) {
+	// accuracy is the % of the originalValue as a value between 0 & 1
+	// precision: 0 = least precise, 1 = most precise
+	// originalValue: starting value / target value
+	// spread: range as a percentage of originalValue to randomize around. value between 0 & 1
+	// direction: 2 = centered around value. 1 = Positive bias. -1 = negative bias
+	let range = originalValue * spread
+	let randomizer
+
+	if (direction == 2) {
+		randomizer = Math.random() - Math.random()
+	} else if (direction == 1 || -1) {
+		randomizer = direction * Math.abs(Math.random() - Math.random())
+	} else {
+		direction = 1
+	}
+	return accuracy * originalValue + Math.trunc(randomizer * range * (1 - precision))
 }
 
 module.exports = { createFragmentedArray }

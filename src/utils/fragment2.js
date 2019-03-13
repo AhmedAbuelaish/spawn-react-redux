@@ -9,6 +9,9 @@ function createFragmentedArray(parentsArr, settings) {
 
 // ~~~~~~~~~~~~~~ DISTRIBUTE VALUE ~~~~~~~~~~~~~~~~~~~//
 function distributeParentValue(parent, settings) {
+	// settings is an object containing minSize & decayFactor
+	// <1 decayFactor for decreasing sizes but greater quantity (0.2 min)
+	// >1 decayFactor for chances of increasing sizes but fewer quantity (1.5+ is unstable)
 	let parentId = parent.id
 	let parentSize = parent.radius
 	let parentX = parent.coordX
@@ -20,6 +23,7 @@ function distributeParentValue(parent, settings) {
 	let minSize = settings.minSize
 
 	let decaySpread = parentSize * 0.2 // Hard coded spread
+	let decay = settings.decayFactor
 
 	let remainder = parentSize
 	let mySize = 0
@@ -35,7 +39,7 @@ function distributeParentValue(parent, settings) {
 		return currentChildrenArray
 	} else {
 		while (remainder >= minSize) {
-			mySize = remainder * decayFactor + Math.trunc((Math.random() - Math.random()) * decaySpread * (1 - decayPrecision))
+			mySize = remainder * decay
 			// let tempAngle =
 			// Math.acos(((parentSize ^ 2) + (myDistance ^ 2) - (mySize ^ 2)) / (2 * myDistance * parentSize)) / (2 * Math.PI)
 			let tempAngle =	Math.atan(mySize/myDistance)
