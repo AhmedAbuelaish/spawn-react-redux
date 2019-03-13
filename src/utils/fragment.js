@@ -22,14 +22,16 @@ function distributeParentValue(parent, settings) {
 	let currentChildrenArray = []
 	let siblingCounter = 0
 
+	let remainder = multiplier * parent.radius
+
 	if (parent.radius <= settings.minSize) {
 		return currentChildrenArray
 	} else {
-		while (siblingCounter < multiplier) {
-			// mySize = 10
+		while (remainder >= settings.minSize) {
 			console.log('siblingCounter',siblingCounter)
 			mySize = randomSpread(settings.decay, settings.decayPrecision, parent.radius, 0.2, 2)
 			let tempAngle = Math.atan(mySize / myDistance)
+			remainder -= mySize
 			if (mySize >= settings.minSize) {
 				// retotalizer += mySize
 				myAngle += tempAngle // Find my center
