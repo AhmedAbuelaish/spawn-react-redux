@@ -4,6 +4,7 @@ function createFragmentedArray(parentsArr, settings) {
 		return distributeParentValue(currentParent, settings)
 	})
 	allChildrenArray = flatten(allChildrenArray)
+	console.log(parentsArr)
 	return allChildrenArray
 }
 

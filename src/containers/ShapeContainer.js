@@ -28,7 +28,7 @@ class ShapeContainer extends Component {
 	render() {
 		return (
 			<div>
-				{this.props.nodes.map((currentShape, i) => {
+				{/* {this.props.nodes.map((currentShape, i) => {
 					const styles = {
 						width: currentShape.radius * 2,
 						height: currentShape.radius * 2,
@@ -44,7 +44,7 @@ class ShapeContainer extends Component {
 						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`
 					}
 					return <div style={styles} key={i} />
-				})}
+				})} */}
 			</div>
 		)
 	}

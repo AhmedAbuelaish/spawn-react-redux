@@ -49,44 +49,44 @@ class SettingsForm extends Component {
 							id="decaySlider"
 							min="0.1"
 							max="1"
-							value={this.state.decay}
+							value={this.state.decay * 100}
 							onChange={e => {
-								this.handleFormChange(e.target.value, 'decay')
-                            }}
-                            onMouseUp={e => {
-                                this.handleFormSubmission(e)
-                            }}
+								this.handleFormChange(e.target.value/100, 'decay')
+							}}
+							onMouseUp={e => {
+								this.handleFormSubmission(e)
+							}}
 						/>
 						<input
-                            className="textFields"
+							className="textFields"
 							type="text"
 							id="decay"
-							value={this.state.decay}
+							value={this.state.decay * 100}
 							onChange={e => {
-								this.handleFormChange(e.target.value, 'decay')
+								this.handleFormChange(e.target.value/100, 'decay')
 							}}
 						/>
 						<input
 							className="slider"
 							type="range"
-							id="decayFactorSlider"
-							min="0.1"
+							id="multiplierSlider"
+							min="0"
 							max="100"
-							value={this.state.decayFactor * 100}
+							value={this.state.multiplier}
 							onChange={e => {
-								this.handleFormChange(e.target.value / 100, 'decayFactor')
-                            }}
-                            onMouseUp={e => {
-                                this.handleFormSubmission(e)
-                            }}
+								this.handleFormChange(e.target.value, 'multiplier')
+							}}
+							onMouseUp={e => {
+								this.handleFormSubmission(e)
+							}}
 						/>
 						<input
-                            className="textFields"
+							className="textFields"
 							type="text"
-							id="decayFactor"
-							value={Math.trunc(this.state.decayFactor * 100)}
+							id="multiplier"
+							value={Math.trunc(this.state.multiplier)}
 							onChange={e => {
-								this.handleFormChange(e.target.value / 100, 'decayFactor')
+								this.handleFormChange(e.target.value, 'multiplier')
 							}}
 						/>
 					</div>

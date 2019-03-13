@@ -36,7 +36,7 @@ const shapeReducer = (state = initialState, action) => {
 			newLeaves = newNodes
 			return { settings: state.settings, nodes: newNodes, leaves: newLeaves }
 		case 'CREATE_NODES':
-			// console.log(newNodes.length)
+			console.log(newNodes.length)
 			newLeaves = fragment.createFragmentedArray(newLeaves, newSettings)
 			newNodes = newNodes.concat(newLeaves)
 			return { settings: state.settings, nodes: newNodes, leaves: newLeaves }
