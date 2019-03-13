@@ -26,7 +26,8 @@ function distributeParentValue(parent, settings) {
 		return currentChildrenArray
 	} else {
 		while (siblingCounter < multiplier) {
-			mySize = randomSpread(settings.decay, settings.decayPrecision, multiplier, 0.2, 2)
+			mySize = 10
+			// mySize = randomSpread(settings.decay, settings.decayPrecision, multiplier, 0.2, 2)
 			let tempAngle = Math.atan(mySize / myDistance)
 			if (mySize >= settings.minSize) {
 				// retotalizer += mySize
