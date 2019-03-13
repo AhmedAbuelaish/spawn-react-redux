@@ -9,9 +9,9 @@ function createFragmentedArray(parentsArr, settings) {
 
 // ~~~~~~~~~~~~~~ DISTRIBUTE VALUE ~~~~~~~~~~~~~~~~~~~//
 function distributeParentValue(parent, settings) {
-	// settings is an object containing minSize & decayFactor
-	// <1 decayFactor for decreasing sizes but greater quantity (0.2 min)
-	// >1 decayFactor for chances of increasing sizes but fewer quantity (1.5+ is unstable)
+	// settings is an object containing minSize & distFactor
+	// <1 distFactor for decreasing sizes but greater quantity (0.2 min)
+	// >1 distFactor for chances of increasing sizes but fewer quantity (1.5+ is unstable)
 	let parentId = parent.id
 	let parentSize = parent.radius
 	let parentX = parent.coordX
@@ -21,9 +21,7 @@ function distributeParentValue(parent, settings) {
 	let radialSpace = settings.angleRange
 	let totalRadialSpace = totalizeAngleRange(radialSpace)
 	let minSize = settings.minSize
-
-	let decaySpread = parentSize * 0.2 // Hard coded spread
-	let decay = settings.decayFactor
+	let distFactor = settings.distFactor
 
 	let remainder = parentSize
 	let mySize = 0
@@ -39,7 +37,7 @@ function distributeParentValue(parent, settings) {
 		return currentChildrenArray
 	} else {
 		while (remainder >= minSize) {
-			mySize = remainder * decay
+			mySize = Math.trunc(remainder * Math.random() * distFactor * 1000) / 1000
 			// let tempAngle =
 			// Math.acos(((parentSize ^ 2) + (myDistance ^ 2) - (mySize ^ 2)) / (2 * myDistance * parentSize)) / (2 * Math.PI)
 			let tempAngle =	Math.atan(mySize/myDistance)
@@ -60,6 +58,8 @@ function distributeParentValue(parent, settings) {
 			}
 		}
 	}
+	// console.log(Math.trunc((100 * currentChildrenArray.length) / siblingCounter), '% distribution score')
+	// console.log(Math.trunc((100 * retotalizer) / parentSize), '% total score')
 	return currentChildrenArray
 }
 
@@ -76,3 +76,19 @@ function totalizeAngleRange(angleArr) {
 }
 
 module.exports = { createFragmentedArray }
+
+// tests
+
+// const settings = { distFactor: 1.4, minSize: 1 }
+
+// for(let i=0;i<1000;i++){
+//     var arr = [{
+//         radius: 1000,
+//         coordX: 500,
+//         coordY: 500,
+//         angle: 0
+//     }]
+//     while (arr.length > 0) {
+//         var arr = createFragmentedArray(arr, settings)
+//     }
+// }

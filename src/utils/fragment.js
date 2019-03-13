@@ -13,7 +13,7 @@ function createFragmentedArray(parentsArr, settings) {
 function distributeParentValue(parent, settings) {
 	console.log('distributeParentValue')
 	let totalRadialSpace = totalizeAngleRange(settings.angleRange)
-	let multiplier = randomSpread(1, settings.multiplierPrecision, settings.multiplier, 1, -1)
+	let multiplier = randomSpread(settings.multiplier, 100, settings.multiplierPrecision, 100, -1)
 	console.log('multiplier=', multiplier)
 
 	let mySize = 0
@@ -29,7 +29,7 @@ function distributeParentValue(parent, settings) {
 	} else {
 		while (remainder >= settings.minSize) {
 			console.log('siblingCounter',siblingCounter)
-			mySize = randomSpread(settings.decay, settings.decayPrecision, parent.radius, 0.2, 2)
+			mySize = randomSpread(parent.radius, settings.decay, settings.decayPrecision, 100, 2)
 			let tempAngle = Math.atan(mySize / myDistance)
 			remainder -= mySize
 			if (mySize >= settings.minSize) {
@@ -64,14 +64,14 @@ function totalizeAngleRange(angleArr) {
 	return totalAngle
 }
 
-function randomSpread(targetValue, precision, originalValue, spread, direction) {
-	// targetValue= % of originalValue as a value between 0 & 1
-	// precision= 0:least precise, 1:most precise
+function randomSpread(originalValue, percentOfOriginal, precision, spread, direction) {
+	// percentOfOriginal= % of originalValue
+	// precision= 0%:least precise, 100%:most precise
 	// originalValue: starting value
-	// spread= range as % of originalValue to randomize around. value between 0 & 1
-	// direction= 2: centered around targetValue. 1:Positive bias. -1:negative bias
+	// spread= range as % of originalValue to randomize around
+	// direction= 2: centered around percentOfOriginal. 1:Positive bias. -1:negative bias
 	console.log('randomSpread')
-	let range = originalValue * spread
+	let range = originalValue * spread/100
 	let randomizer = 0
 
 	if (direction === 2) {
@@ -81,7 +81,7 @@ function randomSpread(targetValue, precision, originalValue, spread, direction) 
 	} else {
 		direction = -1
 	}
-	return targetValue * originalValue + Math.trunc(randomizer * range * (1 - precision))
+	return (percentOfOriginal/100) * originalValue + (randomizer * range * (100 - precision)/100)
 }
 
 module.exports = { createFragmentedArray }

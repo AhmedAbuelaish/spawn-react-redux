@@ -47,11 +47,11 @@ class SettingsForm extends Component {
 							className="slider"
 							type="range"
 							id="decaySlider"
-							min="0.1"
-							max="1"
-							value={this.state.decay * 100}
+							min="10"
+							max="100"
+							value={this.state.decay}
 							onChange={e => {
-								this.handleFormChange(e.target.value/100, 'decay')
+								this.handleFormChange(e.target.value, 'decay')
 							}}
 							onMouseUp={e => {
 								this.handleFormSubmission(e)
@@ -61,9 +61,9 @@ class SettingsForm extends Component {
 							className="textFields"
 							type="text"
 							id="decay"
-							value={this.state.decay * 100}
+							value={this.state.decay}
 							onChange={e => {
-								this.handleFormChange(e.target.value/100, 'decay')
+								this.handleFormChange(e.target.value, 'decay')
 							}}
 						/>
 						<input
@@ -71,7 +71,7 @@ class SettingsForm extends Component {
 							type="range"
 							id="multiplierSlider"
 							min="0"
-							max="2"
+							max="10"
 							value={this.state.multiplier}
 							onChange={e => {
 								this.handleFormChange(e.target.value, 'multiplier')
@@ -84,7 +84,7 @@ class SettingsForm extends Component {
 							className="textFields"
 							type="text"
 							id="multiplier"
-							value={Math.trunc(this.state.multiplier)}
+							value={this.state.multiplier}
 							onChange={e => {
 								this.handleFormChange(e.target.value, 'multiplier')
 							}}

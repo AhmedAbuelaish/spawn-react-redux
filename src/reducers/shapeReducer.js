@@ -8,9 +8,9 @@ const initialState = {
 		angleRange: [[0, 180], [180, 360]],
 		minSize: 10,
 		multiplier: 1,
-		multiplierPrecision: 0.5, // Higher Levels, precision -> 1
-        decay: 0.2,
-        decayPrecision: 0.5, // Higher Levels, precision -> 1
+		multiplierPrecision: 50, // Higher Levels, precision -> 100%
+        decay: 20,
+        decayPrecision: 50, // Higher Levels, precision -> 100%
 	},
 	nodes: [],
 	leaves: []
@@ -42,7 +42,7 @@ const shapeReducer = (state = initialState, action) => {
 			return { settings: state.settings, nodes: newNodes, leaves: newLeaves }
 		case 'UPDATE_SETTINGS':
 			newSettings = action.settings
-			console.log(newSettings)
+			// console.log(newSettings)
 			return { settings: newSettings, nodes: state.nodes, leaves: state.leaves }
 		default:
 			return state
