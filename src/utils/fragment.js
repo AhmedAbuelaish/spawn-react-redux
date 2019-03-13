@@ -1,15 +1,17 @@
 // ~~~~~~~~~~~ CREATE FRAGMENTED ARRAY ~~~~~~~~~~~~~~~//
 function createFragmentedArray(parentsArr, settings) {
+	console.log('createFragmentedArray')
 	var allChildrenArray = parentsArr.map((currentParent, index) => {
 		return distributeParentValue(currentParent, settings)
 	})
 	allChildrenArray = flatten(allChildrenArray)
-	console.log(parentsArr)
+	console.log('createFragmentedArray')
 	return allChildrenArray
 }
 
 // ~~~~~~~~~~~~~~ DISTRIBUTE VALUE ~~~~~~~~~~~~~~~~~~~//
 function distributeParentValue(parent, settings) {
+	console.log('distributeParentValue')
 	let totalRadialSpace = totalizeAngleRange(settings.angleRange)
 	let multiplier = randomSpread(settings.multiplier, settings.multiplierPrecision, settings.multiplier, 1, -1)
 
@@ -44,10 +46,12 @@ function distributeParentValue(parent, settings) {
 }
 
 function flatten(arr, val) {
+	console.log('flatten')
 	return arr.reduce((acc, val) => acc.concat(val), [])
 }
 
 function totalizeAngleRange(angleArr) {
+	console.log('totalizeAngleRange')
 	let totalAngleArr = angleArr.map((currentRangeArr, index) => {
 		return currentRangeArr[1] - currentRangeArr[0]
 	})
@@ -61,6 +65,7 @@ function randomSpread(targetValue, precision, originalValue, spread, direction) 
 	// originalValue: starting value
 	// spread= range as % of originalValue to randomize around. value between 0 & 1
 	// direction= 2: centered around targetValue. 1:Positive bias. -1:negative bias
+	console.log('randomSpread')
 	let range = originalValue * spread
 	let randomizer
 
