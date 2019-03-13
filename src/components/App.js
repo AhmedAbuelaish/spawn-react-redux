@@ -10,7 +10,7 @@ class App extends Component {
 			<div className="App">
 				<header className="App-header">
 					<div>
-						{/* <SettingsForm /> */}
+						<SettingsForm />
 						<ShapeContainer />
 						{/* <Canvas /> */}
 					</div>
