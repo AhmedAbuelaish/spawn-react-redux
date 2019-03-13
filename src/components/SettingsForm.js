@@ -43,6 +43,55 @@ class SettingsForm extends Component {
 					}}
 				>
 					<div>
+						{/* minSize */}
+						<input
+							className="slider"
+							type="range"
+							id="minSizeSlider"
+							min="1"
+							max="10"
+							value={this.state.minSize}
+							onChange={e => {
+								this.handleFormChange(e.target.value, 'minSize')
+							}}
+							onMouseUp={e => {
+								this.handleFormSubmission(e)
+							}}
+						/>
+						<input
+							className="textFields"
+							type="text"
+							id="minSize"
+							value={this.state.minSize}
+							onChange={e => {
+								this.handleFormChange(e.target.value, 'minSize')
+							}}
+						/>
+						{/* multiplierPrecision */}
+						<input
+							className="slider"
+							type="range"
+							id="multiplierPrecisionSlider"
+							min="0"
+							max="100"
+							value={this.state.multiplierPrecision}
+							onChange={e => {
+								this.handleFormChange(e.target.value, 'multiplierPrecision')
+							}}
+							onMouseUp={e => {
+								this.handleFormSubmission(e)
+							}}
+						/>
+						<input
+							className="textFields"
+							type="text"
+							id="multiplierPrecision"
+							value={this.state.multiplierPrecision}
+							onChange={e => {
+								this.handleFormChange(e.target.value, 'multiplierPrecision')
+							}}
+						/>
+						{/* decay */}
 						<input
 							className="slider"
 							type="range"
@@ -66,15 +115,16 @@ class SettingsForm extends Component {
 								this.handleFormChange(e.target.value, 'decay')
 							}}
 						/>
+						{/* decayPrecision */}
 						<input
 							className="slider"
 							type="range"
-							id="multiplierSlider"
+							id="decayPrecisionSlider"
 							min="0"
-							max="10"
-							value={this.state.multiplier}
+							max="100"
+							value={this.state.decayPrecision}
 							onChange={e => {
-								this.handleFormChange(e.target.value, 'multiplier')
+								this.handleFormChange(e.target.value, 'decayPrecision')
 							}}
 							onMouseUp={e => {
 								this.handleFormSubmission(e)
@@ -83,10 +133,10 @@ class SettingsForm extends Component {
 						<input
 							className="textFields"
 							type="text"
-							id="multiplier"
-							value={this.state.multiplier}
+							id="decayPrecision"
+							value={this.state.decayPrecision}
 							onChange={e => {
-								this.handleFormChange(e.target.value, 'multiplier')
+								this.handleFormChange(e.target.value, 'decayPrecision')
 							}}
 						/>
 					</div>

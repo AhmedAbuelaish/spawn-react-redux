@@ -1,28 +1,26 @@
 
-console.log(randomSpread(1,0.5,5,1,-1))
+console.log(randomSpread(130,60,50,100,2))
 
-function randomSpread(factor, precision, originalValue, spread, direction){
-	// factor is the % of the originalValue as a value between 0 & 1
-	// precision: 0 = least precise, 1 = most precise
-	// originalValue: starting value / target value
-	// spread: range as a percentage of originalValue to randomize around. value between 0 & 1
-	// direction: 2 = centered around value. 1 = Positive bias. -1 = negative bias
+function randomSpread(originalValue, percentOfOriginal, precision, spread, direction){
+	// percentOfOriginal= % of originalValue
+	// precision= 0%:least precise, 100%:most precise
+	// originalValue: starting value
+	// spread= range as % of originalValue to randomize around
+	// direction= 2: centered around percentOfOriginal. 1:Positive bias. -1:negative bias
 
-	let range = originalValue * spread
+	let range = originalValue * (percentOfOriginal/100) * (spread/100)
+	let randomizer = 0
 	let result = []
-	let moreResults = []
-
-
 
 	for (var i = 0; i < 100; i++) {
-		if (direction == 2) {
-			(randomizer = (Math.random() - Math.random()))
-		} else if (direction ==1 || -1) {
-			(randomizer = direction * Math.abs(Math.random() - Math.random()))
+		if (direction === 2) {
+			randomizer = Math.random() - Math.random()
+		} else if (direction === 1 || direction === -1) {
+			randomizer = direction * Math.abs(Math.random() - Math.random())
 		} else {
-			direction = 1
+			direction = -1
 		}
-		let values = factor * originalValue + Math.trunc(randomizer * range * (1 - precision))
+		let values = (percentOfOriginal/100) * originalValue + Math.trunc(randomizer * range * (100 - precision)/100)
 		result.push(values)
 	}
 
@@ -33,16 +31,16 @@ function randomSpread(factor, precision, originalValue, spread, direction){
 		counts[num] = counts[num] ? counts[num] + 1 : 1
 	}
 
-	for (var i = originalValue * 2; i > 0; i--) {
+	for (var i = originalValue * 2; i > -originalValue; i--) {
 		console.log(i, marker(counts[i]))
-		moreResults.push(marker(counts[i]))
 	}
-
-	function marker(numberOfMarkers) {
-		var markers = ''
-		for (var i = 0; i < numberOfMarkers; i++) {
-			markers += '|'
-		}
-		return markers
-	}
+	return '------Done-------'
 }
+
+function marker(numberOfMarkers) {
+	var markers = ''
+	for (var i = 0; i < numberOfMarkers; i++) {
+		markers += '|'
+	}
+	return markers
+	}

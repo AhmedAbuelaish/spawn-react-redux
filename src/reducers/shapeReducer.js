@@ -6,7 +6,7 @@ var fragment = require('../utils/fragment')
 const initialState = {
 	settings: {
 		angleRange: [[0, 180], [180, 360]],
-		minSize: 10,
+		minSize: 1,
 		multiplier: 1,
 		multiplierPrecision: 50, // Higher Levels, precision -> 100%
         decay: 20,
@@ -42,7 +42,7 @@ const shapeReducer = (state = initialState, action) => {
 			return { settings: state.settings, nodes: newNodes, leaves: newLeaves }
 		case 'UPDATE_SETTINGS':
 			newSettings = action.settings
-			// console.log(newSettings)
+			console.log(newSettings)
 			return { settings: newSettings, nodes: state.nodes, leaves: state.leaves }
 		default:
 			return state

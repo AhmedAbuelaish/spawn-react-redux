@@ -1,20 +1,15 @@
 // ~~~~~~~~~~~ CREATE FRAGMENTED ARRAY ~~~~~~~~~~~~~~~//
 function createFragmentedArray(parentsArr, settings) {
-	console.log('createFragmentedArray')
 	var allChildrenArray = parentsArr.map((currentParent, index) => {
 		return distributeParentValue(currentParent, settings)
 	})
 	allChildrenArray = flatten(allChildrenArray)
-	console.log('createFragmentedArray')
 	return allChildrenArray
 }
 
 // ~~~~~~~~~~~~~~ DISTRIBUTE VALUE ~~~~~~~~~~~~~~~~~~~//
 function distributeParentValue(parent, settings) {
-	console.log('distributeParentValue')
 	let totalRadialSpace = totalizeAngleRange(settings.angleRange)
-	let multiplier = randomSpread(settings.multiplier, 100, settings.multiplierPrecision, 100, -1)
-	console.log('multiplier=', multiplier)
 
 	let mySize = 0
 	let myAngle = parent.angle
@@ -22,14 +17,14 @@ function distributeParentValue(parent, settings) {
 	let currentChildrenArray = []
 	let siblingCounter = 0
 
-	let remainder = multiplier * parent.radius
+	let remainder = randomSpread(parent.radius, 130, settings.multiplierPrecision, 50, 2)
 
 	if (parent.radius <= settings.minSize || parent.id.length ===20) {
 		return currentChildrenArray
 	} else {
 		while (remainder >= settings.minSize) {
-			console.log('siblingCounter',siblingCounter)
-			mySize = randomSpread(parent.radius, settings.decay, settings.decayPrecision, 100, 2)
+			mySize = randomSpread(remainder*Math.random(), settings.decay, settings.decayPrecision, 100, 2)
+			// mySize = Math.trunc(remainder * Math.random() * 1000) / 1000
 			let tempAngle = Math.atan(mySize / myDistance)
 			remainder -= mySize
 			if (mySize >= settings.minSize) {
@@ -51,12 +46,10 @@ function distributeParentValue(parent, settings) {
 }
 
 function flatten(arr, val) {
-	console.log('flatten')
 	return arr.reduce((acc, val) => acc.concat(val), [])
 }
 
 function totalizeAngleRange(angleArr) {
-	console.log('totalizeAngleRange')
 	let totalAngleArr = angleArr.map((currentRangeArr, index) => {
 		return currentRangeArr[1] - currentRangeArr[0]
 	})
@@ -70,8 +63,7 @@ function randomSpread(originalValue, percentOfOriginal, precision, spread, direc
 	// originalValue: starting value
 	// spread= range as % of originalValue to randomize around
 	// direction= 2: centered around percentOfOriginal. 1:Positive bias. -1:negative bias
-	console.log('randomSpread')
-	let range = originalValue * spread/100
+	let range = originalValue * (percentOfOriginal/100) * (spread/100)
 	let randomizer = 0
 
 	if (direction === 2) {
