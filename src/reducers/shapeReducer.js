@@ -7,7 +7,7 @@ const initialState = {
 	settings: {
 		angleRange: [[0, 180], [180, 360]],
 		minSize: 10,
-		multiplier: 2,
+		multiplier: 1,
 		multiplierPrecision: 0.5, // Higher Levels, precision -> 1
         decay: 0.2,
         decayPrecision: 0.5, // Higher Levels, precision -> 1

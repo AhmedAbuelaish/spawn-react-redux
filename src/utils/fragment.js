@@ -27,6 +27,7 @@ function distributeParentValue(parent, settings) {
 	} else {
 		while (siblingCounter < multiplier) {
 			// mySize = 10
+			console.log('siblingCounter',siblingCounter)
 			mySize = randomSpread(settings.decay, settings.decayPrecision, parent.radius, 0.2, 2)
 			let tempAngle = Math.atan(mySize / myDistance)
 			if (mySize >= settings.minSize) {
@@ -39,7 +40,6 @@ function distributeParentValue(parent, settings) {
 					coordY: parent.coordY + myDistance * Math.sin(myAngle),
 					angle: myAngle
 				})
-				console.log('siblingCounter',siblingCounter)
 				siblingCounter += 1
 				myAngle += tempAngle // Setup for next center
 			}
