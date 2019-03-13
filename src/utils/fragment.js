@@ -14,6 +14,7 @@ function distributeParentValue(parent, settings) {
 	console.log('distributeParentValue')
 	let totalRadialSpace = totalizeAngleRange(settings.angleRange)
 	let multiplier = randomSpread(1, settings.multiplierPrecision, settings.multiplier, 1, -1)
+	console.log('multiplier=', multiplier)
 
 	let mySize = 0
 	let myAngle = parent.angle
@@ -37,6 +38,7 @@ function distributeParentValue(parent, settings) {
 					coordY: parent.coordY + myDistance * Math.sin(myAngle),
 					angle: myAngle
 				})
+				console.log('siblingCounter',siblingCounter)
 				siblingCounter += 1
 				myAngle += tempAngle // Setup for next center
 			}
