@@ -24,18 +24,35 @@
 	margin: 10px;
 }
 
-.textFields {
+.settings-controllers {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: center;
+	align-items: baseline;
+}
+
+.controller-label {
 	background: none;
-	width: 10%;
+	width:35%;
 	border: none;
 	font-size: 1.2rem;
 	font: bold;
 	color: white;
 }
 
-.slider {
+.text-fields {
+	background: none;
+	width:10%;
+	border: none;
+	font-size: 1.2rem;
+	font: bold;
+	color: white;
+}
+
+.sliders {
 	-webkit-appearance: none;
-	width: 50%;
+	width:55%;
 	height: 5px;
 	border-radius: 5px;
 	background: white;
@@ -45,7 +62,7 @@
 	transition: opacity 0.2s;
 }
 
-.slider::-webkit-slider-thumb {
+.sliders::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	appearance: none;
 	width: 15px;
@@ -55,7 +72,7 @@
 	cursor: pointer;
 }
 
-.slider::-moz-range-thumb {
+.sliders::-moz-range-thumb {
 	width: 15px;
 	height: 15px;
 	border-radius: 50%;
