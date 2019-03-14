@@ -17,7 +17,7 @@ function distributeParentValue(parent, settings) {
 	let currentChildrenArray = []
 	let siblingCounter = 0
 
-	let remainder = randomSpread(parent.radius, 130, settings.multiplierPrecision, 50, 2)
+	let remainder = randomSpread(parent.radius, settings.multiplier, settings.multiplierPrecision, 50, 2)
 
 	if (parent.radius <= settings.minSize || parent.id.length ===20) {
 		return currentChildrenArray
