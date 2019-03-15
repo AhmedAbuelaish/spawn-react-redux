@@ -33,14 +33,14 @@ function angleSpread(arrayToSpread, rangeToSpread, arrayToSpreadOver, parentAngl
 	for (var i = 0; i < arrayToSpreadOver.length; i++) {
 		console.log('begining of loop')
 		initSpreadArray = shiftEntireArray(initialArray, arrayToSpreadOver, i)
-		console.log('initSpreadArray',initSpreadArray)
-		for (var j=0;j<initSpreadArray.length;j++){
+		console.log('initSpreadArray', initSpreadArray)
+		for (var j = 0; j < initSpreadArray.length; j++) {
 			let newEl = Object.assign({}, initSpreadArray[j])
-			console.log('newEl',newEl)
+			console.log('newEl', newEl)
 			console.log('spacebetween', radToDeg(spaceBetween))
 			let tempAngle = newEl.angle + (2 * j + 1) * spaceBetween
 			rangeNumber = findMatchingRange(arrayToSpreadOver, radToDeg(tempAngle))
-			console.log('tempAngle',radToDeg(tempAngle),'rangeNumber',rangeNumber)
+			console.log('tempAngle', radToDeg(tempAngle), 'rangeNumber', rangeNumber)
 			if (rangeNumber == -1) {
 				console.log('skip this element', newEl.id)
 				break
@@ -56,13 +56,13 @@ function angleSpread(arrayToSpread, rangeToSpread, arrayToSpreadOver, parentAngl
 				newEl.angle = tempAngle
 				console.log(newEl)
 				resultArray.push(newEl)
-				initialArray.splice(0,j)
-				console.log('resultArray',resultArray)
-				console.log('initialArray',initialArray)
+				initialArray.splice(0, j)
+				console.log('resultArray', resultArray)
+				console.log('initialArray', initialArray)
 			}
 		}
 	}
-		
+
 	let filteredArray = resultArray.filter(function(el) {
 		return el != null
 	})

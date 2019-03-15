@@ -5,7 +5,7 @@ var fragment = require('../utils/fragment')
 
 const initialState = {
 	settings: {
-		angleRange: [[-45,45],[90,100]],
+		angleRange: [[-45, 45], [90, 100]],
 		minSize: 1,
 		multiplier: 130,
 		multiplierPrecision: 0, // Higher Levels, precision -> 100%

@@ -54,8 +54,8 @@ function distributeParentValue(parent, settings) {
 		angles.radToDeg(parent.angle) % 360
 	)
 
-	let positionedChildrenArray = distributedChildrenArray.map((el,index) => {
-		let newEl = Object.assign({},el)
+	let positionedChildrenArray = distributedChildrenArray.map((el, index) => {
+		let newEl = Object.assign({}, el)
 		newEl.coordX = newEl.coordX + newEl.distance * Math.cos(newEl.angle)
 		newEl.coordY = newEl.coordY + newEl.distance * Math.sin(newEl.angle)
 		return newEl
