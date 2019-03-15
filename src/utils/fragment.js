@@ -61,7 +61,6 @@ function distributeParentValue(parent, settings) {
 		return newEl
 	})
 
-	console.log('positionedChildrenArray',positionedChildrenArray)
 	return positionedChildrenArray
 }
 

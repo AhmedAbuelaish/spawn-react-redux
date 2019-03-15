@@ -5,11 +5,11 @@ var fragment = require('../utils/fragment')
 
 const initialState = {
 	settings: {
-		angleRange: [[-45, 90], [270, 360]],
+		angleRange: [[-45,45],[90,100]],
 		minSize: 1,
 		multiplier: 130,
 		multiplierPrecision: 0, // Higher Levels, precision -> 100%
-		decay: 10,
+		decay: 50,
 		decayPrecision: 0 // Higher Levels, precision -> 100%
 	},
 	nodes: [],
@@ -27,7 +27,7 @@ const shapeReducer = (state = initialState, action) => {
 			newNodes = [
 				{
 					id: 0,
-					radius: 100,
+					radius: 50,
 					coordX: 500,
 					coordY: 500,
 					angle: 0

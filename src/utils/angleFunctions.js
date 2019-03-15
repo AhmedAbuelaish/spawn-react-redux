@@ -18,37 +18,78 @@ function angleSpread(arrayToSpread, rangeToSpread, arrayToSpreadOver, parentAngl
 	if (arrayToSpread.length === 0) {
 		spaceBetween = 0
 	} else {
-		spaceBetween = emptySpace / (arrayToSpread.length * 2)
+		spaceBetween = degToRad(emptySpace / (arrayToSpread.length * 2))
 	}
 
-	console.log('arrayToSpread',arrayToSpread)
-	let newPositionedArray = arrayToSpread.map((el,index) => {
-		console.log(degToRad(arrayToSpreadOver[0][0]))
-		let newEl = Object.assign({},el)
-		newEl.angle += degToRad(arrayToSpreadOver[0][0])
-		return newEl
+	console.log(rangeToSpread, 'spread over', rangeToSpreadOver)
+	console.log(emptySpace, '/', arrayToSpread.length, '* 2 =', radToDeg(spaceBetween))
+	// console.log(arrayToSpread)
+
+	let cummAngle = degToRad(arrayToSpreadOver[0][0])
+	let rangeNumber = 0
+	let resultArray = []
+	let initialArray = arrayToSpread
+	let initSpreadArray = []
+	for (var i = 0; i < arrayToSpreadOver.length; i++) {
+		console.log('begining of loop')
+		initSpreadArray = shiftEntireArray(initialArray, arrayToSpreadOver, i)
+		console.log('initSpreadArray',initSpreadArray)
+		for (var j=0;j<initSpreadArray.length;j++){
+			let newEl = Object.assign({}, initSpreadArray[j])
+			console.log('newEl',newEl)
+			console.log('spacebetween', radToDeg(spaceBetween))
+			let tempAngle = newEl.angle + (2 * j + 1) * spaceBetween
+			rangeNumber = findMatchingRange(arrayToSpreadOver, radToDeg(tempAngle))
+			console.log('tempAngle',radToDeg(tempAngle),'rangeNumber',rangeNumber)
+			if (rangeNumber == -1) {
+				console.log('skip this element', newEl.id)
+				break
+			} else {
+				console.log(
+					'tempAngle',
+					radToDeg(tempAngle),
+					'max',
+					arrayToSpreadOver[rangeNumber][1],
+					'rangeNumber',
+					rangeNumber
+				)
+				newEl.angle = tempAngle
+				console.log(newEl)
+				resultArray.push(newEl)
+				initialArray.splice(0,j)
+				console.log('resultArray',resultArray)
+				console.log('initialArray',initialArray)
+			}
+		}
+	}
+		
+	let filteredArray = resultArray.filter(function(el) {
+		return el != null
 	})
 
-	let newSpreadArray = newPositionedArray.map((currentEl, index) => {
-		let totalAngle = 0
-		let myAngle = currentEl.angle
-		myAngle += spaceBetween
-
-		return currentEl
-
-
-	})
-
-	let finalPositionedArray = newPositionedArray.map((el,index) => {
-		let newEl = Object.assign({},el)
-		console.log(degToRad(parentAngle))
+	let finalPositionedArray = filteredArray.map((el, index) => {
+		let newEl = Object.assign({}, el)
 		newEl.angle += degToRad(parentAngle)
 		return newEl
 	})
-	console.log('finalPositionedArray',finalPositionedArray)
 	return finalPositionedArray
-	// console.log(rangeToSpread, 'spread in', rangeToSpreadOver)
-	// console.log(emptySpace, '/', arrayToSpread.length, '* 2 =', spaceBetween)
+}
+
+function shiftEntireArray(arrayToShift, refArr, i) {
+	return arrayToShift.map((el, index) => {
+		let newEl = Object.assign({}, el)
+		newEl.angle += degToRad(refArr[i][0])
+		console.log(radToDeg(el.angle), '+', refArr[i][0], '-->', radToDeg(newEl.angle))
+		return newEl
+	})
+}
+
+function findMatchingRange(ranges, checkValue) {
+	function checkRange(range) {
+		console.log('checkValue', checkValue, 'range[0]', range[0], 'range[1]', range[1])
+		return checkValue >= range[0] && checkValue <= range[1]
+	}
+	return ranges.findIndex(checkRange)
 }
 
 function radToDeg(angle) {
