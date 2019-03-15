@@ -1,3 +1,6 @@
+// Fragmented file before introducing the randomSpread function
+
+
 // ~~~~~~~~~~~ CREATE FRAGMENTED ARRAY ~~~~~~~~~~~~~~~//
 function createFragmentedArray(parentsArr, settings) {
 	var allChildrenArray = parentsArr.map((currentParent, index) => {

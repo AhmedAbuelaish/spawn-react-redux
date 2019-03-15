@@ -6,11 +6,11 @@ var fragment = require('../utils/fragment')
 const initialState = {
 	settings: {
 		angleRange: [[0, 180], [180, 360]],
-		minSize: 1,
+		minSize: 4,
 		multiplier: 130,
-		multiplierPrecision: 50, // Higher Levels, precision -> 100%
-        decay: 20,
-        decayPrecision: 50, // Higher Levels, precision -> 100%
+		multiplierPrecision: 90, // Higher Levels, precision -> 100%
+		decay: 90,
+		decayPrecision: 90 // Higher Levels, precision -> 100%
 	},
 	nodes: [],
 	leaves: []
@@ -26,11 +26,11 @@ const shapeReducer = (state = initialState, action) => {
 		case 'CREATE_ROOT':
 			newNodes = [
 				{
-                    id: 0,
+					id: 0,
 					radius: 100,
 					coordX: 500,
 					coordY: 500,
-                    angle: Math.PI,
+					angle: -Math.PI / 2
 				}
 			]
 			newLeaves = newNodes

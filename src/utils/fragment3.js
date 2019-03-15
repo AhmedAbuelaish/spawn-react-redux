@@ -1,3 +1,5 @@
+// fragment file before the angleSpread function
+
 var rs = require('./randomSpread')
 var as = require('./angleSpread')
 
@@ -15,12 +17,12 @@ function distributeParentValue(parent, settings) {
 	let totalRadialSpace = totalizeAngleRange(settings.angleRange)
 
 	let mySize = 0
-	let myAngle = -Math.PI/4
+	let myAngle = parent.angle
 	let myDistance = parent.radius + 30 // Adjust this to move children off of circumferance
 	let currentChildrenArray = []
 	let siblingCounter = 0
 
-	let minAngle = Math.atan(settings.minSize / myDistance)
+	let minAngle = Math.atan(1 / myDistance)
 	let remainder = rs.randomSpread(parent.radius, settings.multiplier, settings.multiplierPrecision, 50, 2)
 
 	if (parent.radius <= settings.minSize || parent.id.length === 40) {
@@ -46,7 +48,6 @@ function distributeParentValue(parent, settings) {
 			}
 		}
 	}
-	// as.angleSpread(currentChildrenArray, settings.angleRange, parent.angle)
 	return currentChildrenArray
 }
 
