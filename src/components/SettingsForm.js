@@ -44,38 +44,38 @@ class SettingsForm extends Component {
 					onSubmit={e => {
 						this.handleFormSubmission(e)
 					}}>
-						<InputField
-							propName={'minSize'}
-							propValue={this.state.minSize}
-							propMin={1}
-							propMax={10}
-							fieldChange={this.handleFormChange}
-							formSubmit={this.handleFormSubmission}
-						/>
-						<InputField
-							propName={'multiplierPrecision'}
-							propValue={this.state.multiplierPrecision}
-							propMin={0}
-							propMax={100}
-							fieldChange={this.handleFormChange}
-							formSubmit={this.handleFormSubmission}
-						/>
-						<InputField
-							propName={'decay'}
-							propValue={this.state.decay}
-							propMin={10}
-							propMax={100}
-							fieldChange={this.handleFormChange}
-							formSubmit={this.handleFormSubmission}
-						/>
-						<InputField
-							propName={'decayPrecision'}
-							propValue={this.state.decayPrecision}
-							propMin={0}
-							propMax={100}
-							fieldChange={this.handleFormChange}
-							formSubmit={this.handleFormSubmission}
-						/>
+					<InputField
+						propName={'minSize'}
+						propValue={this.state.minSize}
+						propMin={1}
+						propMax={10}
+						fieldChange={this.handleFormChange}
+						formSubmit={this.handleFormSubmission}
+					/>
+					<InputField
+						propName={'multiplierPrecision'}
+						propValue={this.state.multiplierPrecision}
+						propMin={0}
+						propMax={100}
+						fieldChange={this.handleFormChange}
+						formSubmit={this.handleFormSubmission}
+					/>
+					<InputField
+						propName={'decay'}
+						propValue={this.state.decay}
+						propMin={10}
+						propMax={100}
+						fieldChange={this.handleFormChange}
+						formSubmit={this.handleFormSubmission}
+					/>
+					<InputField
+						propName={'decayPrecision'}
+						propValue={this.state.decayPrecision}
+						propMin={0}
+						propMax={100}
+						fieldChange={this.handleFormChange}
+						formSubmit={this.handleFormSubmission}
+					/>
 					<input className='reset-button' type='submit' value='Reset' />
 				</form>
 			</div>

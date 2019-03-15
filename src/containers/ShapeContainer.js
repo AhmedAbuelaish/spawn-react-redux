@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 class ShapeContainer extends Component {
 	constructor(props) {
 		super(props)
-		// this.state = ''
 	}
 
 	componentDidMount() {

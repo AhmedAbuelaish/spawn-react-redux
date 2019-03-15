@@ -4,8 +4,9 @@ var fragment = require('../utils/fragment')
 // It modifies the main state of the app
 
 const initialState = {
+	viewportDims: { width: window.innerWidth, height: window.innerHeight  },
 	settings: {
-		angleRange: [[-45, 45], [90, 100]],
+		angleRange: [[-45, 45], [85, 90], [270, 275]],
 		minSize: 1,
 		multiplier: 130,
 		multiplierPrecision: 0, // Higher Levels, precision -> 100%
@@ -20,30 +21,35 @@ const shapeReducer = (state = initialState, action) => {
 	var newNodes = state.nodes.slice()
 	var newLeaves = state.leaves.slice()
 	var newSettings = { ...state.settings }
+	var newViewportDims = { ...state.viewportDims }
 	switch (action.type) {
 		case 'RESET':
-			return { settings: state.settings, nodes: [], leaves: [] }
+			return { ...state, nodes: [], leaves: [] }
 		case 'CREATE_ROOT':
 			newNodes = [
 				{
 					id: 0,
 					radius: 50,
-					coordX: 500,
-					coordY: 500,
+					coordX: state.viewportDims.width/2,
+					coordY: state.viewportDims.height/2,
 					angle: 0
 				}
 			]
 			newLeaves = newNodes
-			return { settings: state.settings, nodes: newNodes, leaves: newLeaves }
+			return { ...state, nodes: newNodes, leaves: newLeaves }
 		case 'CREATE_NODES':
-			// console.log(newNodes.length)
+			console.log(state.nodes.length)
 			newLeaves = fragment.createFragmentedArray(newLeaves, newSettings)
 			newNodes = newNodes.concat(newLeaves)
-			return { settings: state.settings, nodes: newNodes, leaves: newLeaves }
+			return { ...state, nodes: newNodes, leaves: newLeaves }
 		case 'UPDATE_SETTINGS':
 			newSettings = action.settings
 			// console.log(newSettings)
-			return { settings: newSettings, nodes: state.nodes, leaves: state.leaves }
+			return { ...state, settings: newSettings }
+		case 'UPDATE_VIEWPORT':
+			newViewportDims = action.viewportDims
+			console.log(newViewportDims)
+			return { ...state, viewportDims: newViewportDims }
 		default:
 			return state
 	}
