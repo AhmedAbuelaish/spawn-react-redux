@@ -3,7 +3,10 @@ import { connect } from 'react-redux'
 
 class ShapeContainer extends Component {
 	componentDidMount() {
+		// Init
 		this.handlePlantSeed()
+
+		// Rendering
 		const intId = setInterval(() => {
 			this.handleCreateShape()
 		}, 1)
@@ -30,7 +33,7 @@ class ShapeContainer extends Component {
 					top: 0,
 					width: this.props.viewportDims.width,
 					height: this.props.viewportDims.height,
-					transform: `scale(1)`,
+					transform: `scale(1)`
 				}}>
 				{this.props.nodes.map((currentShape, i) => {
 					const styles = {

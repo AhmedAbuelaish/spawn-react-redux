@@ -28,11 +28,10 @@ function angleSpread(arrayToSpread, rangeToSpread, arrayToSpreadOver, parentAngl
 	let cummAngle = degToRad(arrayToSpreadOver[0][0])
 	let rangeNumber = 0
 	let resultArray = []
-	let initialArray = arrayToSpread
-	let initSpreadArray = []
+	let initSpreadArray = arrayToSpread
 	for (var i = 0; i < arrayToSpreadOver.length; i++) {
 		console.log('begining of loop')
-		initSpreadArray = shiftEntireArray(initialArray, arrayToSpreadOver, i)
+		initSpreadArray = shiftEntireArray(initSpreadArray, arrayToSpreadOver, i)
 		console.log('initSpreadArray', initSpreadArray)
 		for (var j = 0; j < initSpreadArray.length; j++) {
 			let newEl = Object.assign({}, initSpreadArray[j])
@@ -42,7 +41,8 @@ function angleSpread(arrayToSpread, rangeToSpread, arrayToSpreadOver, parentAngl
 			rangeNumber = findMatchingRange(arrayToSpreadOver, radToDeg(tempAngle))
 			console.log('tempAngle', radToDeg(tempAngle), 'rangeNumber', rangeNumber)
 			if (rangeNumber === -1) {
-				console.log('skip this element', newEl.id)
+				console.log('skip this element and unshift entire array', newEl.id)
+				initSpreadArray = ushiftEntireArray(initSpreadArray, arrayToSpreadOver, i)
 				break
 			} else {
 				console.log(
@@ -56,9 +56,9 @@ function angleSpread(arrayToSpread, rangeToSpread, arrayToSpreadOver, parentAngl
 				newEl.angle = tempAngle
 				console.log(newEl)
 				resultArray.push(newEl)
-				initialArray.splice(0, j)
+				initSpreadArray = initSpreadArray.splice(j, initSpreadArray.length-1)
 				console.log('resultArray', resultArray)
-				console.log('initialArray', initialArray)
+				console.log('initSpreadArray', initSpreadArray)
 			}
 		}
 	}
@@ -80,6 +80,15 @@ function shiftEntireArray(arrayToShift, refArr, i) {
 		let newEl = Object.assign({}, el)
 		newEl.angle += degToRad(refArr[i][0])
 		console.log(radToDeg(el.angle), '+', refArr[i][0], '-->', radToDeg(newEl.angle))
+		return newEl
+	})
+}
+
+function ushiftEntireArray(arrayToShift, refArr, i) {
+	return arrayToShift.map((el, index) => {
+		let newEl = Object.assign({}, el)
+		newEl.angle -= degToRad(refArr[i][0])
+		console.log(radToDeg(el.angle), '-', refArr[i][0], '-->', radToDeg(newEl.angle))
 		return newEl
 	})
 }
