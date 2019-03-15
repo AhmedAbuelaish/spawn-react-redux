@@ -1,5 +1,5 @@
 var rs = require('./randomSpread')
-var as = require('./angleSpread')
+var angles = require('./angleFunctions')
 
 // ~~~~~~~~~~~ CREATE FRAGMENTED ARRAY ~~~~~~~~~~~~~~~//
 function createFragmentedArray(parentsArr, settings) {
@@ -12,10 +12,8 @@ function createFragmentedArray(parentsArr, settings) {
 
 // ~~~~~~~~~~~~~~ DISTRIBUTE VALUE ~~~~~~~~~~~~~~~~~~~//
 function distributeParentValue(parent, settings) {
-	let totalRadialSpace = totalizeAngleRange(settings.angleRange)
-
 	let mySize = 0
-	let myAngle = -Math.PI/4
+	let myAngle = 0
 	let myDistance = parent.radius + 30 // Adjust this to move children off of circumferance
 	let currentChildrenArray = []
 	let siblingCounter = 0
@@ -37,8 +35,9 @@ function distributeParentValue(parent, settings) {
 				currentChildrenArray.push({
 					id: parent.id + '' + siblingCounter,
 					radius: mySize,
-					coordX: parent.coordX + myDistance * Math.cos(myAngle),
-					coordY: parent.coordY + myDistance * Math.sin(myAngle),
+					distance: myDistance,
+					coordX: parent.coordX,
+					coordY: parent.coordY,
 					angle: myAngle
 				})
 				siblingCounter += 1
@@ -46,20 +45,28 @@ function distributeParentValue(parent, settings) {
 			}
 		}
 	}
-	// as.angleSpread(currentChildrenArray, settings.angleRange, parent.angle)
-	return currentChildrenArray
+
+	// Spread Angle of children over angle range
+	let distributedChildrenArray = angles.angleSpread(
+		currentChildrenArray,
+		Math.abs(angles.radToDeg(myAngle)),
+		settings.angleRange,
+		angles.radToDeg(parent.angle) % 360
+	)
+
+	let positionedChildrenArray = distributedChildrenArray.map((el,index) => {
+		let newEl = Object.assign({},el)
+		newEl.coordX = newEl.coordX + newEl.distance * Math.cos(newEl.angle)
+		newEl.coordY = newEl.coordY + newEl.distance * Math.sin(newEl.angle)
+		return newEl
+	})
+
+	console.log('positionedChildrenArray',positionedChildrenArray)
+	return positionedChildrenArray
 }
 
 function flatten(arr, val) {
 	return arr.reduce((acc, val) => acc.concat(val), [])
-}
-
-function totalizeAngleRange(angleArr) {
-	let totalAngleArr = angleArr.map((currentRangeArr, index) => {
-		return currentRangeArr[1] - currentRangeArr[0]
-	})
-	let totalAngle = totalAngleArr.reduce((partial_sum, a) => partial_sum + a)
-	return totalAngle
 }
 
 module.exports = { createFragmentedArray }

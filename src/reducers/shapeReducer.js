@@ -5,12 +5,12 @@ var fragment = require('../utils/fragment')
 
 const initialState = {
 	settings: {
-		angleRange: [[0, 180], [180, 360]],
-		minSize: 4,
+		angleRange: [[-45, 90], [270, 360]],
+		minSize: 1,
 		multiplier: 130,
-		multiplierPrecision: 90, // Higher Levels, precision -> 100%
-		decay: 90,
-		decayPrecision: 90 // Higher Levels, precision -> 100%
+		multiplierPrecision: 0, // Higher Levels, precision -> 100%
+		decay: 10,
+		decayPrecision: 0 // Higher Levels, precision -> 100%
 	},
 	nodes: [],
 	leaves: []
@@ -30,19 +30,19 @@ const shapeReducer = (state = initialState, action) => {
 					radius: 100,
 					coordX: 500,
 					coordY: 500,
-					angle: -Math.PI / 2
+					angle: 0
 				}
 			]
 			newLeaves = newNodes
 			return { settings: state.settings, nodes: newNodes, leaves: newLeaves }
 		case 'CREATE_NODES':
-			console.log(newNodes.length)
+			// console.log(newNodes.length)
 			newLeaves = fragment.createFragmentedArray(newLeaves, newSettings)
 			newNodes = newNodes.concat(newLeaves)
 			return { settings: state.settings, nodes: newNodes, leaves: newLeaves }
 		case 'UPDATE_SETTINGS':
 			newSettings = action.settings
-			console.log(newSettings)
+			// console.log(newSettings)
 			return { settings: newSettings, nodes: state.nodes, leaves: state.leaves }
 		default:
 			return state
