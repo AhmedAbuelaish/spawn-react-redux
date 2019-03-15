@@ -16,12 +16,17 @@
 .settings-form {
 	display: flex;
 	flex-direction: column;
-	width: 40vw;
+	min-width: 40vw;
+	height: auto;
 	margin: 20px;
+	position: absolute;
+	left: 50vw;
+	top: 95vh;
+	transform: translate(0%, -100%);
 }
 
 .settings-form * {
-	margin: 10px;
+	margin: 5px;
 }
 
 .settings-controllers {

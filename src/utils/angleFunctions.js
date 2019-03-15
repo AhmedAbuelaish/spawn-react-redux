@@ -41,7 +41,7 @@ function angleSpread(arrayToSpread, rangeToSpread, arrayToSpreadOver, parentAngl
 			let tempAngle = newEl.angle + (2 * j + 1) * spaceBetween
 			rangeNumber = findMatchingRange(arrayToSpreadOver, radToDeg(tempAngle))
 			console.log('tempAngle', radToDeg(tempAngle), 'rangeNumber', rangeNumber)
-			if (rangeNumber == -1) {
+			if (rangeNumber === -1) {
 				console.log('skip this element', newEl.id)
 				break
 			} else {

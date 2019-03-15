@@ -2,10 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 class ShapeContainer extends Component {
-	constructor(props) {
-		super(props)
-	}
-
 	componentDidMount() {
 		this.handlePlantSeed()
 		const intId = setInterval(() => {
@@ -27,7 +23,15 @@ class ShapeContainer extends Component {
 
 	render() {
 		return (
-			<div>
+			<div
+				style={{
+					position: 'relative',
+					left: 0,
+					top: 0,
+					width: this.props.viewportDims.width,
+					height: this.props.viewportDims.height,
+					transform: `scale(1)`,
+				}}>
 				{this.props.nodes.map((currentShape, i) => {
 					const styles = {
 						width: currentShape.radius * 2,
@@ -35,11 +39,7 @@ class ShapeContainer extends Component {
 						left: currentShape.coordX,
 						top: currentShape.coordY,
 						borderRadius: '50%',
-						// borderWidth: 1,
-						// borderColor: 'black',
-						// borderStyle: 'solid',
 						background: 'radial-gradient(rgba(210, 77, 87, 0.1),rgba(210, 77, 87, 0.2) , rgba(210, 77, 87, 0.8))',
-						// backgroundColor: 'rgba(210, 77, 87, 0.5)',
 						position: 'absolute',
 						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`
 					}
@@ -51,6 +51,7 @@ class ShapeContainer extends Component {
 }
 
 const mapStateToProps = state => ({
+	viewportDims: state.viewportDims,
 	settings: state.settings,
 	nodes: state.nodes,
 	leaves: state.leaves

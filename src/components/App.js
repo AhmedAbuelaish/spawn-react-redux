@@ -32,8 +32,8 @@ class App extends Component {
 			<div className='App'>
 				<header className='App-header'>
 					<div>
-						<SettingsForm />
 						<ShapeContainer />
+						<SettingsForm />
 						{/* <Canvas /> */}
 					</div>
 				</header>
