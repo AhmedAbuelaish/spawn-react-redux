@@ -28,23 +28,18 @@ function angleSpread(arrayToSpread, rangeToSpread, arrayToSpreadOver, parentAngl
 	let cummAngle = degToRad(arrayToSpreadOver[0][0])
 	let rangeNumber = 0
 	let resultArray = []
-	let initSpreadArray = arrayToSpread
+	let currentSpreadArray = arrayToSpread
 	for (var i = 0; i < arrayToSpreadOver.length; i++) {
 		console.log('begining of loop')
-		initSpreadArray = shiftEntireArray(initSpreadArray, arrayToSpreadOver, i)
-		console.log('initSpreadArray', initSpreadArray)
-		for (var j = 0; j < initSpreadArray.length; j++) {
-			let newEl = Object.assign({}, initSpreadArray[j])
+		currentSpreadArray = shiftEntireArray(currentSpreadArray, arrayToSpreadOver, i)
+		console.log('currentSpreadArray', currentSpreadArray)
+		for (var j = 0; j < currentSpreadArray.length; j++) {
+			let newEl = Object.assign({}, currentSpreadArray[j])
 			console.log('newEl', newEl)
 			console.log('spacebetween', radToDeg(spaceBetween))
 			let tempAngle = newEl.angle + (2 * j + 1) * spaceBetween
-			rangeNumber = findMatchingRange(arrayToSpreadOver, radToDeg(tempAngle))
-			console.log('tempAngle', radToDeg(tempAngle), 'rangeNumber', rangeNumber)
-			if (rangeNumber === -1) {
-				console.log('skip this element and unshift entire array', newEl.id)
-				initSpreadArray = ushiftEntireArray(initSpreadArray, arrayToSpreadOver, i)
-				break
-			} else {
+			rangeNumber = checkIfInRange(arrayToSpreadOver, radToDeg(tempAngle), i)
+			if (rangeNumber !== false) {
 				console.log(
 					'tempAngle',
 					radToDeg(tempAngle),
@@ -54,11 +49,14 @@ function angleSpread(arrayToSpread, rangeToSpread, arrayToSpreadOver, parentAngl
 					rangeNumber
 				)
 				newEl.angle = tempAngle
-				console.log(newEl)
 				resultArray.push(newEl)
-				initSpreadArray = initSpreadArray.splice(j, initSpreadArray.length-1)
+				currentSpreadArray.splice(0, 1)
 				console.log('resultArray', resultArray)
-				console.log('initSpreadArray', initSpreadArray)
+				console.log('currentSpreadArray', currentSpreadArray)
+			} else {
+				console.log('skip this element and unshift entire array', newEl.id, 'rangeNumber', rangeNumber)
+				currentSpreadArray = ushiftEntireArray(currentSpreadArray, arrayToSpreadOver, i)
+				break
 			}
 		}
 	}
@@ -99,6 +97,15 @@ function findMatchingRange(ranges, checkValue) {
 		return checkValue >= range[0] && checkValue <= range[1]
 	}
 	return ranges.findIndex(checkRange)
+}
+
+function checkIfInRange(ranges, checkValue, index) {
+	console.log('checkValue', checkValue, 'ranges[index][0]', ranges[index][0], 'ranges[index][1]', ranges[index][1])
+	if (checkValue >= ranges[index][0] && checkValue <= ranges[index][1]) {
+		return index
+	} else {
+		return false
+	}
 }
 
 function radToDeg(angle) {
