@@ -6,7 +6,7 @@ class ShapeContainer extends Component {
 		this.handlePlantSeed()
 		const intId = setInterval(() => {
 			this.handleCreateShape()
-		}, 1)
+		}, 50)
 		setTimeout(() => {
 			console.log('cleared, final state:', this.props.nodes)
 			clearInterval(intId)
@@ -30,7 +30,7 @@ class ShapeContainer extends Component {
 					top: 0,
 					width: this.props.viewportDims.width,
 					height: this.props.viewportDims.height,
-					transform: `scale(${this.props.zoom}/100)`,
+					transform: `scale(1)`,
 				}}>
 				{this.props.nodes.map((currentShape, i) => {
 					const styles = {

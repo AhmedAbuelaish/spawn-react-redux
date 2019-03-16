@@ -34,7 +34,7 @@ function angleSpread(arrayToSpread, rangeToSpread, arrayToSpreadOver, parentAngl
 		console.log('begining of loop')
 		initSpreadArray = shiftEntireArray(initialArray, arrayToSpreadOver, i)
 		console.log('initSpreadArray', initSpreadArray)
-		for (var j = 0; j < initSpreadArray.length; j++) {
+		for (var j = 0; j < initialArray.length; j++) {
 			let newEl = Object.assign({}, initSpreadArray[j])
 			console.log('newEl', newEl)
 			console.log('spacebetween', radToDeg(spaceBetween))
