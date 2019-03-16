@@ -16,13 +16,15 @@
 .settings-form {
 	display: flex;
 	flex-direction: column;
-	min-width: 40vw;
+	min-width: 20vw;
 	height: auto;
 	margin: 20px;
 	position: absolute;
-	left: 50vw;
+	left: 70vw;
 	top: 95vh;
 	transform: translate(0%, -100%);
+	background-color: rgba(0,0,0,0.5);
+	border: 1px solid rgba(0,0,0,0.5);
 }
 
 .settings-form * {
