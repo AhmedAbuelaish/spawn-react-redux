@@ -30,7 +30,7 @@ class ShapeContainer extends Component {
 					top: 0,
 					width: this.props.viewportDims.width,
 					height: this.props.viewportDims.height,
-					transform: `scale(1)`,
+					transform: `scale(${this.props.zoom}/100)`,
 				}}>
 				{this.props.nodes.map((currentShape, i) => {
 					const styles = {
@@ -54,7 +54,8 @@ const mapStateToProps = state => ({
 	viewportDims: state.viewportDims,
 	settings: state.settings,
 	nodes: state.nodes,
-	leaves: state.leaves
+	leaves: state.leaves,
+	zoom: state.zoom
 })
 
 const mapDispatchToProps = dispatch => ({

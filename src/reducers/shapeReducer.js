@@ -11,7 +11,8 @@ const initialState = {
 		multiplier: 130,
 		multiplierPrecision: 40, // Higher Levels, precision -> 100%
 		decay: 50,
-		decayPrecision: 40 // Higher Levels, precision -> 100%
+		decayPrecision: 40, // Higher Levels, precision -> 100%
+		zoom: 100
 	},
 	nodes: [],
 	leaves: []
