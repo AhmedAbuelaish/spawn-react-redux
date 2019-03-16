@@ -6,7 +6,7 @@ var fragment = require('../utils/fragment')
 const initialState = {
 	viewportDims: { width: window.innerWidth, height: window.innerHeight  },
 	settings: {
-		angleRange: [[0,180]],
+		angleRange: [[-360,360]],
 		minSize: 1,
 		multiplier: 130,
 		multiplierPrecision: 40, // Higher Levels, precision -> 100%
@@ -30,7 +30,7 @@ const shapeReducer = (state = initialState, action) => {
 			newNodes = [
 				{
 					id: 0,
-					radius: 50,
+					radius: 200,
 					coordX: state.viewportDims.width/2,
 					coordY: state.viewportDims.height/2,
 					angle: 0
