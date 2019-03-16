@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 
 class InputField extends Component {
 	render() {
-		let { propName, propValue, propMin, propMax, fieldChange, formSubmit } = this.props
+		let { propName, propLabel, propValue, propMin, propMax, fieldChange, formSubmit } = this.props
 		return (
 			<div className='settings-controllers'>
-				<label className='controller-label'>{propName}</label>
+				<label className='controller-label'>{propLabel}</label>
 				<input
 					className='sliders'
 					type='range'

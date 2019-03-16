@@ -69,7 +69,19 @@
 	transition: opacity 0.2s;
 }
 
-.sliders::-webkit-slider-thumb {
+.slidersHalf {
+	-webkit-appearance: none;
+	width:25%;
+	height: 5px;
+	border-radius: 5px;
+	background: white;
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: 0.2s;
+	transition: opacity 0.2s;
+}
+
+.sliders::-webkit-slider-thumb, .slidersHalf::-webkit-slider-thumb{
 	-webkit-appearance: none;
 	appearance: none;
 	width: 15px;
@@ -79,7 +91,7 @@
 	cursor: pointer;
 }
 
-.sliders::-moz-range-thumb {
+.sliders::-moz-range-thumb, .slidersHalf::-webkit-slider-thumb{
 	width: 15px;
 	height: 15px;
 	border-radius: 50%;

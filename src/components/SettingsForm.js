@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import InputField from './InputField'
+import DoubleInput from './DoubleInput'
 
 class SettingsForm extends Component {
 	constructor(props) {
@@ -10,9 +11,17 @@ class SettingsForm extends Component {
 		this.handleFormSubmission = this.handleFormSubmission.bind(this)
 	}
 
-	handleFormChange = (value, targetProp) => {
-		console.log('input:', value)
-		this.setState({ [targetProp]: value })
+	handleFormChange = (value, targetProp, i) => {
+		console.log('input:', value, 'i', i)
+		if(i === undefined){
+			this.setState({ [targetProp]: value })
+		} else if(i===0){
+			this.setState({ [targetProp]: [[value, this.state.angleRange[0][1]]] })
+			console.log(this.state.angleRange, 'i', i)
+		} else if(i===1){
+			this.setState({ [targetProp]: [[this.state.angleRange[0][0],value]] })
+			console.log(this.state.angleRange, 'i', i)
+		}
 	}
 
 	handleFormSubmission = e => {
@@ -44,8 +53,18 @@ class SettingsForm extends Component {
 					onSubmit={e => {
 						this.handleFormSubmission(e)
 					}}>
+					<DoubleInput
+						propName={'angleRange'}
+						propLabel={'Angle Range'}
+						propValue={this.state.angleRange[0]}
+						propMin={-360}
+						propMax={360}
+						fieldChange={this.handleFormChange}
+						formSubmit={this.handleFormSubmission}
+					/>
 					<InputField
 						propName={'minSize'}
+						propLabel={'Min Size'}
 						propValue={this.state.minSize}
 						propMin={1}
 						propMax={10}
@@ -54,6 +73,7 @@ class SettingsForm extends Component {
 					/>
 					<InputField
 						propName={'multiplierPrecision'}
+						propLabel={'x Precision'}
 						propValue={this.state.multiplierPrecision}
 						propMin={0}
 						propMax={100}
@@ -62,6 +82,7 @@ class SettingsForm extends Component {
 					/>
 					<InputField
 						propName={'decay'}
+						propLabel={'Decay'}
 						propValue={this.state.decay}
 						propMin={10}
 						propMax={100}
@@ -70,6 +91,7 @@ class SettingsForm extends Component {
 					/>
 					<InputField
 						propName={'decayPrecision'}
+						propLabel={'D Precision'}
 						propValue={this.state.decayPrecision}
 						propMin={0}
 						propMax={100}
