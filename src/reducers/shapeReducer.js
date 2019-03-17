@@ -6,11 +6,11 @@ var fragment = require('../utils/fragment')
 const initialState = {
 	viewportDims: { width: window.innerWidth, height: window.innerHeight  },
 	settings: {
-		angleRange: [[-360,360]],
+		angleRange: [[-90,90]],
 		minSize: 1,
 		multiplier: 130,
-		multiplierPrecision: 40, // Higher Levels, precision -> 100%
-		decay: 50,
+		multiplierPrecision: 90, // Higher Levels, precision -> 100%
+		decay: 80,
 		decayPrecision: 40, // Higher Levels, precision -> 100%
 		zoom: 100
 	},

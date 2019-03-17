@@ -14,7 +14,7 @@ function createFragmentedArray(parentsArr, settings) {
 function distributeParentValue(parent, settings) {
 	let mySize = 0
 	let myAngle = 0
-	let myDistance = parent.radius + 30 // Adjust this to move children off of circumferance
+	let myDistance = parent.radius + 10 // Adjust this to move children off of circumferance
 	let currentChildrenArray = []
 	let siblingCounter = 0
 
