@@ -1,8 +1,8 @@
 {
   "name": "spawn-react-redux",
-  "homepage": "https://ahmedabuelaish.github.io/spawn-react-redux/",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://ahmedabuelaish.github.io/spawn-react-redux/",
   "dependencies": {
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
@@ -12,11 +12,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
