@@ -1,8 +1,8 @@
 {
   "name": "spawn-react-redux",
+  "homepage": "https://ahmedabuelaish.github.io/spawn-react-redux/public/",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ahmedabuelaish.github.io/spawn-react-redux/",
   "dependencies": {
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
