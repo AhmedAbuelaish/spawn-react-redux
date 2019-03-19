@@ -1,12 +1,13 @@
 var rs = require('./randomSpread')
 var angles = require('./angleFunctions')
+var arrays = require('./arrayFunctions')
 
 // ~~~~~~~~~~~ CREATE FRAGMENTED ARRAY ~~~~~~~~~~~~~~~//
 function createFragmentedArray(parentsArr, settings) {
 	var allChildrenArray = parentsArr.map((currentParent, index) => {
 		return distributeParentValue(currentParent, settings)
 	})
-	allChildrenArray = flatten(allChildrenArray)
+	allChildrenArray = arrays.flatten(allChildrenArray)
 	return allChildrenArray
 }
 
@@ -64,8 +65,3 @@ function distributeParentValue(parent, settings) {
 	return positionedChildrenArray
 }
 
-function flatten(arr, val) {
-	return arr.reduce((acc, val) => acc.concat(val), [])
-}
-
-module.exports = { createFragmentedArray }
