@@ -99,3 +99,7 @@
 	background: white;
 	cursor: pointer;
 }
+
+.handlebars:hover {
+	height:100px;
+}
