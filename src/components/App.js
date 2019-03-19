@@ -4,6 +4,7 @@ import '../styles/App.css'
 import Canvas from './Canvas'
 import ShapeContainer from '../containers/ShapeContainer'
 import SettingsForm from '../components/SettingsForm'
+import RadialControl from '../components/RadialControl'
 
 class App extends Component {
 	constructor(props) {
@@ -32,9 +33,10 @@ class App extends Component {
 			<div className='App'>
 				<header className='App-header'>
 					<div>
-						<ShapeContainer />
-						<SettingsForm />
+						{/* <ShapeContainer /> */}
+						{/* <SettingsForm /> */}
 						{/* <Canvas /> */}
+						<RadialControl />
 					</div>
 				</header>
 			</div>
