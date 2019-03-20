@@ -89,7 +89,8 @@ class RangeHandlebars extends Component {
 				y: e.pageY - this.state.rel.y
 			}
 		})
-		console.log('pageX',e.pageX,'pageY',e.pageY)
+		console.log('pageX', e.pageX, 'pageY', e.pageY)
+		console.log('this.state.rel.x', this.state.rel.x, 'this.state.rel.y', this.state.rel.y)
 		e.stopPropagation()
 		e.preventDefault()
 		console.log('dragging', this.state.dragging)
