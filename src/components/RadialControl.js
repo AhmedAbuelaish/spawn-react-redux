@@ -10,26 +10,9 @@ class RadialControl extends Component {
 		super(props)
 		this.state = {
 			angleRange: this.props.settings.angleRange,
-			maxAngleRanges: this.props.settings.maxAngleRanges,
-			pos: { x: 0, y: 0 },
-			dragging: false,
-			rel: null // position relative to the cursor
+			maxAngleRanges: this.props.settings.maxAngleRanges
 		}
 		this.handleFormChange = this.handleFormChange.bind(this)
-		this.onMouseDown = this.onMouseDown.bind(this)
-		this.onMouseUp = this.onMouseUp.bind(this)
-		this.onMouseMove = this.onMouseMove.bind(this)
-	}
-
-	componentDidUpdate(props, state) {
-		console.log('update')
-		if (this.state.dragging && !state.dragging) {
-			document.addEventListener('mousemove', this.onMouseMove)
-			document.addEventListener('mouseup', this.onMouseUp)
-		} else if (!this.state.dragging && state.dragging) {
-			document.removeEventListener('mousemove', this.onMouseMove)
-			document.removeEventListener('mouseup', this.onMouseUp)
-		}
 	}
 
 	handleFormChange = (value, targetProp, i) => {
@@ -45,43 +28,6 @@ class RadialControl extends Component {
 		}
 	}
 
-	// calculate relative position to the mouse and set dragging=true
-	onMouseDown(e) {
-		console.log('down')
-		if (e.button !== 0) return
-		var computedStyle = window.getComputedStyle(this.getDOMNode())
-		var pos = { top: parseInt(computedStyle.top), left: parseInt(computedStyle.left) }
-		this.setState({
-			dragging: true,
-			rel: {
-				x: e.pageX - pos.left,
-				y: e.pageY - pos.top
-			}
-		})
-		e.stopPropagation()
-		e.preventDefault()
-	}
-
-	onMouseUp(e) {
-		console.log('up')
-		this.setState({ dragging: false })
-		e.stopPropagation()
-		e.preventDefault()
-	}
-
-	onMouseMove(e) {
-		console.log('move')
-		if (!this.state.dragging) return
-		this.setState({
-			pos: {
-				x: e.pageX - this.state.rel.x,
-				y: e.pageY - this.state.rel.y
-			}
-		})
-		e.stopPropagation()
-		e.preventDefault()
-	}
-
 	render() {
 		let angleRanges = this.state.angleRange
 		let initAngle = Math.min(...angleRanges[0])
@@ -90,7 +36,7 @@ class RadialControl extends Component {
 			<div style={{ position: 'relative' }}>
 				{angleRanges.map((currentRange, i) => {
 					return (
-						<div>
+						<div className='rangeHandlebars'>
 							<RangeHandlebars
 								radius={controllerRadius}
 								angle={parseFloat(currentRange[0]) % 360}

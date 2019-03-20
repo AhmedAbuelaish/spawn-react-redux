@@ -65,3 +65,4 @@ function distributeParentValue(parent, settings) {
 	return positionedChildrenArray
 }
 
+module.exports = { createFragmentedArray }
