@@ -86,7 +86,7 @@ class RadialControl extends Component {
 				{angleRanges.map((currentRange, i) => {
 					return (
 						<div>
-							<RangeHandlebars radius={controllerRadius} angle={parseFloat(currentRange[0]) % 360} key={i + '0'} onMouseDown={this.onMouseDown} className='handlebars'/>
+							<RangeHandlebars radius={controllerRadius} angle={parseFloat(currentRange[0]) % 360} key={i + '0'} onMouseDown={this.onMouseDown}/>
 							<RangeHandlebars radius={controllerRadius} angle={parseFloat(currentRange[1]) % 360} key={i + '1'} />
 						</div>
 					)
