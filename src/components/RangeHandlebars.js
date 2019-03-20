@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 var angles = require('../utils/angleFunctions')
 
 class RangeHandlebars extends Component {
@@ -10,31 +11,38 @@ class RangeHandlebars extends Component {
 		}
 	}
 	toggleHover = () => {
-		this.setState({hover: !this.state.hover })
+		this.setState({ hover: !this.state.hover })
 	}
 	render() {
 		let { radius, angle } = this.props
 		let handleWidth = parseFloat(radius)
+		let handleHeight = 3
 		let radAngle = angles.degToRad(parseFloat(angle))
-		let borderProps
-		console.log('handleWidth', handleWidth)
+		let backgroundProps, iconColor
+		let componentClasses = ['handlebars']
 		if (this.state.hover) {
-			borderProps = '2px solid rgba(256,256,256,0.5)'
-		} else {
-			borderProps = '0px solid rgba(256,256,256,0)'
+			componentClasses += 'hover'
 		}
 		let styles = {
 			position: 'absolute',
-			height: '2px',
-			backgroundImage: 'linear-gradient(90deg,rgba(256,256,256,0),rgba(256,256,256,0.05),rgba(256,256,256,0.8))',
-			borderRadius: '5px',
+			height: `${handleHeight}px`,
 			width: handleWidth,
 			top: `${1 * radius + 0.5 * handleWidth * Math.sin(radAngle)}px`,
-			left: `${0.5 * radius + 0.5 * handleWidth * Math.cos(radAngle)}px`,
+			left: `${0.5 * radius + 0.5 * handleWidth * Math.cos(radAngle) - handleHeight / 2}px`,
 			transform: `rotate(${angle}deg)`,
-			border: borderProps
+			textAlign: 'end',
+			display: 'flex',
+			flexDirection: 'column',
+			justifyContent: 'center',
+			alignItems: 'flex-end',
+			paddingRight: '5px',
 		}
-		return <div style={styles} className='handlebars' onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} />
+		return (
+			<div style={styles} className={componentClasses} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
+				<FontAwesomeIcon icon={faCaretUp} />
+				<FontAwesomeIcon icon={faCaretDown} />
+			</div>
+		)
 	}
 }
 

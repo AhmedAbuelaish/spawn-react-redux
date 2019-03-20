@@ -113,7 +113,7 @@ class RadialControl extends Component {
 							return [sectionData, emptySectionData]
 						})
 					)}
-					startAngle={parseFloat(angleRanges[0][0]) % 360}
+					startAngle={(parseFloat(angleRanges[0][0]) % 360)}
 					totalValue={360}
 					lineWidth={45}
 					radius={40}
