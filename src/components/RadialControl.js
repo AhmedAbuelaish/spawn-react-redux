@@ -8,17 +8,30 @@ var arrays = require('../utils/arrayFunctions')
 class RadialControl extends Component {
 	constructor(props) {
 		super(props)
-    this.state = this.props.settings.angleRange
-    
-	}
-	getInitialState() {
-		return {
-			pos: this.props.initialPos,
+		this.state = {
+			angleRange: this.props.settings.angleRange,
+			maxAngleRanges: this.props.settings.maxAngleRanges,
+			pos: { x: 0, y: 0 },
 			dragging: false,
 			rel: null // position relative to the cursor
 		}
-  }
-  
+		this.handleFormChange = this.handleFormChange.bind(this)
+		this.onMouseDown = this.onMouseDown.bind(this)
+		this.onMouseUp = this.onMouseUp.bind(this)
+		this.onMouseMove = this.onMouseMove.bind(this)
+	}
+
+	componentDidUpdate(props, state) {
+		console.log('update')
+		if (this.state.dragging && !state.dragging) {
+			document.addEventListener('mousemove', this.onMouseMove)
+			document.addEventListener('mouseup', this.onMouseUp)
+		} else if (!this.state.dragging && state.dragging) {
+			document.removeEventListener('mousemove', this.onMouseMove)
+			document.removeEventListener('mouseup', this.onMouseUp)
+		}
+	}
+
 	handleFormChange = (value, targetProp, i) => {
 		console.log('input:', value, 'i', i)
 		if (i === undefined) {
@@ -32,19 +45,9 @@ class RadialControl extends Component {
 		}
 	}
 
-	componentDidUpdate(props, state) {
-		if (this.state.dragging && !state.dragging) {
-			document.addEventListener('mousemove', this.onMouseMove)
-			document.addEventListener('mouseup', this.onMouseUp)
-		} else if (!this.state.dragging && state.dragging) {
-			document.removeEventListener('mousemove', this.onMouseMove)
-			document.removeEventListener('mouseup', this.onMouseUp)
-		}
-	}
-
 	// calculate relative position to the mouse and set dragging=true
 	onMouseDown(e) {
-		console.log(this.state)
+		console.log('down')
 		if (e.button !== 0) return
 		var computedStyle = window.getComputedStyle(this.getDOMNode())
 		var pos = { top: parseInt(computedStyle.top), left: parseInt(computedStyle.left) }
@@ -60,12 +63,14 @@ class RadialControl extends Component {
 	}
 
 	onMouseUp(e) {
+		console.log('up')
 		this.setState({ dragging: false })
 		e.stopPropagation()
 		e.preventDefault()
 	}
 
 	onMouseMove(e) {
+		console.log('move')
 		if (!this.state.dragging) return
 		this.setState({
 			pos: {
@@ -78,7 +83,7 @@ class RadialControl extends Component {
 	}
 
 	render() {
-		let angleRanges = this.state
+		let angleRanges = this.state.angleRange
 		let initAngle = Math.min(...angleRanges[0])
 		let controllerRadius = 150
 		return (
@@ -86,7 +91,11 @@ class RadialControl extends Component {
 				{angleRanges.map((currentRange, i) => {
 					return (
 						<div>
-							<RangeHandlebars radius={controllerRadius} angle={parseFloat(currentRange[0]) % 360} key={i + '0'} onMouseDown={this.onMouseDown}/>
+							<RangeHandlebars
+								radius={controllerRadius}
+								angle={parseFloat(currentRange[0]) % 360}
+								key={i + '0'}
+							/>
 							<RangeHandlebars radius={controllerRadius} angle={parseFloat(currentRange[1]) % 360} key={i + '1'} />
 						</div>
 					)
@@ -113,7 +122,7 @@ class RadialControl extends Component {
 							return [sectionData, emptySectionData]
 						})
 					)}
-					startAngle={(parseFloat(angleRanges[0][0]) % 360)}
+					startAngle={parseFloat(angleRanges[0][0]) % 360}
 					totalValue={360}
 					lineWidth={45}
 					radius={40}

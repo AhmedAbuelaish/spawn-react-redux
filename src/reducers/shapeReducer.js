@@ -6,7 +6,8 @@ var fragment = require('../utils/fragment')
 const initialState = {
 	viewportDims: { width: window.innerWidth, height: window.innerHeight  },
 	settings: {
-		angleRange: [[-45,45],[140,200]],
+		angleRange: [[-45,45],[70,100],[260,290]],
+		maxAngleRanges: 4,
 		minSize: 1,
 		multiplier: 130,
 		multiplierPrecision: 90, // Higher Levels, precision -> 100%
@@ -49,7 +50,6 @@ const shapeReducer = (state = initialState, action) => {
 			return { ...state, settings: newSettings }
 		case 'UPDATE_VIEWPORT':
 			newViewportDims = action.viewportDims
-			console.log(newViewportDims)
 			return { ...state, viewportDims: newViewportDims }
 		default:
 			return state

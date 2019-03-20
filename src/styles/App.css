@@ -103,9 +103,8 @@
 }
 
 .handlebars {
-	border-radius: '5px';
 	background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.15), rgba(256, 256, 256, 0.3));
-	color: rgba(256,256,256,0.15);
+	color: rgba(256, 256, 256, 0.15);
 	-webkit-transition: all 0.5s ease-out;
 	-moz-transition: all 0.5s ease-out;
 	-o-transition: all 0.5s ease-out;
@@ -114,5 +113,5 @@
 
 .handlebarshover {
 	background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.3), rgba(256, 256, 256, 0.5));
-	color: rgba(256,256,256,1);
+	color: rgba(256, 256, 256, 1);
 }
