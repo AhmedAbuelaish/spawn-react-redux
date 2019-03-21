@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons'
+var arrays = require('../utils/arrayFunctions')
 var angles = require('../utils/angleFunctions')
 
 class RangeHandlebars extends Component {
@@ -16,35 +17,57 @@ class RangeHandlebars extends Component {
 			},
 			hover: false,
 			dragging: false,
-			rel: null // position relative to the cursor
+			id: this.props.id
 		}
-		// Initialize deg and rad angles
+		// Initialize deg and rad angles)
+		// hardcoded center based on bottom left controller + 10px padding
+		// --- todo: make this flexible and based on position of parent getBoundingClientRect()
+		// calc min max based on the two adjacent handles
 		this.state = {
 			...this.state,
-			center: this.props.center,
+			center: {
+				cx: 10 + this.props.radius,
+				cy: -10 + this.props.viewportDims.height - this.props.radius
+			},
 			angle: {
 				deg: this.props.angle,
 				rad: angles.degToRad(parseFloat(this.props.angle))
-			}
+			},
+			minMax: this.calcMinMax()
 		}
 		// Calculate position of each handlebar
 		this.state = {
 			...this.state,
-			pos: {
-				x:
-					0.5 * this.state.radius +
-					0.5 * this.state.radius * Math.cos(this.state.angle.rad) -
-					this.state.handle.height / 2,
-				y: 1 * this.state.radius + 0.5 * this.state.radius * Math.sin(this.state.angle.rad)
-			}
+			pos: this.calcPos(this.state.angle.rad)
 		}
 		// Bind mouse event functions
 		this.onMouseDown = this.onMouseDown.bind(this)
 		this.onMouseUp = this.onMouseUp.bind(this)
 		this.onMouseMove = this.onMouseMove.bind(this)
+		console.log(this.state)
+	}
+	calcMinMax = () => {
+		let flatArr = arrays.flatten(this.state.angleRange)
+		let currentIndex = 2 * this.state.id[0] + this.state.id[1]
+		let maxIndex = flatArr.length - 1
+		let prevIndex = currentIndex === 0 ? maxIndex : currentIndex - 1
+		let nextIndex = currentIndex === maxIndex ? 0 : currentIndex + 1
+		let pad = 5
+		return {
+			min: angles.degToRad(flatArr[prevIndex] + pad),
+			max: angles.degToRad(flatArr[nextIndex] - pad)
+		}
+	}
+	calcPos = ang => {
+		// return the x & y positions of the handleBar based on the new angle.
+		// radius and height don't change so can be pulled from the state
+		return {
+			x: 0.5 * this.state.radius + 0.5 * this.state.radius * Math.cos(ang) - this.state.handle.height / 2,
+			y: 1 * this.state.radius + 0.5 * this.state.radius * Math.sin(ang)
+		}
 	}
 	componentDidUpdate(props, state) {
-		console.log('update')
+		// console.log('update')
 		if (this.state.dragging && !state.dragging) {
 			document.addEventListener('mousemove', this.onMouseMove)
 			document.addEventListener('mouseup', this.onMouseUp)
@@ -58,46 +81,46 @@ class RangeHandlebars extends Component {
 	}
 	// calculate relative position to the mouse and set dragging=true
 	onMouseDown = e => {
-		console.log('down')
+		// console.log('down')
+		// console.log(e)
 		if (e.button !== 0) return
 		this.setState({
-			dragging: true,
-			rel: {
-				x: e.pageX - this.state.pos.x,
-				y: e.pageY - this.state.pos.y
-			}
+			dragging: true
 		})
 		e.stopPropagation()
 		e.preventDefault()
-		console.log('dragging', this.state.dragging)
 	}
 
 	onMouseUp = e => {
-		console.log('up')
+		// console.log('up')
 		this.setState({ dragging: false })
 		e.stopPropagation()
 		e.preventDefault()
-		console.log('dragging', this.state.dragging)
+		// todo: trigger dispatch action here with settings updated with new angleRange
 	}
 
 	onMouseMove = e => {
-		console.log('move')
+		// console.log('move')
+		console.log(e)
 		if (!this.state.dragging) return
+		let newAngleInRad = Math.atan((e.pageY - this.state.center.cy) / (e.pageX - this.state.center.cx))
+		if (newAngleInRad<0){newAngleInRad = 2*Math.PI+newAngleInRad}
+		// if (e.pageX < this.state.center.cx) {
+		// 	newAngleInRad = newAngleInRad + Math.PI
+		// }
 		this.setState({
-			pos: {
-				x: e.pageX - this.state.rel.x,
-				y: e.pageY - this.state.rel.y
+			pos: this.calcPos(newAngleInRad),
+			angle: {
+				deg: angles.radToDeg(newAngleInRad),
+				rad: newAngleInRad
 			}
 		})
-		console.log('pageX', e.pageX, 'pageY', e.pageY)
-		console.log('this.state.center', this.state.center)
+		console.log('angle', this.state.angle, 'pos', this.state.pos)
 		e.stopPropagation()
 		e.preventDefault()
-		console.log('dragging', this.state.dragging)
 	}
 
 	render() {
-		// let { radius, angle } = this.props
 		let componentClasses = ['handlebars']
 		if (this.state.hover) {
 			componentClasses += 'hover'
@@ -132,7 +155,8 @@ class RangeHandlebars extends Component {
 }
 
 const mapStateToProps = state => ({
-	settings: state.settings
+	settings: state.settings,
+	viewportDims: state.viewportDims
 })
 
 const mapDispatchToProps = dispatch => ({

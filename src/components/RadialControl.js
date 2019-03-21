@@ -11,16 +11,21 @@ class RadialControl extends Component {
 		this.state = {
 			angleRange: this.props.settings.angleRange,
 			maxAngleRanges: this.props.settings.maxAngleRanges,
-			height: 0
+			radius: this.props.radius,
+			center: 0
 		}
 		this.handleFormChange = this.handleFormChange.bind(this)
+		this.getCenter = this.getCenter.bind(this)
 	}
 
-	componentDidMount() {
-    const height = this.divElement.clientHeight;
-		this.setState({ height });
-		console.log(this.state)
-  }
+	componentDidMount() {}
+
+	getCenter = element => {
+		let rect = element.getBoundingClientRect()
+		console.log('rect', rect)
+		this.setState({ center: rect })
+		return rect
+	}
 
 	handleFormChange = (value, targetProp, i) => {
 		console.log('input:', value, 'i', i)
@@ -37,14 +42,14 @@ class RadialControl extends Component {
 	render() {
 		let angleRanges = this.state.angleRange
 		let initAngle = Math.min(...angleRanges[0])
-		let controllerRadius = 150
+		let controllerRadius = this.state.radius
 		return (
-			<div className='radial-controller' ref={(divElement) => this.divElement = divElement}>
+			<div className='radial-controller' ref={this.getCenter} style={{ border: '1px solid red' }}>
 				{angleRanges.map((currentRange, i) => {
 					return (
 						<div className='rangeHandlebars'>
-							<RangeHandlebars radius={controllerRadius} angle={parseFloat(currentRange[0]) % 360} key={i + '0'}/>
-							<RangeHandlebars radius={controllerRadius} angle={parseFloat(currentRange[1]) % 360} key={i + '1'} />
+							<RangeHandlebars radius={controllerRadius} angle={parseFloat(currentRange[0]) % 360} key={i + '0'} id={i + '0'}/>
+							<RangeHandlebars radius={controllerRadius} angle={parseFloat(currentRange[1]) % 360} key={i + '1'} id={i + '1'}/>
 						</div>
 					)
 				})}
@@ -70,6 +75,7 @@ class RadialControl extends Component {
 							return [sectionData, emptySectionData]
 						})
 					)}
+					style={{ width: `${controllerRadius * 2}px` }}
 					startAngle={parseFloat(angleRanges[0][0]) % 360}
 					totalValue={360}
 					lineWidth={45}
