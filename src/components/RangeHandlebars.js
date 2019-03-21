@@ -21,7 +21,7 @@ class RangeHandlebars extends Component {
 		// Initialize deg and rad angles
 		this.state = {
 			...this.state,
-			center: { x: this.state.radius, y: this.state.radius },
+			center: this.props.center,
 			angle: {
 				deg: this.props.angle,
 				rad: angles.degToRad(parseFloat(this.props.angle))
@@ -90,8 +90,7 @@ class RangeHandlebars extends Component {
 			}
 		})
 		console.log('pageX', e.pageX, 'pageY', e.pageY)
-		console.log('this.state.rel.x', this.state.rel.x, 'this.state.rel.y', this.state.rel.y)
-		console.log('this.state.center.x', this.state.center.x, 'this.state.center.y', this.state.center.y)
+		console.log('this.state.center', this.state.center)
 		e.stopPropagation()
 		e.preventDefault()
 		console.log('dragging', this.state.dragging)

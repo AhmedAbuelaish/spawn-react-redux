@@ -10,10 +10,17 @@ class RadialControl extends Component {
 		super(props)
 		this.state = {
 			angleRange: this.props.settings.angleRange,
-			maxAngleRanges: this.props.settings.maxAngleRanges
+			maxAngleRanges: this.props.settings.maxAngleRanges,
+			height: 0
 		}
 		this.handleFormChange = this.handleFormChange.bind(this)
 	}
+
+	componentDidMount() {
+    const height = this.divElement.clientHeight;
+		this.setState({ height });
+		console.log(this.state)
+  }
 
 	handleFormChange = (value, targetProp, i) => {
 		console.log('input:', value, 'i', i)
@@ -27,21 +34,16 @@ class RadialControl extends Component {
 			console.log(this.state.angleRange, 'i', i)
 		}
 	}
-
 	render() {
 		let angleRanges = this.state.angleRange
 		let initAngle = Math.min(...angleRanges[0])
 		let controllerRadius = 150
 		return (
-			<div style={{ position: 'relative' }}>
+			<div className='radial-controller' ref={(divElement) => this.divElement = divElement}>
 				{angleRanges.map((currentRange, i) => {
 					return (
 						<div className='rangeHandlebars'>
-							<RangeHandlebars
-								radius={controllerRadius}
-								angle={parseFloat(currentRange[0]) % 360}
-								key={i + '0'}
-							/>
+							<RangeHandlebars radius={controllerRadius} angle={parseFloat(currentRange[0]) % 360} key={i + '0'}/>
 							<RangeHandlebars radius={controllerRadius} angle={parseFloat(currentRange[1]) % 360} key={i + '1'} />
 						</div>
 					)
@@ -58,12 +60,12 @@ class RadialControl extends Component {
 							let sectionData = {
 								title: `${i}`,
 								value: (parseFloat(currentRange[1]) % 360) - (parseFloat(currentRange[0]) % 360),
-								color: `#C13C37`
+								color: `rgba(210, 77, 87, 0.7)`
 							}
 							let emptySectionData = {
 								title: `blank${i}`,
 								value: nextRangeStart - (parseFloat(currentRange[1]) % 360),
-								color: `rgba(0,0,0,0.5)`
+								color: `rgba(0,0,0,0.2)`
 							}
 							return [sectionData, emptySectionData]
 						})

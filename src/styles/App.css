@@ -14,20 +14,25 @@
 	color: white;
 }
 
-.controls {
+.radial-controller {
 	position: absolute;
-	display: flex;
-	flex-direction: row;
-	/* align-items: center; */
+	margin: 10px;
+	bottom: 0vh;
+	left: 0vw;
+}
+
+.settings-controller {
+	position: absolute;
+	margin: 10px;
+	bottom: 0vh;
+	right: 0vw;
+	width: 40%;
 }
 
 .settings-form {
 	display: flex;
 	flex-direction: column;
-	min-width: 20vw;
 	height: auto;
-	margin: 20px;
-	/* transform: translate(0%, -100%); */
 	background-color: rgba(0, 0, 0, 0.5);
 	border: 1px solid rgba(0, 0, 0, 0.5);
 }

@@ -47,7 +47,7 @@ class SettingsForm extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className='settings-controller'>
 				<form
 					className='settings-form'
 					onSubmit={e => {
