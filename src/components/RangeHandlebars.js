@@ -38,7 +38,10 @@ class RangeHandlebars extends Component {
 		// Calculate position of each handlebar
 		this.state = {
 			...this.state,
-			pos: this.calcPos(this.state.angle.rad)
+			pos: {
+				x: this.state.radius,
+				y: this.state.radius
+			}
 		}
 		// Bind mouse event functions
 		this.onMouseDown = this.onMouseDown.bind(this)
@@ -56,14 +59,6 @@ class RangeHandlebars extends Component {
 		return {
 			min: angles.degToRad(flatArr[prevIndex] + pad),
 			max: angles.degToRad(flatArr[nextIndex] - pad)
-		}
-	}
-	calcPos = ang => {
-		// return the x & y positions of the handleBar based on the new angle.
-		// radius and height don't change so can be pulled from the state
-		return {
-			x: 0.5 * this.state.radius + 0.5 * this.state.radius * Math.cos(ang) - this.state.handle.height / 2,
-			y: 1 * this.state.radius + 0.5 * this.state.radius * Math.sin(ang)
 		}
 	}
 	componentDidUpdate(props, state) {
@@ -104,18 +99,16 @@ class RangeHandlebars extends Component {
 		console.log(e)
 		if (!this.state.dragging) return
 		let newAngleInRad = Math.atan((e.pageY - this.state.center.cy) / (e.pageX - this.state.center.cx))
-		if (newAngleInRad<0){newAngleInRad = 2*Math.PI+newAngleInRad}
-		// if (e.pageX < this.state.center.cx) {
-		// 	newAngleInRad = newAngleInRad + Math.PI
-		// }
+		if (newAngleInRad < 0) {
+			newAngleInRad = 2 * Math.PI + newAngleInRad
+		}
 		this.setState({
-			pos: this.calcPos(newAngleInRad),
 			angle: {
 				deg: angles.radToDeg(newAngleInRad),
 				rad: newAngleInRad
 			}
 		})
-		console.log('angle', this.state.angle, 'pos', this.state.pos)
+		console.log('angle', this.state.angle)
 		e.stopPropagation()
 		e.preventDefault()
 	}
@@ -132,6 +125,7 @@ class RangeHandlebars extends Component {
 			left: `${this.state.pos.x}px`,
 			top: `${this.state.pos.y}px`,
 			transform: `rotate(${this.state.angle.deg}deg)`,
+			transformOrigin: `0px`,
 			borderRadius: '5px',
 			textAlign: 'end',
 			display: 'flex',
