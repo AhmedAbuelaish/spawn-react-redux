@@ -14,30 +14,6 @@ class RadialControl extends Component {
 			radius: this.props.radius,
 			center: 0
 		}
-		this.handleFormChange = this.handleFormChange.bind(this)
-		this.getCenter = this.getCenter.bind(this)
-	}
-
-	componentDidMount() {}
-
-	getCenter = element => {
-		let rect = element.getBoundingClientRect()
-		console.log('rect', rect)
-		this.setState({ center: rect })
-		return rect
-	}
-
-	handleFormChange = (value, targetProp, i) => {
-		console.log('input:', value, 'i', i)
-		if (i === undefined) {
-			this.setState({ [targetProp]: value })
-		} else if (i === 0) {
-			this.setState({ [targetProp]: [[value, this.state.angleRange[0][1]]] })
-			console.log(this.state.angleRange, 'i', i)
-		} else if (i === 1) {
-			this.setState({ [targetProp]: [[this.state.angleRange[0][0], value]] })
-			console.log(this.state.angleRange, 'i', i)
-		}
 	}
 	render() {
 		let angleRanges = this.state.angleRange

@@ -47,7 +47,7 @@ class RangeHandlebars extends Component {
 		this.onMouseUp = this.onMouseUp.bind(this)
 		this.onMouseMove = this.onMouseMove.bind(this)
 		this.calcMinMax = this.calcMinMax.bind(this)
-		console.log(this.state)
+		this.arrangeStateForDispatch = this.arrangeStateForDispatch.bind(this)
 	}
 	// calculate min max based on the two adjacent handles
 	calcMinMax = () => {
@@ -59,22 +59,15 @@ class RangeHandlebars extends Component {
 		let boundArr = arrays.flatten([-180, flatArr, 180])
 		prevIndex++
 		nextIndex++
-		console.log(
-			'flatArr',
-			flatArr,
-			'currentIndex',
-			currentIndex,
-			'boundArr',
-			boundArr,
-			'prevIndex',
-			prevIndex,
-			'nextIndex',
-			nextIndex
-		)
 		return {
 			min: angles.degToRad(boundArr[prevIndex] + pad),
 			max: angles.degToRad(boundArr[nextIndex] - pad)
 		}
+	}
+	arrangeStateForDispatch = () => {
+		let obj = this.props.settings
+		let newObj = { ...obj, angleRange: this.state.angleRange }
+		this.props.updateSettings(newObj)
 	}
 	componentDidUpdate(props, state) {
 		// console.log('update')
@@ -117,14 +110,10 @@ class RangeHandlebars extends Component {
 		let newAngleInRad = Math.atan(deltaY / deltaX)
 		if (deltaX < 0 && deltaY < 0) {
 			// Top left Quadrant
-			console.log(this.state.angle.deg)
 			newAngleInRad -= Math.PI
-			console.log(angles.radToDeg(newAngleInRad))
 		} else if (deltaX < 0 && deltaY > 0) {
 			// Bottom left Quadrant
-			console.log(this.state.angle.deg)
 			newAngleInRad += Math.PI
-			console.log(angles.radToDeg(newAngleInRad))
 		}
 
 		if (newAngleInRad <= this.state.minMax.min) {
@@ -144,7 +133,7 @@ class RangeHandlebars extends Component {
 				rad: newAngleInRad
 			}
 		})
-		// console.log('angle', this.state.angle)
+		this.arrangeStateForDispatch()
 		e.stopPropagation()
 		e.preventDefault()
 	}
