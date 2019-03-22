@@ -17,7 +17,8 @@ class RangeHandlebars extends Component {
 			},
 			hover: false,
 			dragging: false,
-			id: this.props.id
+			id: this.props.id,
+			minMax: this.props.minMax
 		}
 		// Initialize deg and rad angles
 		// hardcoded center based on bottom left controller + 10px padding
@@ -28,11 +29,7 @@ class RangeHandlebars extends Component {
 				cx: 10 + parseFloat(this.props.radius),
 				cy: -10 + this.props.viewportDims.height - this.props.radius
 			},
-			angle: {
-				deg: parseFloat(this.props.angle),
-				rad: angles.degToRad(parseFloat(this.props.angle))
-			},
-			minMax: this.calcMinMax()
+			angle: this.fromRangeToAngle()
 		}
 		// Calculate position of each handlebar
 		this.state = {
@@ -46,29 +43,19 @@ class RangeHandlebars extends Component {
 		this.onMouseDown = this.onMouseDown.bind(this)
 		this.onMouseUp = this.onMouseUp.bind(this)
 		this.onMouseMove = this.onMouseMove.bind(this)
-		this.calcMinMax = this.calcMinMax.bind(this)
-		this.arrangeStateForDispatch = this.arrangeStateForDispatch.bind(this)
+		this.fromRangeToAngle = this.fromRangeToAngle.bind(this)
+		this.fromAngleToRange = this.fromAngleToRange.bind(this)
+		this.updateStates = this.updateStates.bind(this)
+		console.log(
+			'angle',
+			this.state.angle.deg,
+			'min',
+			angles.radToDeg(this.state.minMax.min),
+			'max',
+			angles.radToDeg(this.state.minMax.max)
+		)
 	}
-	// calculate min max based on the two adjacent handles
-	calcMinMax = () => {
-		let flatArr = arrays.flatten(this.state.angleRange)
-		let currentIndex = 2 * parseFloat(this.state.id[0]) + parseFloat(this.state.id[1])
-		let prevIndex = currentIndex - 1
-		let nextIndex = currentIndex + 1
-		let pad = 5
-		let boundArr = arrays.flatten([-180, flatArr, 180])
-		prevIndex++
-		nextIndex++
-		return {
-			min: angles.degToRad(boundArr[prevIndex] + pad),
-			max: angles.degToRad(boundArr[nextIndex] - pad)
-		}
-	}
-	arrangeStateForDispatch = () => {
-		let obj = this.props.settings
-		let newObj = { ...obj, angleRange: this.state.angleRange }
-		this.props.updateSettings(newObj)
-	}
+
 	componentDidUpdate(props, state) {
 		// console.log('update')
 		if (this.state.dragging && !state.dragging) {
@@ -79,9 +66,24 @@ class RangeHandlebars extends Component {
 			document.removeEventListener('mouseup', this.onMouseUp)
 		}
 	}
+
+	fromRangeToAngle = () => {
+		return {
+			deg: parseFloat(this.props.angle),
+			rad: angles.degToRad(parseFloat(this.props.angle))
+		}
+	}
+
+	fromAngleToRange = () => {
+		let newRanges = this.state.angleRange
+		newRanges[parseFloat(this.state.id[0])][parseFloat(this.state.id[1])] = this.state.angle.deg
+		this.setState({ angleRange: newRanges })
+	}
+
 	toggleHover = () => {
 		this.setState({ hover: !this.state.hover })
 	}
+
 	// calculate relative position to the mouse and set dragging=true
 	onMouseDown = e => {
 		// console.log('down')
@@ -115,27 +117,30 @@ class RangeHandlebars extends Component {
 			// Bottom left Quadrant
 			newAngleInRad += Math.PI
 		}
-
 		if (newAngleInRad <= this.state.minMax.min) {
 			newAngleInRad = this.state.minMax.min
 		}
 		if (newAngleInRad >= this.state.minMax.max) {
 			newAngleInRad = this.state.minMax.max
 		}
-
 		if (Math.abs(this.state.angle.rad - newAngleInRad) > Math.PI / 4) {
 			newAngleInRad = this.state.angle.rad
 		}
-
-		this.setState({
-			angle: {
-				deg: angles.radToDeg(newAngleInRad),
-				rad: newAngleInRad
-			}
-		})
-		this.arrangeStateForDispatch()
+		this.updateStates(newAngleInRad)
 		e.stopPropagation()
 		e.preventDefault()
+	}
+
+	updateStates = ang => {
+		this.setState({
+			angle: {
+				deg: angles.radToDeg(ang),
+				rad: ang
+			}
+		})
+		this.fromAngleToRange()
+		this.props.handleChange(this.state.angleRange, 'angleRange', this.state.id)
+		this.setState({ minMax: this.props.minMax })
 	}
 
 	render() {
@@ -178,9 +183,7 @@ const mapStateToProps = state => ({
 	viewportDims: state.viewportDims
 })
 
-const mapDispatchToProps = dispatch => ({
-	updateSettings: settingsObj => dispatch({ type: 'UPDATE_SETTINGS', settings: settingsObj })
-})
+const mapDispatchToProps = dispatch => ({})
 
 export default connect(
 	mapStateToProps,
