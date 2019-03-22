@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import '../styles/App.css'
 import Canvas from './Canvas'
 import ShapeContainer from '../containers/ShapeContainer'
-import SettingsForm from '../components/SettingsForm'
-import RadialControl from '../components/RadialControl'
+import SettingsForm from './SettingsForm'
+import RadialControl from './RadialControl'
 
 class App extends Component {
 	constructor(props) {
@@ -36,7 +36,7 @@ class App extends Component {
 						<ShapeContainer />
 						{/* <Canvas /> */}
 					</div>
-					<RadialControl radius={100}/>
+					<RadialControl radius={150}/>
 					<SettingsForm />
 				</header>
 			</div>

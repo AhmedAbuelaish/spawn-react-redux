@@ -34,7 +34,7 @@ class RadialControl extends Component {
 			let prevIndex = currentIndex - 1
 			let nextIndex = currentIndex + 1
 			let key = Math.floor((currentIndex - 1) / 2) + '' + ((currentIndex - 1) % 2)
-			let pad = 5
+			let pad = 10
 			return {
 				[key]: {
 					min: degToRad(boundArr[prevIndex] + pad),
