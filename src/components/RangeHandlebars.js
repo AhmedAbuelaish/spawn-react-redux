@@ -19,18 +19,17 @@ class RangeHandlebars extends Component {
 			dragging: false,
 			id: this.props.id
 		}
-		// Initialize deg and rad angles)
+		// Initialize deg and rad angles
 		// hardcoded center based on bottom left controller + 10px padding
 		// --- todo: make this flexible and based on position of parent getBoundingClientRect()
-		// calc min max based on the two adjacent handles
 		this.state = {
 			...this.state,
 			center: {
-				cx: 10 + this.props.radius,
+				cx: 10 + parseFloat(this.props.radius),
 				cy: -10 + this.props.viewportDims.height - this.props.radius
 			},
 			angle: {
-				deg: this.props.angle,
+				deg: parseFloat(this.props.angle),
 				rad: angles.degToRad(parseFloat(this.props.angle))
 			},
 			minMax: this.calcMinMax()
@@ -39,23 +38,37 @@ class RangeHandlebars extends Component {
 		this.state = {
 			...this.state,
 			pos: {
-				x: this.state.radius,
-				y: this.state.radius
+				x: parseFloat(this.state.radius),
+				y: parseFloat(this.state.radius)
 			}
 		}
 		// Bind mouse event functions
 		this.onMouseDown = this.onMouseDown.bind(this)
 		this.onMouseUp = this.onMouseUp.bind(this)
 		this.onMouseMove = this.onMouseMove.bind(this)
+		this.calcMinMax = this.calcMinMax.bind(this)
 		console.log(this.state)
 	}
+	// calculate min max based on the two adjacent handles
 	calcMinMax = () => {
 		let flatArr = arrays.flatten(this.state.angleRange)
-		let currentIndex = 2 * this.state.id[0] + this.state.id[1]
+		let currentIndex = 2 * parseFloat(this.state.id[0]) + parseFloat(this.state.id[1])
 		let maxIndex = flatArr.length - 1
 		let prevIndex = currentIndex === 0 ? maxIndex : currentIndex - 1
 		let nextIndex = currentIndex === maxIndex ? 0 : currentIndex + 1
 		let pad = 5
+		// console.log(
+		// 	'flatArr',
+		// 	flatArr,
+		// 	'currentIndex',
+		// 	currentIndex,
+		// 	'maxIndex',
+		// 	maxIndex,
+		// 	'prevIndex',
+		// 	prevIndex,
+		// 	'nextIndex',
+		// 	nextIndex
+		// )
 		return {
 			min: angles.degToRad(flatArr[prevIndex] + pad),
 			max: angles.degToRad(flatArr[nextIndex] - pad)
@@ -96,11 +109,12 @@ class RangeHandlebars extends Component {
 
 	onMouseMove = e => {
 		// console.log('move')
-		console.log(e)
 		if (!this.state.dragging) return
 		let newAngleInRad = Math.atan((e.pageY - this.state.center.cy) / (e.pageX - this.state.center.cx))
-		if (newAngleInRad < 0) {
-			newAngleInRad = 2 * Math.PI + newAngleInRad
+		if (e.pageX < this.state.center.cx && e.pageY < this.state.center.cy) {
+			newAngleInRad -= Math.PI
+		} else if (e.pageX < this.state.center.cx && e.pageY > this.state.center.cy) {
+			newAngleInRad += Math.PI
 		}
 		this.setState({
 			angle: {

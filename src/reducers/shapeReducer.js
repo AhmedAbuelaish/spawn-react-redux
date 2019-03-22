@@ -6,7 +6,7 @@ var fragment = require('../utils/fragment')
 const initialState = {
 	viewportDims: { width: window.innerWidth, height: window.innerHeight  },
 	settings: {
-		angleRange: [[-45,45],[70,100],[260,290]],
+		angleRange: [[-100,-70],[-45,45],[70,100]], // Range: -180 to 180
 		maxAngleRanges: 4,
 		minSize: 1,
 		multiplier: 130,
