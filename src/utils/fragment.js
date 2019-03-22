@@ -1,13 +1,13 @@
-var rs = require('./randomSpread')
-var angles = require('./angleFunctions')
-var arrays = require('./arrayFunctions')
+import { totalizeAngleRange, angleSpread, degToRad, radToDeg } from '../utils/angleFunctions'
+import flatten from '../utils/arrayFunctions'
+import randomSpread from './randomSpread'
 
 // ~~~~~~~~~~~ CREATE FRAGMENTED ARRAY ~~~~~~~~~~~~~~~//
 function createFragmentedArray(parentsArr, settings) {
 	var allChildrenArray = parentsArr.map((currentParent, index) => {
 		return distributeParentValue(currentParent, settings)
 	})
-	allChildrenArray = arrays.flatten(allChildrenArray)
+	allChildrenArray = flatten(allChildrenArray)
 	return allChildrenArray
 }
 
@@ -20,13 +20,13 @@ function distributeParentValue(parent, settings) {
 	let siblingCounter = 0
 
 	let minAngle = Math.atan(settings.minSize / myDistance)
-	let remainder = rs.randomSpread(parent.radius, settings.multiplier, settings.multiplierPrecision, 50, 2)
+	let remainder = randomSpread(parent.radius, settings.multiplier, settings.multiplierPrecision, 50, 2)
 
 	if (parent.radius <= settings.minSize || parent.id.length === 40) {
 		return currentChildrenArray
 	} else {
 		while (remainder >= settings.minSize) {
-			mySize = rs.randomSpread(remainder * Math.random(), settings.decay, settings.decayPrecision, 100, 2)
+			mySize = randomSpread(remainder * Math.random(), settings.decay, settings.decayPrecision, 100, 2)
 			// mySize = Math.trunc(remainder * Math.random() * 1000) / 1000
 			let tempAngle = Math.atan(mySize / myDistance)
 			remainder -= mySize
@@ -48,11 +48,11 @@ function distributeParentValue(parent, settings) {
 	}
 
 	// Spread Angle of children over angle range
-	let distributedChildrenArray = angles.angleSpread(
+	let distributedChildrenArray = angleSpread(
 		currentChildrenArray,
-		Math.abs(angles.radToDeg(myAngle)),
+		Math.abs(radToDeg(myAngle)),
 		settings.angleRange,
-		angles.radToDeg(parent.angle) % 360
+		radToDeg(parent.angle) % 360
 	)
 
 	let positionedChildrenArray = distributedChildrenArray.map((el, index) => {
@@ -65,4 +65,4 @@ function distributeParentValue(parent, settings) {
 	return positionedChildrenArray
 }
 
-module.exports = { createFragmentedArray }
+export default createFragmentedArray

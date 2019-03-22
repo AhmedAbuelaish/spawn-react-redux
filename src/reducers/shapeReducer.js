@@ -1,4 +1,4 @@
-var fragment = require('../utils/fragment')
+import createFragmentedArray from '../utils/fragment'
 
 // This reducer references/holds the main store
 // It modifies the main state of the app
@@ -41,7 +41,7 @@ const shapeReducer = (state = initialState, action) => {
 			return { ...state, nodes: newNodes, leaves: newLeaves }
 		case 'CREATE_NODES':
 			console.log(state.nodes.length)
-			newLeaves = fragment.createFragmentedArray(newLeaves, newSettings)
+			newLeaves = createFragmentedArray(newLeaves, newSettings)
 			newNodes = newNodes.concat(newLeaves)
 			return { ...state, nodes: newNodes, leaves: newLeaves }
 		case 'UPDATE_SETTINGS':

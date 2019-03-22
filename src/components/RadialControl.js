@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PieChart from 'react-minimal-pie-chart'
 import RangeHandlebars from './RangeHandlebars'
-
-var angles = require('../utils/angleFunctions')
-var arrays = require('../utils/arrayFunctions')
+import { totalizeAngleRange, angleSpread, degToRad, radToDeg } from '../utils/angleFunctions'
+import flatten from '../utils/arrayFunctions'
 
 class RadialControl extends Component {
 	constructor(props) {
@@ -23,25 +22,23 @@ class RadialControl extends Component {
 	}
 
 	handleFormChange = (value, targetProp, i) => {
-		console.log('input:', value, 'i', i)
 		this.setState({ [targetProp]: value })
-		console.log(this.state.angleRange, 'i', i)
 		this.setState({ minMax: this.calcAllMinMax() })
 	}
 
 	calcAllMinMax = () => {
-		let flatArr = arrays.flatten(this.state.angleRange)
-		let boundArr = arrays.flatten([-180, flatArr, 180])
+		let flatArr = flatten(this.state.angleRange)
+		let boundArr = flatten([-180, flatArr, 180])
 		let mmArr = boundArr.map((currentValue, currentIndex) => {
-			if (currentIndex === 0 || currentIndex === boundArr.length - 1) return
+			if (currentIndex === 0 || currentIndex === boundArr.length - 1) return {}
 			let prevIndex = currentIndex - 1
 			let nextIndex = currentIndex + 1
 			let key = Math.floor((currentIndex - 1) / 2) + '' + ((currentIndex - 1) % 2)
 			let pad = 5
 			return {
 				[key]: {
-					min: angles.degToRad(boundArr[prevIndex] + pad),
-					max: angles.degToRad(boundArr[nextIndex] - pad)
+					min: degToRad(boundArr[prevIndex] + pad),
+					max: degToRad(boundArr[nextIndex] - pad)
 				}
 			}
 		})
@@ -53,15 +50,14 @@ class RadialControl extends Component {
 		let initAngle = Math.min(...angleRanges[0])
 		let controllerRadius = this.state.radius
 		return (
-			<div className='radial-controller' style={{ border: '1px solid red' }}>
+			<div className='radial-controller'>
 				{angleRanges.map((currentRange, i) => {
 					return (
-						<div className='rangeHandlebars'>
+						<div className='rangeHandlebars' key={i}>
 							<RangeHandlebars
 								radius={controllerRadius}
 								angle={parseFloat(currentRange[0]) % 360}
 								minMax={this.state.minMax[i + '0']}
-								key={i + '0'}
 								id={i + '0'}
 								handleChange={this.handleFormChange}
 							/>
@@ -69,7 +65,6 @@ class RadialControl extends Component {
 								radius={controllerRadius}
 								angle={parseFloat(currentRange[1]) % 360}
 								minMax={this.state.minMax[i + '1']}
-								key={i + '1'}
 								id={i + '1'}
 								handleChange={this.handleFormChange}
 							/>
@@ -77,7 +72,7 @@ class RadialControl extends Component {
 					)
 				})}
 				<PieChart
-					data={arrays.flatten(
+					data={flatten(
 						angleRanges.map((currentRange, i, allRanges) => {
 							let nextRangeStart = 0
 							if (i >= allRanges.length - 1) {

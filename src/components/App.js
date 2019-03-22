@@ -33,11 +33,11 @@ class App extends Component {
 			<div className='App'>
 				<header className='App-header'>
 					<div className='stage'>
-						{/* <ShapeContainer /> */}
+						<ShapeContainer />
 						{/* <Canvas /> */}
 					</div>
-					<RadialControl radius={200}/>
-					{/* <SettingsForm /> */}
+					<RadialControl radius={100}/>
+					<SettingsForm />
 				</header>
 			</div>
 		)

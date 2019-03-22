@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons'
-var arrays = require('../utils/arrayFunctions')
-var angles = require('../utils/angleFunctions')
+import { totalizeAngleRange, angleSpread, degToRad, radToDeg } from '../utils/angleFunctions'
 
 class RangeHandlebars extends Component {
 	constructor(props) {
@@ -46,18 +45,9 @@ class RangeHandlebars extends Component {
 		this.fromRangeToAngle = this.fromRangeToAngle.bind(this)
 		this.fromAngleToRange = this.fromAngleToRange.bind(this)
 		this.updateStates = this.updateStates.bind(this)
-		console.log(
-			'angle',
-			this.state.angle.deg,
-			'min',
-			angles.radToDeg(this.state.minMax.min),
-			'max',
-			angles.radToDeg(this.state.minMax.max)
-		)
 	}
 
 	componentDidUpdate(props, state) {
-		// console.log('update')
 		if (this.state.dragging && !state.dragging) {
 			document.addEventListener('mousemove', this.onMouseMove)
 			document.addEventListener('mouseup', this.onMouseUp)
@@ -70,7 +60,7 @@ class RangeHandlebars extends Component {
 	fromRangeToAngle = () => {
 		return {
 			deg: parseFloat(this.props.angle),
-			rad: angles.degToRad(parseFloat(this.props.angle))
+			rad: degToRad(parseFloat(this.props.angle))
 		}
 	}
 
@@ -86,8 +76,6 @@ class RangeHandlebars extends Component {
 
 	// calculate relative position to the mouse and set dragging=true
 	onMouseDown = e => {
-		// console.log('down')
-		// console.log(e)
 		if (e.button !== 0) return
 		this.setState({
 			dragging: true
@@ -97,7 +85,6 @@ class RangeHandlebars extends Component {
 	}
 
 	onMouseUp = e => {
-		// console.log('up')
 		this.setState({ dragging: false, mouseQuad: 0 })
 		e.stopPropagation()
 		e.preventDefault()
@@ -105,7 +92,6 @@ class RangeHandlebars extends Component {
 	}
 
 	onMouseMove = e => {
-		// console.log('move')
 		if (!this.state.dragging) return
 		let deltaY = e.pageY - this.state.center.cy
 		let deltaX = e.pageX - this.state.center.cx
@@ -134,7 +120,7 @@ class RangeHandlebars extends Component {
 	updateStates = ang => {
 		this.setState({
 			angle: {
-				deg: angles.radToDeg(ang),
+				deg: radToDeg(ang),
 				rad: ang
 			}
 		})

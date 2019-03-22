@@ -17,4 +17,4 @@ function randomSpread(originalValue, percentOfOriginal, precision, spread, direc
 	return (percentOfOriginal / 100) * originalValue + (randomizer * range * (100 - precision)) / 100
 }
 
-module.exports = { randomSpread }
+export default randomSpread

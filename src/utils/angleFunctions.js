@@ -100,4 +100,4 @@ function degToRad(angle) {
 	return Math.round((angle * Math.PI * 100) / 180) / 100
 }
 
-module.exports = { totalizeAngleRange, angleSpread, degToRad, radToDeg }
+export { totalizeAngleRange, angleSpread, degToRad, radToDeg }
