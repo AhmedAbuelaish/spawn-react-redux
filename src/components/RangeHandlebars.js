@@ -53,25 +53,27 @@ class RangeHandlebars extends Component {
 	calcMinMax = () => {
 		let flatArr = arrays.flatten(this.state.angleRange)
 		let currentIndex = 2 * parseFloat(this.state.id[0]) + parseFloat(this.state.id[1])
-		let maxIndex = flatArr.length - 1
-		let prevIndex = currentIndex === 0 ? maxIndex : currentIndex - 1
-		let nextIndex = currentIndex === maxIndex ? 0 : currentIndex + 1
+		let prevIndex = currentIndex - 1
+		let nextIndex = currentIndex + 1
 		let pad = 5
-		// console.log(
-		// 	'flatArr',
-		// 	flatArr,
-		// 	'currentIndex',
-		// 	currentIndex,
-		// 	'maxIndex',
-		// 	maxIndex,
-		// 	'prevIndex',
-		// 	prevIndex,
-		// 	'nextIndex',
-		// 	nextIndex
-		// )
+		let boundArr = arrays.flatten([-180, flatArr, 180])
+		prevIndex++
+		nextIndex++
+		console.log(
+			'flatArr',
+			flatArr,
+			'currentIndex',
+			currentIndex,
+			'boundArr',
+			boundArr,
+			'prevIndex',
+			prevIndex,
+			'nextIndex',
+			nextIndex
+		)
 		return {
-			min: angles.degToRad(flatArr[prevIndex] + pad),
-			max: angles.degToRad(flatArr[nextIndex] - pad)
+			min: angles.degToRad(boundArr[prevIndex] + pad),
+			max: angles.degToRad(boundArr[nextIndex] - pad)
 		}
 	}
 	componentDidUpdate(props, state) {
@@ -101,7 +103,7 @@ class RangeHandlebars extends Component {
 
 	onMouseUp = e => {
 		// console.log('up')
-		this.setState({ dragging: false })
+		this.setState({ dragging: false, mouseQuad: 0 })
 		e.stopPropagation()
 		e.preventDefault()
 		// todo: trigger dispatch action here with settings updated with new angleRange
@@ -110,19 +112,39 @@ class RangeHandlebars extends Component {
 	onMouseMove = e => {
 		// console.log('move')
 		if (!this.state.dragging) return
-		let newAngleInRad = Math.atan((e.pageY - this.state.center.cy) / (e.pageX - this.state.center.cx))
-		if (e.pageX < this.state.center.cx && e.pageY < this.state.center.cy) {
+		let deltaY = e.pageY - this.state.center.cy
+		let deltaX = e.pageX - this.state.center.cx
+		let newAngleInRad = Math.atan(deltaY / deltaX)
+		if (deltaX < 0 && deltaY < 0) {
+			// Top left Quadrant
+			console.log(this.state.angle.deg)
 			newAngleInRad -= Math.PI
-		} else if (e.pageX < this.state.center.cx && e.pageY > this.state.center.cy) {
+			console.log(angles.radToDeg(newAngleInRad))
+		} else if (deltaX < 0 && deltaY > 0) {
+			// Bottom left Quadrant
+			console.log(this.state.angle.deg)
 			newAngleInRad += Math.PI
+			console.log(angles.radToDeg(newAngleInRad))
 		}
+
+		if (newAngleInRad <= this.state.minMax.min) {
+			newAngleInRad = this.state.minMax.min
+		}
+		if (newAngleInRad >= this.state.minMax.max) {
+			newAngleInRad = this.state.minMax.max
+		}
+
+		if (Math.abs(this.state.angle.rad - newAngleInRad) > Math.PI / 4) {
+			newAngleInRad = this.state.angle.rad
+		}
+
 		this.setState({
 			angle: {
 				deg: angles.radToDeg(newAngleInRad),
 				rad: newAngleInRad
 			}
 		})
-		console.log('angle', this.state.angle)
+		// console.log('angle', this.state.angle)
 		e.stopPropagation()
 		e.preventDefault()
 	}
