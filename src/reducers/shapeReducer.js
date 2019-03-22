@@ -1,4 +1,4 @@
-var fragment = require('../utils/fragment')
+import createFragmentedArray from '../utils/fragment'
 
 // This reducer references/holds the main store
 // It modifies the main state of the app
@@ -6,7 +6,8 @@ var fragment = require('../utils/fragment')
 const initialState = {
 	viewportDims: { width: window.innerWidth, height: window.innerHeight  },
 	settings: {
-		angleRange: [[-45,45],[140,180]],
+		angleRange: [[-100,-70],[-45,45],[70,100]], // Range: -180 to 180
+		maxAngleRanges: 4,
 		minSize: 1,
 		multiplier: 130,
 		multiplierPrecision: 90, // Higher Levels, precision -> 100%
@@ -40,7 +41,7 @@ const shapeReducer = (state = initialState, action) => {
 			return { ...state, nodes: newNodes, leaves: newLeaves }
 		case 'CREATE_NODES':
 			console.log(state.nodes.length)
-			newLeaves = fragment.createFragmentedArray(newLeaves, newSettings)
+			newLeaves = createFragmentedArray(newLeaves, newSettings)
 			newNodes = newNodes.concat(newLeaves)
 			return { ...state, nodes: newNodes, leaves: newLeaves }
 		case 'UPDATE_SETTINGS':
@@ -49,7 +50,6 @@ const shapeReducer = (state = initialState, action) => {
 			return { ...state, settings: newSettings }
 		case 'UPDATE_VIEWPORT':
 			newViewportDims = action.viewportDims
-			console.log(newViewportDims)
 			return { ...state, viewportDims: newViewportDims }
 		default:
 			return state

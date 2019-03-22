@@ -10,22 +10,31 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-end;
-	font-size: calc(10px + 2vmin);
+	font-size: calc(10px + 1vmin);
 	color: white;
+}
+
+.radial-controller {
+	position: absolute;
+	margin: 10px;
+	bottom: 0vh;
+	left: 0vw;
+}
+
+.settings-controller {
+	position: absolute;
+	margin: 10px;
+	bottom: 0vh;
+	right: 0vw;
+	width: 40%;
 }
 
 .settings-form {
 	display: flex;
 	flex-direction: column;
-	min-width: 20vw;
 	height: auto;
-	margin: 20px;
-	position: absolute;
-	left: 70vw;
-	top: 95vh;
-	transform: translate(0%, -100%);
-	background-color: rgba(0,0,0,0.5);
-	border: 1px solid rgba(0,0,0,0.5);
+	background-color: rgba(0, 0, 0, 0.5);
+	border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .settings-form * {
@@ -42,7 +51,7 @@
 
 .controller-label {
 	background: none;
-	width:35%;
+	width: 35%;
 	border: none;
 	font-size: 1.2rem;
 	font: bold;
@@ -51,7 +60,7 @@
 
 .text-fields {
 	background: none;
-	width:10%;
+	width: 10%;
 	border: none;
 	font-size: 1.2rem;
 	font: bold;
@@ -60,7 +69,7 @@
 
 .sliders {
 	-webkit-appearance: none;
-	width:55%;
+	width: 55%;
 	height: 5px;
 	border-radius: 5px;
 	background: white;
@@ -72,7 +81,7 @@
 
 .slidersHalf {
 	-webkit-appearance: none;
-	width:25%;
+	width: 25%;
 	height: 5px;
 	border-radius: 5px;
 	background: white;
@@ -82,7 +91,8 @@
 	transition: opacity 0.2s;
 }
 
-.sliders::-webkit-slider-thumb, .slidersHalf::-webkit-slider-thumb{
+.sliders::-webkit-slider-thumb,
+.slidersHalf::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	appearance: none;
 	width: 15px;
@@ -92,10 +102,25 @@
 	cursor: pointer;
 }
 
-.sliders::-moz-range-thumb, .slidersHalf::-webkit-slider-thumb{
+.sliders::-moz-range-thumb,
+.slidersHalf::-webkit-slider-thumb {
 	width: 15px;
 	height: 15px;
 	border-radius: 50%;
 	background: white;
 	cursor: pointer;
+}
+
+.handlebars {
+	background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.15), rgba(256, 256, 256, 0.3));
+	color: rgba(256, 256, 256, 0.15);
+	-webkit-transition: color 0.5s ease-out;
+	-moz-transition: color 0.5s ease-out;
+	-o-transition: color 0.5s ease-out;
+	transition: color 0.5s ease-out;
+}
+
+.handlebarshover {
+	background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.3), rgba(256, 256, 256, 0.5));
+	color: rgba(256, 256, 256, 1);
 }

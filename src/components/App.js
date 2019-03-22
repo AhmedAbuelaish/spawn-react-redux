@@ -10,8 +10,8 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 		this.state = this.props.viewportDims
-		// this.state = { width: window.innerWidth, height: window.innerHeight }
 		this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+		console.log('viewport',this.state)
 	}
 
 	componentDidMount() {
@@ -32,12 +32,12 @@ class App extends Component {
 		return (
 			<div className='App'>
 				<header className='App-header'>
-					<div>
-						{/* <ShapeContainer /> */}
-						{/* <SettingsForm /> */}
+					<div className='stage'>
+						<ShapeContainer />
 						{/* <Canvas /> */}
-						<RadialControl />
 					</div>
+					<RadialControl radius={100}/>
+					<SettingsForm />
 				</header>
 			</div>
 		)
