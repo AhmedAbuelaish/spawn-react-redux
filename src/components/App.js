@@ -36,7 +36,7 @@ class App extends Component {
 						<ShapeContainer />
 						{/* <Canvas /> */}
 					</div>
-					<RadialControl radius={150}/>
+					<RadialControl radius={0.08*this.state.width}/>
 					<SettingsForm />
 				</header>
 			</div>

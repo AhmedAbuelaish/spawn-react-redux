@@ -111,7 +111,7 @@ class RadialControl extends Component {
 }
 
 const mapStateToProps = state => ({
-	settings: state.settings
+	settings: state.settings,
 })
 
 const mapDispatchToProps = dispatch => ({
