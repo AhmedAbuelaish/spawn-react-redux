@@ -14,6 +14,13 @@
 	color: white;
 }
 
+.stage {
+	-webkit-transition: all 0.2s ease-out;
+	-moz-transition: all 0.2s ease-out;
+	-o-transition: all 0.2s ease-out;
+	transition: all 0.2s ease-out;
+}
+
 .radial-controller {
 	position: absolute;
 	margin: 10px;

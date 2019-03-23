@@ -1,5 +1,5 @@
 import { totalizeAngleRange, angleSpread, degToRad, radToDeg } from '../utils/angleFunctions'
-import flatten from '../utils/arrayFunctions'
+import { flatten } from '../utils/arrayFunctions'
 import randomSpread from './randomSpread'
 
 // ~~~~~~~~~~~ CREATE FRAGMENTED ARRAY ~~~~~~~~~~~~~~~//
