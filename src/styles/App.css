@@ -15,10 +15,10 @@
 }
 
 .stage {
-	-webkit-transition: all 0.2s ease-out;
+	/* -webkit-transition: all 0.2s ease-out;
 	-moz-transition: all 0.2s ease-out;
 	-o-transition: all 0.2s ease-out;
-	transition: all 0.2s ease-out;
+	transition: all 0.2s ease-out; */
 }
 
 .radial-controller {
@@ -34,6 +34,7 @@
 	bottom: 0vh;
 	right: 0vw;
 	width: 40%;
+	max-width: 500px;
 }
 
 .settings-form {

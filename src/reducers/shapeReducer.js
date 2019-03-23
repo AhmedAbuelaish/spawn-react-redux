@@ -26,7 +26,7 @@ const shapeReducer = (state = initialState, action) => {
 	var newSettings = { ...state.settings }
 	var newViewportDims = { ...state.viewportDims }
 	var newStage = state.stage
-	console.log('newStage', newStage)
+	// console.log('newStage', newStage)
 	switch (action.type) {
 		case 'RESET':
 			var defaultStage = { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 1 }
@@ -44,10 +44,10 @@ const shapeReducer = (state = initialState, action) => {
 			newLeaves = newNodes
 			return { ...state, nodes: newNodes, leaves: newLeaves }
 		case 'CREATE_NODES':
-			console.log(state.nodes.length)
+			// console.log(state.nodes.length)
 			newLeaves = createFragmentedArray(newLeaves, newSettings)
 			newStage = calcNewZoom(newLeaves, state.stage, state.viewportDims)
-			console.log('newStage', newStage)
+			// console.log('newStage', newStage)
 			newNodes = newNodes.concat(newLeaves)
 			return { ...state, nodes: newNodes, leaves: newLeaves, stage: newStage }
 		case 'UPDATE_SETTINGS':

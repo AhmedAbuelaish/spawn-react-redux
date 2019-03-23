@@ -53,15 +53,6 @@ class SettingsForm extends Component {
 					onSubmit={e => {
 						this.handleFormSubmission(e)
 					}}>
-					<DoubleInput
-						propName={'angleRange'}
-						propLabel={'Angle Range'}
-						propValue={this.state.angleRange[0]}
-						propMin={-360}
-						propMax={360}
-						fieldChange={this.handleFormChange}
-						formSubmit={this.handleFormSubmission}
-					/>
 					<InputField
 						propName={'minSize'}
 						propLabel={'Min Size'}

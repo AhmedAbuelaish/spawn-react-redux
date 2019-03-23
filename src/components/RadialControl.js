@@ -15,10 +15,12 @@ class RadialControl extends Component {
 		}
 		this.state = {
 			...this.state,
-			minMax: this.calcAllMinMax()
+			minMax: this.calcAllMinMax(),
+			pad: 10
 		}
 		this.handleFormChange = this.handleFormChange.bind(this)
 		this.calcAllMinMax = this.calcAllMinMax.bind(this)
+		this.createPieData = this.createPieData.bind(this)
 	}
 
 	handleFormChange = (value, targetProp, i) => {
@@ -34,16 +36,39 @@ class RadialControl extends Component {
 			let prevIndex = currentIndex - 1
 			let nextIndex = currentIndex + 1
 			let key = Math.floor((currentIndex - 1) / 2) + '' + ((currentIndex - 1) % 2)
-			let pad = 10
 			return {
 				[key]: {
-					min: degToRad(boundArr[prevIndex] + pad),
-					max: degToRad(boundArr[nextIndex] - pad)
+					min: degToRad(boundArr[prevIndex] + this.state.pad),
+					max: degToRad(boundArr[nextIndex] - this.state.pad)
 				}
 			}
 		})
 		return Object.assign({}, ...mmArr)
 	}
+
+	createPieData = (arr, initial) => {
+		return flatten(
+		arr.map((currentRange, i, allRanges) => {
+			let nextRangeStart = 0
+			if (i >= allRanges.length - 1) {
+				nextRangeStart = initial + 360
+			} else {
+				nextRangeStart = allRanges[i + 1][0]
+			}
+			let sectionData = {
+				title: `${i}`,
+				value: (parseFloat(currentRange[1]) % 360) - (parseFloat(currentRange[0]) % 360),
+				color: `rgba(210, 77, 87, 0.7)`
+			}
+			let emptyValue = nextRangeStart - (parseFloat(currentRange[1]) % 360)
+			let emptySectionData = {
+				title: `blank${i}`,
+				value: emptyValue,
+				color: emptyValue <= this.state.pad ? `rgba(255,255,255,0.8)` : `rgba(0,0,0,0.2)`,
+			}
+			return [sectionData, emptySectionData]
+		})
+	)}
 
 	render() {
 		let angleRanges = this.state.angleRange
@@ -72,32 +97,13 @@ class RadialControl extends Component {
 					)
 				})}
 				<PieChart
-					data={flatten(
-						angleRanges.map((currentRange, i, allRanges) => {
-							let nextRangeStart = 0
-							if (i >= allRanges.length - 1) {
-								nextRangeStart = initAngle + 360
-							} else {
-								nextRangeStart = allRanges[i + 1][0]
-							}
-							let sectionData = {
-								title: `${i}`,
-								value: (parseFloat(currentRange[1]) % 360) - (parseFloat(currentRange[0]) % 360),
-								color: `rgba(210, 77, 87, 0.7)`
-							}
-							let emptySectionData = {
-								title: `blank${i}`,
-								value: nextRangeStart - (parseFloat(currentRange[1]) % 360),
-								color: `rgba(0,0,0,0.2)`
-							}
-							return [sectionData, emptySectionData]
-						})
-					)}
-					style={{ width: `${controllerRadius * 2}px` }}
+					data={this.createPieData(angleRanges, initAngle)}
+					style={{ width: `${controllerRadius * 2}px`}}
+					segmentsStyle={{ transition: 'stroke .3s' }}
 					startAngle={parseFloat(angleRanges[0][0]) % 360}
 					totalValue={360}
-					lineWidth={45}
-					radius={40}
+					lineWidth={42}
+					radius={42}
 				/>
 			</div>
 		)
