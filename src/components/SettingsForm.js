@@ -35,6 +35,9 @@ class SettingsForm extends Component {
 		setTimeout(() => {
 			clearInterval(intId)
 		}, 10000)
+		// for (let i=0;i<1000;i++){
+		// 	this.handleCreateShape()
+		// }
 	}
 
 	plantSeed = () => {

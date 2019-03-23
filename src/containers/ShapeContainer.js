@@ -11,6 +11,9 @@ class ShapeContainer extends Component {
 			console.log('cleared, final state:', this.props.nodes)
 			clearInterval(intId)
 		}, 1000)
+		// for (let i=0;i<1000;i++){
+		// 	this.handleCreateShape()
+		// }
 	}
 
 	handlePlantSeed = () => {
