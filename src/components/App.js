@@ -32,7 +32,7 @@ class App extends Component {
 		return (
 			<div className='App'>
 				<header className='App-header'>
-					<div className='stage'>
+					<div>
 						<ShapeContainer />
 						{/* <Canvas /> */}
 					</div>

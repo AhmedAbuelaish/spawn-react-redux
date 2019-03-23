@@ -22,15 +22,17 @@ class ShapeContainer extends Component {
 	}
 
 	render() {
+		console.log('zoom', this.props.stage.zoom)
 		return (
 			<div
+				className='stage'
 				style={{
 					position: 'relative',
 					left: 0,
 					top: 0,
 					width: this.props.viewportDims.width,
 					height: this.props.viewportDims.height,
-					transform: `scale(1)`,
+					transform: `scale(${this.props.stage.zoom})`
 				}}>
 				{this.props.nodes.map((currentShape, i) => {
 					const styles = {
@@ -55,7 +57,7 @@ const mapStateToProps = state => ({
 	settings: state.settings,
 	nodes: state.nodes,
 	leaves: state.leaves,
-	zoom: state.zoom
+	stage: state.stage
 })
 
 const mapDispatchToProps = dispatch => ({
