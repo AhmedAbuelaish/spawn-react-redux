@@ -12,8 +12,8 @@ const initialState = {
 		maxAngleRanges: 4,
 		minSize: 1,
 		multiplier: 130,
-		multiplierPrecision: 90, // Higher Levels, precision -> 100%
-		decay: 80,
+		multiplierPrecision: 40, // Higher Levels, precision -> 100%
+		decay: 90,
 		decayPrecision: 40 // Higher Levels, precision -> 100%
 	},
 	nodes: [],
@@ -48,7 +48,8 @@ const shapeReducer = (state = initialState, action) => {
 			newLeaves = createFragmentedArray(newLeaves, newSettings)
 			newStage = calcNewZoom(newLeaves, state.stage, state.viewportDims)
 			// console.log('newStage', newStage)
-			newNodes = newNodes.concat(newLeaves)
+			// newNodes = newNodes.concat(newLeaves)
+			Array.prototype.push.apply(newNodes, newLeaves)
 			return { ...state, nodes: newNodes, leaves: newLeaves, stage: newStage }
 		case 'UPDATE_SETTINGS':
 			newSettings = action.settings

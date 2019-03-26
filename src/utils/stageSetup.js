@@ -8,7 +8,7 @@ function calcNewZoom(leaves, stage, viewport) {
 	let minX = Math.min(...allX, stage.x.min)
 	let maxY = Math.max(...allY, stage.y.max)
 	let minY = Math.min(...allY, stage.y.min)
-
+	
 	let deltaX = Math.max(Math.abs(minX), maxX - stage.x.max)
 	let deltaY = Math.max(Math.abs(minY), maxY - stage.y.max)
 

@@ -1,5 +1,5 @@
-import { totalizeAngleRange, angleSpread, degToRad, radToDeg } from '../utils/angleFunctions'
-import { flatten } from '../utils/arrayFunctions'
+import { totalizeAngleRange, angleSpread, degToRad, radToDeg } from './angleFunctions'
+import { flatten } from './arrayFunctions'
 import randomSpread from './randomSpread'
 
 // ~~~~~~~~~~~ CREATE FRAGMENTED ARRAY ~~~~~~~~~~~~~~~//
@@ -66,3 +66,46 @@ function distributeParentValue(parent, settings) {
 }
 
 export default createFragmentedArray
+
+window.offlineTest = offlineTest
+function offlineTest() {
+	let testRoot = [
+		{
+			id: 0,
+			radius: 200,
+			coordX: 900 / 2,
+			coordY: 900 / 2,
+			angle: 0
+		}
+	]
+
+	let testSettings = {
+		angleRange: [[-100, -70], [-45, 45], [70, 100]], // Range: -180 to 180
+		maxAngleRanges: 4,
+		minSize: 1,
+		multiplier: 130,
+		multiplierPrecision: 40, // Higher Levels, precision -> 100%
+		decay: 90,
+		decayPrecision: 40 // Higher Levels, precision -> 100%
+	}
+	let newNodes = testRoot
+	let newLeaves = newNodes
+	console.time('fragArray')
+	for (var i = 0; i < 50; i++) {
+		newLeaves = createFragmentedArray(newLeaves, testSettings)
+		Array.prototype.push.apply(newNodes, newLeaves)
+		// console.log('nodes',newNodes)
+		// console.log('leaves',newLeaves)
+		if(newLeaves.length===0 || newLeaves.length>20000)break
+	}
+	console.timeEnd('fragArray')
+	console.log(newNodes.length)
+	window.newNodes=newNodes
+	// const intId = setInterval(() => {
+	// 	let result = createFragmentedArray(testLeaves,testSettings)
+	// 	console.log(result)
+	// }, 50)
+	// setTimeout(() => {
+	// 	clearInterval(intId)
+	// }, 10000)
+}
