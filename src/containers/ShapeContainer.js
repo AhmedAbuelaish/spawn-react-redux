@@ -6,7 +6,7 @@ class ShapeContainer extends Component {
 		this.handlePlantSeed()
 		const intId = setInterval(() => {
 			this.handleCreateShape()
-		}, 50)
+		}, 100)
 		setTimeout(() => {
 			console.log('cleared, final state:', this.props.nodes)
 			clearInterval(intId)
@@ -46,7 +46,8 @@ class ShapeContainer extends Component {
 						borderRadius: '50%',
 						background: 'radial-gradient(rgba(210, 77, 87, 0.1),rgba(210, 77, 87, 0.2) , rgba(210, 77, 87, 0.8))',
 						position: 'absolute',
-						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`
+						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`,
+						transitionDelay: '1s'
 					}
 					return <div style={styles} key={i} />
 				})}
