@@ -6,14 +6,11 @@ class ShapeContainer extends Component {
 		this.handlePlantSeed()
 		const intId = setInterval(() => {
 			this.handleCreateShape()
-		}, 100)
+		}, 50)
 		setTimeout(() => {
 			console.log('cleared, final state:', this.props.nodes)
 			clearInterval(intId)
 		}, 1000)
-		// for (let i=0;i<1000;i++){
-		// 	this.handleCreateShape()
-		// }
 	}
 
 	handlePlantSeed = () => {
@@ -46,8 +43,7 @@ class ShapeContainer extends Component {
 						borderRadius: '50%',
 						background: 'radial-gradient(rgba(210, 77, 87, 0.1),rgba(210, 77, 87, 0.2) , rgba(210, 77, 87, 0.8))',
 						position: 'absolute',
-						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`,
-						transitionDelay: '1s'
+						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`
 					}
 					return <div style={styles} key={i} />
 				})}
