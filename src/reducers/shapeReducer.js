@@ -19,10 +19,11 @@ const initialState = {
 	nodes: [],
 	leaves: [],
 	obstacles: [
-		[{ x: 0, y: 0 }, { x: 100, y: 0 }, { x: 100, y: 100 }, { x: 0, y: 100 }],
-		[{ x: 500, y: 500 }, { x: 600, y: 500 }, { x: 600, y: 600 }, { x: 500, y: 600 }]
-	]
+		[{ x: 0, y: 0 }, { x: 1150, y: 0 }, { x: 1150, y: 50 }, { x: 0, y: 50 }],
+		[{ x: 1150, y: 200 }, { x: 1200, y: 200 }, { x: 1200, y: 600 }, { x: 1150, y: 600 }]
+	] // Draw obstacles clockwise
 }
+
 
 const shapeReducer = (state = initialState, action) => {
 	var newNodes = state.nodes.slice()
@@ -42,7 +43,8 @@ const shapeReducer = (state = initialState, action) => {
 					radius: 200,
 					coordX: state.viewportDims.width / 2,
 					coordY: state.viewportDims.height / 2,
-					angle: 90
+					angle: 0,
+					color: '210, 77, 87' // rgb values
 				}
 			]
 			newLeaves = newNodes

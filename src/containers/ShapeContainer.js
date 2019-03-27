@@ -39,7 +39,7 @@ class ShapeContainer extends Component {
 						left: currentShape.coordX,
 						top: currentShape.coordY,
 						borderRadius: '50%',
-						background: 'radial-gradient(rgba(210, 77, 87, 0.1),rgba(210, 77, 87, 0.2) , rgba(210, 77, 87, 0.8))',
+						background: `radial-gradient(rgba(${currentShape.color}, 0.1),rgba(${currentShape.color}, 0.2) , rgba(${currentShape.color}, 0.8))`,
 						position: 'absolute',
 						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`
 					}

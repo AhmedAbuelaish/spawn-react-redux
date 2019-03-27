@@ -39,7 +39,8 @@ function distributeParentValue(parent, settings) {
 					distance: myDistance,
 					coordX: parent.coordX,
 					coordY: parent.coordY,
-					angle: myAngle
+					angle: myAngle,
+					color: '210, 77, 87' // rgb values
 				})
 				siblingCounter += 1
 				myAngle += tempAngle // Setup for next center

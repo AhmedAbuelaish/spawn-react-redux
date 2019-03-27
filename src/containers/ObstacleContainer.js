@@ -8,22 +8,20 @@ class ObstacleContainer extends Component {
 		return (
 			<div
 				style={{
-					position: 'relative',
+					position: 'absolute',
 					left: 0,
 					top: 0,
 					width: this.props.viewportDims.width,
 					height: this.props.viewportDims.height
 				}}>
-				{this.props.nodes.map((currentObstacle, i) => {
+				{this.props.obstacles.map((currentObstacle, i) => {
 					const styles = {
-						width: currentObstacle.radius * 2,
-						height: currentObstacle.radius * 2,
-						left: currentObstacle.coordX,
-						top: currentObstacle.coordY,
-						borderRadius: '50%',
-						background: 'radial-gradient(rgba(210, 77, 87, 0.1),rgba(210, 77, 87, 0.2) , rgba(210, 77, 87, 0.8))',
-						position: 'absolute',
-						transform: `translate(-${currentObstacle.radius}px, -${currentObstacle.radius}px)`
+						width: currentObstacle[2].x-currentObstacle[0].x,
+						height: currentObstacle[2].y-currentObstacle[0].y,
+						left: currentObstacle[0].x,
+						top: currentObstacle[0].y,
+						background: 'black',
+						position: 'absolute'
 					}
 					return <div style={styles} key={i} />
 				})}
@@ -35,8 +33,7 @@ class ObstacleContainer extends Component {
 const mapStateToProps = state => ({
 	viewportDims: state.viewportDims,
 	settings: state.settings,
-	nodes: state.nodes,
-	leaves: state.leaves,
+	obstacles: state.obstacles,
 	stage: state.stage
 })
 
