@@ -38,7 +38,7 @@ const shapeReducer = (state = initialState, action) => {
 					radius: 200,
 					coordX: state.viewportDims.width / 2,
 					coordY: state.viewportDims.height / 2,
-					angle: 0
+					angle: 90
 				}
 			]
 			newLeaves = newNodes

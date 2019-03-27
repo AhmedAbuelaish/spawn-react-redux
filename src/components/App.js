@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import '../styles/App.css'
-import Canvas from './Canvas'
+import Canvas from '../containers/Canvas'
 import ShapeContainer from '../containers/ShapeContainer'
 import SettingsForm from './SettingsForm'
 import RadialControl from './RadialControl'
@@ -11,7 +11,7 @@ class App extends Component {
 		super(props)
 		this.state = this.props.viewportDims
 		this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
-		console.log('viewport',this.state)
+		console.log('viewport', this.state)
 	}
 
 	componentDidMount() {
@@ -32,10 +32,8 @@ class App extends Component {
 		return (
 			<div className='App'>
 				<header className='App-header'>
-					<div>
-						<ShapeContainer />
-						{/* <Canvas /> */}
-					</div>
+					<ShapeContainer />
+					{/* <Canvas /> */}
 					<RadialControl radius={0.08*this.state.width}/>
 					<SettingsForm />
 				</header>
