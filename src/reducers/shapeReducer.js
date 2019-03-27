@@ -17,7 +17,11 @@ const initialState = {
 		decayPrecision: 40 // Higher Levels, precision -> 100%
 	},
 	nodes: [],
-	leaves: []
+	leaves: [],
+	obstacles: [
+		[{ x: 0, y: 0 }, { x: 100, y: 0 }, { x: 100, y: 100 }, { x: 0, y: 100 }],
+		[{ x: 500, y: 500 }, { x: 600, y: 500 }, { x: 600, y: 600 }, { x: 500, y: 600 }]
+	]
 }
 
 const shapeReducer = (state = initialState, action) => {
@@ -30,7 +34,7 @@ const shapeReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'RESET':
 			var defaultStage = { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 1 }
-			return { ...state, nodes: [], leaves: [] ,stage:defaultStage}
+			return { ...state, nodes: [], leaves: [], stage: defaultStage }
 		case 'CREATE_ROOT':
 			newNodes = [
 				{

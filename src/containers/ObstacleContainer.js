@@ -1,25 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-class ShapeContainer extends Component {
-	componentDidMount() {
-		this.handlePlantSeed()
-		const intId = setInterval(() => {
-			this.handleCreateShape()
-		}, 50)
-		setTimeout(() => {
-			console.log('cleared, final state:', this.props.nodes)
-			clearInterval(intId)
-		}, 1000)
-	}
-
-	handlePlantSeed = () => {
-		this.props.createRoot()
-	}
-
-	handleCreateShape = () => {
-		this.props.createNodes()
-	}
+class ObstacleContainer extends Component {
 
 	render() {
 		console.log('zoom', this.props.stage.zoom)
@@ -68,4 +50,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(ShapeContainer)
+)(ObstacleContainer)
