@@ -7,25 +7,23 @@ class ObstacleContainer extends Component {
 		console.log('zoom', this.props.stage.zoom)
 		return (
 			<div
-				className='stage'
 				style={{
 					position: 'relative',
 					left: 0,
 					top: 0,
 					width: this.props.viewportDims.width,
-					height: this.props.viewportDims.height,
-					transform: `scale(${this.props.stage.zoom})`
+					height: this.props.viewportDims.height
 				}}>
-				{this.props.nodes.map((currentShape, i) => {
+				{this.props.nodes.map((currentObstacle, i) => {
 					const styles = {
-						width: currentShape.radius * 2,
-						height: currentShape.radius * 2,
-						left: currentShape.coordX,
-						top: currentShape.coordY,
+						width: currentObstacle.radius * 2,
+						height: currentObstacle.radius * 2,
+						left: currentObstacle.coordX,
+						top: currentObstacle.coordY,
 						borderRadius: '50%',
 						background: 'radial-gradient(rgba(210, 77, 87, 0.1),rgba(210, 77, 87, 0.2) , rgba(210, 77, 87, 0.8))',
 						position: 'absolute',
-						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`
+						transform: `translate(-${currentObstacle.radius}px, -${currentObstacle.radius}px)`
 					}
 					return <div style={styles} key={i} />
 				})}
@@ -43,8 +41,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-	createRoot: () => dispatch({ type: 'CREATE_ROOT' }),
-	createNodes: () => dispatch({ type: 'CREATE_NODES' })
 })
 
 export default connect(
