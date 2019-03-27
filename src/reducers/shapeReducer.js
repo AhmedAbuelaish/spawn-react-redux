@@ -1,5 +1,6 @@
 import createFragmentedArray from '../utils/fragment'
-import { calcNewZoom } from '../utils/stageSetup'
+import calcNewZoom from '../utils/stageSetup'
+import doesCircleIntersectSegment from '../utils/collisions'
 
 // This reducer references/holds the main store
 // It modifies the main state of the app
@@ -12,15 +13,15 @@ const initialState = {
 		maxAngleRanges: 4,
 		minSize: 1,
 		multiplier: 130,
-		multiplierPrecision: 40, // Higher Levels, precision -> 100%
+		multiplierPrecision: 80, // Higher Levels, precision -> 100%
 		decay: 90,
 		decayPrecision: 40 // Higher Levels, precision -> 100%
 	},
 	nodes: [],
 	leaves: [],
 	obstacles: [
-		[{ x: 0, y: 0 }, { x: 1150, y: 0 }, { x: 1150, y: 50 }, { x: 0, y: 50 }],
-		[{ x: 1150, y: 200 }, { x: 1200, y: 200 }, { x: 1200, y: 600 }, { x: 1150, y: 600 }]
+		[{ x: 0, y: 0 }, { x: window.innerWidth, y: 0 }, { x: window.innerWidth, y: 50 }, { x: 0, y: 50 }],
+		[{ x: window.innerWidth-50, y: 200 }, { x: window.innerWidth, y: 200 }, { x: window.innerWidth, y: 600 }, { x: window.innerWidth-50, y: 600 }]
 	] // Draw obstacles clockwise
 }
 
@@ -40,11 +41,11 @@ const shapeReducer = (state = initialState, action) => {
 			newNodes = [
 				{
 					id: 0,
-					radius: 200,
+					radius: 150,
 					coordX: state.viewportDims.width / 2,
 					coordY: state.viewportDims.height / 2,
 					angle: 0,
-					color: '210, 77, 87' // rgb values
+					color: `210, ${150*20}, ${150*40}` // rgb values
 				}
 			]
 			newLeaves = newNodes
@@ -53,8 +54,7 @@ const shapeReducer = (state = initialState, action) => {
 			// console.log(state.nodes.length)
 			newLeaves = createFragmentedArray(newLeaves, newSettings)
 			newStage = calcNewZoom(newLeaves, state.stage, state.viewportDims)
-			// console.log('newStage', newStage)
-			// newNodes = newNodes.concat(newLeaves)
+			
 			Array.prototype.push.apply(newNodes, newLeaves)
 			return { ...state, nodes: newNodes, leaves: newLeaves, stage: newStage }
 		case 'UPDATE_SETTINGS':

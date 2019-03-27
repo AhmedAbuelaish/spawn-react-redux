@@ -40,7 +40,7 @@ function distributeParentValue(parent, settings) {
 					coordX: parent.coordX,
 					coordY: parent.coordY,
 					angle: myAngle,
-					color: '210, 77, 87' // rgb values
+					color: `210, ${mySize*20}, ${mySize*40}` // rgb values
 				})
 				siblingCounter += 1
 				myAngle += tempAngle // Setup for next center
@@ -67,6 +67,13 @@ function distributeParentValue(parent, settings) {
 }
 
 export default createFragmentedArray
+
+//
+//
+//
+//
+//
+// Offline Tests:
 
 window.offlineTest = offlineTest
 function offlineTest() {
@@ -97,11 +104,11 @@ function offlineTest() {
 		Array.prototype.push.apply(newNodes, newLeaves)
 		// console.log('nodes',newNodes)
 		// console.log('leaves',newLeaves)
-		if(newLeaves.length===0 || newLeaves.length>20000)break
+		if (newLeaves.length === 0 || newLeaves.length > 20000) break
 	}
 	console.timeEnd('fragArray')
 	console.log(newNodes.length)
-	window.newNodes=newNodes
+	window.newNodes = newNodes
 	// const intId = setInterval(() => {
 	// 	let result = createFragmentedArray(testLeaves,testSettings)
 	// 	console.log(result)

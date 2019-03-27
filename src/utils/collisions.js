@@ -1,12 +1,46 @@
+import { pluck } from '../utils/arrayFunctions'
+
+function doLeavesIntersectObstacles(leaves, obstacles) {
+	let leavX = pluck(leaves, 'coordX')
+    let leavY = pluck(leaves, 'coordY')
+    let leavR = pluck(leaves, 'radii')
+    
+    // let obstSegments = 
+
+	// let maxX = Math.max(...allX, stage.x.max)
+	// let minX = Math.min(...allX, stage.x.min)
+	// let maxY = Math.max(...allY, stage.y.max)
+	// let minY = Math.min(...allY, stage.y.min)
+
+	// let deltaX = Math.max(Math.abs(minX), maxX - stage.x.max)
+	// let deltaY = Math.max(Math.abs(minY), maxY - stage.y.max)
+
+	// let newStage = {
+	// 	x: {
+	// 		min: -deltaX,
+	// 		max: viewport.width + deltaX
+	// 	},
+	// 	y: {
+	// 		min: -deltaY,
+	// 		max: viewport.height + deltaY
+	// 	},
+	// 	zoom:
+	// 		Math.trunc((10000 * 0.9) / Math.max(1 + (2 * deltaX) / viewport.width, 1 + (2 * deltaY) / viewport.height)) /
+	// 		10000
+	// }
+
+	// return newStage
+}
+
 function doesCircleIntersectSegment(center, radius, vertex1, vertex2) {
 	// Check if vertices are in the circle, then check if distance is within radius
 	if (distanceBetweenPoints(center, vertex1) <= radius || distanceBetweenPoints(center, vertex2) <= radius) {
 		return true
-	} else if (distanceToSegment(center, vertex1, vertex2) <= radius){
-        return true   
-    } else {
-        return false
-    }
+	} else if (distanceToSegment(center, vertex1, vertex2) <= radius) {
+		return true
+	} else {
+		return false
+	}
 }
 
 function distanceBetweenPoints(point1, point2) {

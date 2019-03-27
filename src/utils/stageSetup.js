@@ -27,4 +27,4 @@ function calcNewZoom(leaves, stage, viewport) {
 	return newStage
 }
 
-export { calcNewZoom }
+export default calcNewZoom
