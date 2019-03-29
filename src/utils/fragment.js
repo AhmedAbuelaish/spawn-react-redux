@@ -15,7 +15,7 @@ function createFragmentedArray(parentsArr, settings) {
 function distributeParentValue(parent, settings) {
 	let mySize = 0
 	let myAngle = 0
-	let myDistance = parent.radius + 10 // Adjust this to move children off of circumferance
+	let myDistance = parent.radius + 5 // Adjust this to move children off of circumferance
 	let currentChildrenArray = []
 	let siblingCounter = 0
 
@@ -39,7 +39,8 @@ function distributeParentValue(parent, settings) {
 					distance: myDistance,
 					coordX: parent.coordX,
 					coordY: parent.coordY,
-					angle: myAngle
+					angle: myAngle,
+					color: `210, ${mySize*20}, ${mySize*40}` // rgb values
 				})
 				siblingCounter += 1
 				myAngle += tempAngle // Setup for next center
@@ -66,6 +67,13 @@ function distributeParentValue(parent, settings) {
 }
 
 export default createFragmentedArray
+
+//
+//
+//
+//
+//
+// Offline Tests:
 
 window.offlineTest = offlineTest
 function offlineTest() {
@@ -96,11 +104,11 @@ function offlineTest() {
 		Array.prototype.push.apply(newNodes, newLeaves)
 		// console.log('nodes',newNodes)
 		// console.log('leaves',newLeaves)
-		if(newLeaves.length===0 || newLeaves.length>20000)break
+		if (newLeaves.length === 0 || newLeaves.length > 20000) break
 	}
 	console.timeEnd('fragArray')
 	console.log(newNodes.length)
-	window.newNodes=newNodes
+	window.newNodes = newNodes
 	// const intId = setInterval(() => {
 	// 	let result = createFragmentedArray(testLeaves,testSettings)
 	// 	console.log(result)

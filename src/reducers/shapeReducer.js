@@ -1,5 +1,6 @@
 import createFragmentedArray from '../utils/fragment'
-import { calcNewZoom } from '../utils/stageSetup'
+import calcNewZoom from '../utils/stageSetup'
+import doLeavesIntersectObstacles from '../utils/collisions'
 
 // This reducer references/holds the main store
 // It modifies the main state of the app
@@ -10,15 +11,22 @@ const initialState = {
 	settings: {
 		angleRange: [[-100, -70], [-45, 45], [70, 100]], // Range: -180 to 180
 		maxAngleRanges: 4,
-		minSize: 1,
+		minSize: 4,
 		multiplier: 130,
-		multiplierPrecision: 40, // Higher Levels, precision -> 100%
+		multiplierPrecision: 80, // Higher Levels, precision -> 100%
 		decay: 90,
 		decayPrecision: 40 // Higher Levels, precision -> 100%
 	},
 	nodes: [],
-	leaves: []
+	leaves: [],
+	obstacles: [
+		[{ x: 0, y: 0 }, { x: window.innerWidth, y: 0 }, { x: window.innerWidth, y: 50 }, { x: 0, y: 50 }],
+		[{ x: window.innerWidth-400, y: 300 }, { x: window.innerWidth-300, y: 300 }, { x: window.innerWidth-300, y: 600 }, { x: window.innerWidth-400, y: 600 }],
+		[{ x: 0, y: window.innerHeight-300 }, { x: window.innerWidth, y: window.innerHeight-300 }, { x: window.innerWidth, y: window.innerHeight-250 }, { x: 0, y: window.innerHeight-250 }],
+		[{ x: 0, y: 300 }, { x: 50, y: 300 }, { x: 50, y: 600 }, { x: 0, y: 600 }],
+	] // Draw obstacles clockwise
 }
+
 
 const shapeReducer = (state = initialState, action) => {
 	var newNodes = state.nodes.slice()
@@ -26,34 +34,31 @@ const shapeReducer = (state = initialState, action) => {
 	var newSettings = { ...state.settings }
 	var newViewportDims = { ...state.viewportDims }
 	var newStage = state.stage
-	// console.log('newStage', newStage)
 	switch (action.type) {
 		case 'RESET':
 			var defaultStage = { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 1 }
-			return { ...state, nodes: [], leaves: [] ,stage:defaultStage}
+			return { ...state, nodes: [], leaves: [], stage: defaultStage }
 		case 'CREATE_ROOT':
 			newNodes = [
 				{
 					id: 0,
-					radius: 200,
+					radius: 150,
 					coordX: state.viewportDims.width / 2,
 					coordY: state.viewportDims.height / 2,
-					angle: 90
+					angle: 180,
+					color: `210, ${150*20}, ${150*40}` // rgb values
 				}
 			]
 			newLeaves = newNodes
 			return { ...state, nodes: newNodes, leaves: newLeaves }
 		case 'CREATE_NODES':
-			// console.log(state.nodes.length)
 			newLeaves = createFragmentedArray(newLeaves, newSettings)
 			newStage = calcNewZoom(newLeaves, state.stage, state.viewportDims)
-			// console.log('newStage', newStage)
-			// newNodes = newNodes.concat(newLeaves)
+			newLeaves = doLeavesIntersectObstacles(newLeaves, state.obstacles)
 			Array.prototype.push.apply(newNodes, newLeaves)
 			return { ...state, nodes: newNodes, leaves: newLeaves, stage: newStage }
 		case 'UPDATE_SETTINGS':
 			newSettings = action.settings
-			// console.log(newSettings)
 			return { ...state, settings: newSettings }
 		case 'UPDATE_VIEWPORT':
 			newViewportDims = action.viewportDims

@@ -5,6 +5,7 @@ import Canvas from '../containers/Canvas'
 import ShapeContainer from '../containers/ShapeContainer'
 import SettingsForm from './SettingsForm'
 import RadialControl from './RadialControl'
+import ObstacleContainer from '../containers/ObstacleContainer'
 
 class App extends Component {
 	constructor(props) {
@@ -32,9 +33,12 @@ class App extends Component {
 		return (
 			<div className='App'>
 				<header className='App-header'>
-					<ShapeContainer />
-					{/* <Canvas /> */}
-					<RadialControl radius={0.08*this.state.width}/>
+					<div className='stage' style={{ transform: `scale(${this.props.stage.zoom})`, position: 'relative' }}>
+						<ShapeContainer />
+						<ObstacleContainer />
+						{/* <Canvas /> */}
+					</div>
+					<RadialControl radius={0.08 * this.state.width} />
 					<SettingsForm />
 				</header>
 			</div>
@@ -43,7 +47,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-	viewportDims: state.viewportDims
+	viewportDims: state.viewportDims,
+	stage: state.stage
 })
 
 const mapDispatchToProps = dispatch => ({
