@@ -11,7 +11,8 @@ class RadialControl extends Component {
 		this.state = {
 			angleRange: this.props.settings.angleRange,
 			maxAngleRanges: this.props.settings.maxAngleRanges,
-			radius: this.props.radius
+			radius: this.props.radius,
+			rootAngle: this.props.settings.rootAngle
 		}
 		this.state = {
 			...this.state,
