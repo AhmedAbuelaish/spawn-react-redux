@@ -4,13 +4,12 @@ import { connect } from 'react-redux'
 class ShapeContainer extends Component {
 	componentDidMount() {
 		this.handlePlantSeed()
-		const intId = setInterval(() => {
-			this.handleCreateShape()
-		}, 50)
-		setTimeout(() => {
-			console.log('cleared, final state:', this.props.nodes)
-			clearInterval(intId)
-		}, 1000)
+		requestAnimationFrame(this.loopCreatAnimation)
+	}
+
+	loopCreatAnimation = (timestamp) => {
+		this.handleCreateShape()
+		requestAnimationFrame(this.loopCreatAnimation)
 	}
 
 	handlePlantSeed = () => {
@@ -39,7 +38,9 @@ class ShapeContainer extends Component {
 						left: currentShape.coordX,
 						top: currentShape.coordY,
 						borderRadius: '50%',
-						background: `radial-gradient(rgba(${currentShape.color}, 0.1),rgba(${currentShape.color}, 0.2) , rgba(${currentShape.color}, 0.8))`,
+						background: `radial-gradient(rgba(${currentShape.color}, 0.1),rgba(${currentShape.color}, 0.2) , rgba(${
+							currentShape.color
+						}, 0.8))`,
 						position: 'absolute',
 						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`
 					}
