@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+    - node_modules
+script:
+  - npm test
+  - npm run deploy
+deploy:
+  provider: pages
+  skip_cleanup: true
+  keep_history: true
+on:
+  branch: master
