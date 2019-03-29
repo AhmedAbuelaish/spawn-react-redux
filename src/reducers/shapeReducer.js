@@ -15,7 +15,8 @@ const initialState = {
 		multiplier: 130,
 		multiplierPrecision: 80, // Higher Levels, precision -> 100%
 		decay: 90,
-		decayPrecision: 40 // Higher Levels, precision -> 100%
+		decayPrecision: 40, // Higher Levels, precision -> 100%
+		rootAngle: 200
 	},
 	nodes: [],
 	leaves: [],
@@ -43,9 +44,9 @@ const shapeReducer = (state = initialState, action) => {
 				{
 					id: 0,
 					radius: 150,
-					coordX: state.viewportDims.width / 2,
-					coordY: state.viewportDims.height / 2,
-					angle: 180,
+					coordX: state.viewportDims.width *0.5,
+					coordY: state.viewportDims.height *0.5,
+					angle: state.settings.rootAngle,
 					color: `210, ${150*20}, ${150*40}` // rgb values
 				}
 			]
