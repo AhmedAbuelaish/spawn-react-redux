@@ -11,7 +11,7 @@ const initialState = {
 	settings: {
 		angleRange: [[-100, -70], [-45, 45], [70, 100]], // Range: -180 to 180
 		maxAngleRanges: 4,
-		minSize: 1,
+		minSize: 4,
 		multiplier: 130,
 		multiplierPrecision: 80, // Higher Levels, precision -> 100%
 		decay: 90,
@@ -21,7 +21,9 @@ const initialState = {
 	leaves: [],
 	obstacles: [
 		[{ x: 0, y: 0 }, { x: window.innerWidth, y: 0 }, { x: window.innerWidth, y: 50 }, { x: 0, y: 50 }],
-		[{ x: window.innerWidth-400, y: 200 }, { x: window.innerWidth-300, y: 200 }, { x: window.innerWidth-300, y: 600 }, { x: window.innerWidth-400, y: 600 }]
+		[{ x: window.innerWidth-400, y: 300 }, { x: window.innerWidth-300, y: 300 }, { x: window.innerWidth-300, y: 600 }, { x: window.innerWidth-400, y: 600 }],
+		[{ x: 0, y: window.innerHeight-300 }, { x: window.innerWidth, y: window.innerHeight-300 }, { x: window.innerWidth, y: window.innerHeight-250 }, { x: 0, y: window.innerHeight-250 }],
+		[{ x: 0, y: 300 }, { x: 50, y: 300 }, { x: 50, y: 600 }, { x: 0, y: 600 }],
 	] // Draw obstacles clockwise
 }
 
@@ -43,7 +45,7 @@ const shapeReducer = (state = initialState, action) => {
 					radius: 150,
 					coordX: state.viewportDims.width / 2,
 					coordY: state.viewportDims.height / 2,
-					angle: -45,
+					angle: 180,
 					color: `210, ${150*20}, ${150*40}` // rgb values
 				}
 			]
