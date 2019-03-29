@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 class ObstacleContainer extends Component {
 
 	render() {
-		console.log('zoom', this.props.stage.zoom)
+		// console.log('zoom', this.props.stage.zoom)
 		return (
 			<div
 				style={{

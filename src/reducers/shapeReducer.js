@@ -1,6 +1,6 @@
 import createFragmentedArray from '../utils/fragment'
 import calcNewZoom from '../utils/stageSetup'
-import doesCircleIntersectSegment from '../utils/collisions'
+import doLeavesIntersectObstacles from '../utils/collisions'
 
 // This reducer references/holds the main store
 // It modifies the main state of the app
@@ -21,7 +21,7 @@ const initialState = {
 	leaves: [],
 	obstacles: [
 		[{ x: 0, y: 0 }, { x: window.innerWidth, y: 0 }, { x: window.innerWidth, y: 50 }, { x: 0, y: 50 }],
-		[{ x: window.innerWidth-50, y: 200 }, { x: window.innerWidth, y: 200 }, { x: window.innerWidth, y: 600 }, { x: window.innerWidth-50, y: 600 }]
+		[{ x: window.innerWidth-400, y: 200 }, { x: window.innerWidth-300, y: 200 }, { x: window.innerWidth-300, y: 600 }, { x: window.innerWidth-400, y: 600 }]
 	] // Draw obstacles clockwise
 }
 
@@ -32,7 +32,6 @@ const shapeReducer = (state = initialState, action) => {
 	var newSettings = { ...state.settings }
 	var newViewportDims = { ...state.viewportDims }
 	var newStage = state.stage
-	// console.log('newStage', newStage)
 	switch (action.type) {
 		case 'RESET':
 			var defaultStage = { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 1 }
@@ -44,22 +43,20 @@ const shapeReducer = (state = initialState, action) => {
 					radius: 150,
 					coordX: state.viewportDims.width / 2,
 					coordY: state.viewportDims.height / 2,
-					angle: 0,
+					angle: -45,
 					color: `210, ${150*20}, ${150*40}` // rgb values
 				}
 			]
 			newLeaves = newNodes
 			return { ...state, nodes: newNodes, leaves: newLeaves }
 		case 'CREATE_NODES':
-			// console.log(state.nodes.length)
 			newLeaves = createFragmentedArray(newLeaves, newSettings)
 			newStage = calcNewZoom(newLeaves, state.stage, state.viewportDims)
-			
+			newLeaves = doLeavesIntersectObstacles(newLeaves, state.obstacles)
 			Array.prototype.push.apply(newNodes, newLeaves)
 			return { ...state, nodes: newNodes, leaves: newLeaves, stage: newStage }
 		case 'UPDATE_SETTINGS':
 			newSettings = action.settings
-			// console.log(newSettings)
 			return { ...state, settings: newSettings }
 		case 'UPDATE_VIEWPORT':
 			newViewportDims = action.viewportDims

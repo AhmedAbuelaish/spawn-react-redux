@@ -1,35 +1,36 @@
-import { pluck } from '../utils/arrayFunctions'
+import { flatten, pluck, multiPluck } from '../utils/arrayFunctions'
 
 function doLeavesIntersectObstacles(leaves, obstacles) {
-	let leavX = pluck(leaves, 'coordX')
-    let leavY = pluck(leaves, 'coordY')
-    let leavR = pluck(leaves, 'radii')
-    
-    // let obstSegments = 
+	let leavesXYR = multiPluck(leaves, ['coordX', 'coordY', 'radius'])
 
-	// let maxX = Math.max(...allX, stage.x.max)
-	// let minX = Math.min(...allX, stage.x.min)
-	// let maxY = Math.max(...allY, stage.y.max)
-	// let minY = Math.min(...allY, stage.y.min)
-
-	// let deltaX = Math.max(Math.abs(minX), maxX - stage.x.max)
-	// let deltaY = Math.max(Math.abs(minY), maxY - stage.y.max)
-
-	// let newStage = {
-	// 	x: {
-	// 		min: -deltaX,
-	// 		max: viewport.width + deltaX
-	// 	},
-	// 	y: {
-	// 		min: -deltaY,
-	// 		max: viewport.height + deltaY
-	// 	},
-	// 	zoom:
-	// 		Math.trunc((10000 * 0.9) / Math.max(1 + (2 * deltaX) / viewport.width, 1 + (2 * deltaY) / viewport.height)) /
-	// 		10000
-	// }
-
-	// return newStage
+	let collisionLeaves = leaves.map((currentLeaf, index) => {
+		for (var i = 0; i < obstacles.length; i++) {
+			for (var j = 0; j < obstacles[i].length; j++) {
+				var nextVert
+				if (j == obstacles[i].length - 1) {
+					nextVert = obstacles[i][0]
+				} else {
+					nextVert = obstacles[i][j + 1]
+				}
+				if (
+					doesCircleIntersectSegment(
+						{ x: currentLeaf.coordX, y: currentLeaf.coordY },
+						currentLeaf.radius,
+						obstacles[i][j],
+						nextVert
+					)
+				) {
+					// true
+					let modLeaf = currentLeaf
+					modLeaf.color = `0, 0, 0`
+					modLeaf.radius = 0
+					return modLeaf // rgb values
+				}
+			}
+		}
+		return currentLeaf
+	})
+	return collisionLeaves
 }
 
 function doesCircleIntersectSegment(center, radius, vertex1, vertex2) {
@@ -90,4 +91,4 @@ function sqr(x) {
 	return x * x
 }
 
-export default doesCircleIntersectSegment
+export default doLeavesIntersectObstacles
