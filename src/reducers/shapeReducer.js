@@ -44,8 +44,8 @@ const shapeReducer = (state = initialState, action) => {
 				{
 					id: 0,
 					radius: 150,
-					coordX: state.viewportDims.width / 2,
-					coordY: state.viewportDims.height / 2,
+					coordX: state.viewportDims.width *0.5,
+					coordY: state.viewportDims.height *0.5,
 					angle: state.settings.rootAngle,
 					color: `210, ${150*20}, ${150*40}` // rgb values
 				}
