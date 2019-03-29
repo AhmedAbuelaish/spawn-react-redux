@@ -35,7 +35,7 @@ class App extends Component {
 				<header className='App-header'>
 					<div className='stage' style={{ transform: `scale(${this.props.stage.zoom})`, position: 'relative' }}>
 						<ShapeContainer />
-						<ObstacleContainer />
+						{/* <ObstacleContainer /> */}
 						{/* <Canvas /> */}
 					</div>
 					<RadialControl radius={0.08 * this.state.width} />
