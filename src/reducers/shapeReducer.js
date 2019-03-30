@@ -53,6 +53,10 @@ const shapeReducer = (state = initialState, action) => {
 			newLeaves = newNodes
 			return { ...state, nodes: newNodes, leaves: newLeaves }
 		case 'CREATE_NODES':
+			
+			Array.prototype.push.apply(newNodes, newLeaves)
+			return { ...state, nodes: newNodes, leaves: newLeaves, stage: newStage }
+		case 'CREATE_LEAVES':
 			newLeaves = createFragmentedArray(newLeaves, newSettings)
 			newStage = calcNewZoom(newLeaves, state.stage, state.viewportDims)
 			newLeaves = doLeavesIntersectObstacles(newLeaves, state.obstacles)
