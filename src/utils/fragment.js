@@ -66,7 +66,7 @@ function distributeParentValue(parent, settings) {
 	return positionedChildrenArray
 }
 
-export default createFragmentedArray
+export {createFragmentedArray, distributeParentValue}
 
 //
 //

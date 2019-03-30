@@ -1,4 +1,4 @@
-import createFragmentedArray from '../utils/fragment'
+import {createFragmentedArray, distributeParentValue} from '../utils/fragment'
 import calcNewZoom from '../utils/stageSetup'
 import doLeavesIntersectObstacles from '../utils/collisions'
 

@@ -1,23 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { createFragmentedArray, distributeParentValue } from '../utils/fragment'
+import calcNewZoom from '../utils/stageSetup'
+import doLeavesIntersectObstacles from '../utils/collisions'
 
 class ShapeContainer extends Component {
 	componentDidMount() {
-		this.handlePlantSeed()
-		requestAnimationFrame(this.createAnimationLoop)
-	}
-
-	createAnimationLoop = (timestamp) => {
-		this.props.renderNodes()
-		requestAnimationFrame(this.createAnimationLoop)
-	}
-
-	handlePlantSeed = () => {
 		this.props.createRoot()
+		requestAnimationFrame(this.createAnimationLoop)
 	}
 
-	handleCreateShape = () => {
+	createAnimationLoop = timestamp => {
 		this.props.renderNodes()
+		requestAnimationFrame(this.createAnimationLoop)
+	}
+
+	createProcessingLoop = () => {
+		for (var i = 0; i < 500; i++) {
+			let nodeIndex = Math.random()
+			distributeParentValue()
+		}
 	}
 
 	render() {
@@ -55,6 +57,7 @@ const mapStateToProps = state => ({
 	viewportDims: state.viewportDims,
 	settings: state.settings,
 	nodes: state.nodes,
+	tempNodes: state.tempNodes,
 	leaves: state.leaves,
 	stage: state.stage
 })
