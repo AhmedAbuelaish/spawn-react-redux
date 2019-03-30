@@ -8,7 +8,7 @@ class ShapeContainer extends Component {
 	}
 
 	createAnimationLoop = (timestamp) => {
-		this.handleCreateShape()
+		this.props.renderNodes()
 		requestAnimationFrame(this.createAnimationLoop)
 	}
 
@@ -17,7 +17,7 @@ class ShapeContainer extends Component {
 	}
 
 	handleCreateShape = () => {
-		this.props.createNodes()
+		this.props.renderNodes()
 	}
 
 	render() {
@@ -61,7 +61,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	createRoot: () => dispatch({ type: 'CREATE_ROOT' }),
-	createNodes: () => dispatch({ type: 'CREATE_NODES' })
+	renderNodes: () => dispatch({ type: 'RENDER_NODES' })
 })
 
 export default connect(

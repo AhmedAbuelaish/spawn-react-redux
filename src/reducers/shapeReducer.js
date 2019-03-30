@@ -19,6 +19,7 @@ const initialState = {
 		rootAngle: 200
 	},
 	nodes: [],
+	tempNodes: [],
 	leaves: [],
 	obstacles: [
 		[{ x: 0, y: 0 }, { x: window.innerWidth, y: 0 }, { x: window.innerWidth, y: 50 }, { x: 0, y: 50 }],
@@ -31,6 +32,7 @@ const initialState = {
 
 const shapeReducer = (state = initialState, action) => {
 	var newNodes = state.nodes.slice()
+	var newTempNodes = state.tempNodes.slice()
 	var newLeaves = state.leaves.slice()
 	var newSettings = { ...state.settings }
 	var newViewportDims = { ...state.viewportDims }
@@ -52,13 +54,12 @@ const shapeReducer = (state = initialState, action) => {
 			]
 			newLeaves = newNodes
 			return { ...state, nodes: newNodes, leaves: newLeaves }
-		case 'CREATE_NODES':
-			
-			Array.prototype.push.apply(newNodes, newLeaves)
+		case 'RENDER_NODES':
+			Array.prototype.push.apply(newNodes, newTempNodes)
+			newStage = calcNewZoom(newTempNodes, state.stage, state.viewportDims)
 			return { ...state, nodes: newNodes, leaves: newLeaves, stage: newStage }
 		case 'CREATE_LEAVES':
 			newLeaves = createFragmentedArray(newLeaves, newSettings)
-			newStage = calcNewZoom(newLeaves, state.stage, state.viewportDims)
 			newLeaves = doLeavesIntersectObstacles(newLeaves, state.obstacles)
 			Array.prototype.push.apply(newNodes, newLeaves)
 			return { ...state, nodes: newNodes, leaves: newLeaves, stage: newStage }
