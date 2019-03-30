@@ -17,8 +17,8 @@ class ShapeContainer extends Component {
 
 	createProcessingLoop = () => {
 		for (var i = 0; i < 500; i++) {
-			let nodeIndex = Math.random()
-			distributeParentValue()
+			let leafIndex = Math.floor(Math.random()*this.props.leaves.length)
+			distributeParentValue(this.props.leaves[leafIndex])
 		}
 	}
 
