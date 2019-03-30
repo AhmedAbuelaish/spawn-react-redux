@@ -42,6 +42,7 @@ function distributeParentValue(parent, settings) {
 					angle: myAngle,
 					color: `210, ${mySize*20}, ${mySize*40}` // rgb values
 				})
+				// console.log(currentChildrenArray.slice(),siblingCounter)
 				siblingCounter += 1
 				myAngle += tempAngle // Setup for next center
 			}
@@ -62,7 +63,6 @@ function distributeParentValue(parent, settings) {
 		newEl.coordY = newEl.coordY + newEl.distance * Math.sin(newEl.angle)
 		return newEl
 	})
-
 	return positionedChildrenArray
 }
 

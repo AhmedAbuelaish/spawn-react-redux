@@ -1,4 +1,4 @@
-import {createFragmentedArray, distributeParentValue} from '../utils/fragment'
+import { createFragmentedArray, distributeParentValue } from '../utils/fragment'
 import calcNewZoom from '../utils/stageSetup'
 import doLeavesIntersectObstacles from '../utils/collisions'
 
@@ -14,7 +14,7 @@ const initialState = {
 		minSize: 4,
 		multiplier: 130,
 		multiplierPrecision: 80, // Higher Levels, precision -> 100%
-		decay: 90,
+		decay: 95,
 		decayPrecision: 40, // Higher Levels, precision -> 100%
 		rootAngle: 200
 	},
@@ -23,12 +23,21 @@ const initialState = {
 	leaves: [],
 	obstacles: [
 		[{ x: 0, y: 0 }, { x: window.innerWidth, y: 0 }, { x: window.innerWidth, y: 50 }, { x: 0, y: 50 }],
-		[{ x: window.innerWidth-400, y: 300 }, { x: window.innerWidth-300, y: 300 }, { x: window.innerWidth-300, y: 600 }, { x: window.innerWidth-400, y: 600 }],
-		[{ x: 0, y: window.innerHeight-300 }, { x: window.innerWidth, y: window.innerHeight-300 }, { x: window.innerWidth, y: window.innerHeight-250 }, { x: 0, y: window.innerHeight-250 }],
-		[{ x: 0, y: 300 }, { x: 50, y: 300 }, { x: 50, y: 600 }, { x: 0, y: 600 }],
+		[
+			{ x: window.innerWidth - 400, y: 300 },
+			{ x: window.innerWidth - 300, y: 300 },
+			{ x: window.innerWidth - 300, y: 600 },
+			{ x: window.innerWidth - 400, y: 600 }
+		],
+		[
+			{ x: 0, y: window.innerHeight - 300 },
+			{ x: window.innerWidth, y: window.innerHeight - 300 },
+			{ x: window.innerWidth, y: window.innerHeight - 250 },
+			{ x: 0, y: window.innerHeight - 250 }
+		],
+		[{ x: 0, y: 300 }, { x: 50, y: 300 }, { x: 50, y: 600 }, { x: 0, y: 600 }]
 	] // Draw obstacles clockwise
 }
-
 
 const shapeReducer = (state = initialState, action) => {
 	var newNodes = state.nodes.slice()
@@ -40,16 +49,16 @@ const shapeReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'RESET':
 			var defaultStage = { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 1 }
-			return { ...state, nodes: [], leaves: [], stage: defaultStage }
+			return { ...state, nodes: [], tempNodes: [], leaves: [], stage: defaultStage }
 		case 'CREATE_ROOT':
 			newNodes = [
 				{
 					id: 0,
 					radius: 150,
-					coordX: state.viewportDims.width *0.5,
-					coordY: state.viewportDims.height *0.5,
+					coordX: state.viewportDims.width * 0.5,
+					coordY: state.viewportDims.height * 0.5,
 					angle: state.settings.rootAngle,
-					color: `210, ${150*20}, ${150*40}` // rgb values
+					color: `210, ${150 * 20}, ${150 * 40}` // rgb values
 				}
 			]
 			newLeaves = newNodes
@@ -57,12 +66,11 @@ const shapeReducer = (state = initialState, action) => {
 		case 'RENDER_NODES':
 			Array.prototype.push.apply(newNodes, newTempNodes)
 			newStage = calcNewZoom(newTempNodes, state.stage, state.viewportDims)
-			return { ...state, nodes: newNodes, leaves: newLeaves, stage: newStage }
+			return { ...state, nodes: newNodes, tempNodes: [], stage: newStage }
 		case 'CREATE_LEAVES':
-			newLeaves = createFragmentedArray(newLeaves, newSettings)
-			newLeaves = doLeavesIntersectObstacles(newLeaves, state.obstacles)
-			Array.prototype.push.apply(newNodes, newLeaves)
-			return { ...state, nodes: newNodes, leaves: newLeaves, stage: newStage }
+			newLeaves = action.newLeaves
+			Array.prototype.push.apply(newTempNodes, action.singleTempNodes)
+			return { ...state, tempNodes: newTempNodes, leaves: newLeaves }
 		case 'UPDATE_SETTINGS':
 			newSettings = action.settings
 			return { ...state, settings: newSettings }
@@ -75,3 +83,5 @@ const shapeReducer = (state = initialState, action) => {
 }
 
 export default shapeReducer
+
+// type: 'CREATE_LEAVES', singleTempNode: tempNodeArr, newLeaves: newLeavesArr })

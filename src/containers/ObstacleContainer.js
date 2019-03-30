@@ -6,7 +6,7 @@ class ObstacleContainer extends Component {
 	render() {
 		// console.log('zoom', this.props.stage.zoom)
 		return (
-			<div
+			<div className='obstacles'
 				style={{
 					position: 'absolute',
 					left: 0,

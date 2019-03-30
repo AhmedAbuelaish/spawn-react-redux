@@ -1,13 +1,11 @@
 import { flatten, pluck, multiPluck } from '../utils/arrayFunctions'
 
 function doLeavesIntersectObstacles(leaves, obstacles) {
-	let leavesXYR = multiPluck(leaves, ['coordX', 'coordY', 'radius'])
-
 	let collisionLeaves = leaves.map((currentLeaf, index) => {
 		for (var i = 0; i < obstacles.length; i++) {
 			for (var j = 0; j < obstacles[i].length; j++) {
 				var nextVert
-				if (j == obstacles[i].length - 1) {
+				if (j === obstacles[i].length - 1) {
 					nextVert = obstacles[i][0]
 				} else {
 					nextVert = obstacles[i][j + 1]
@@ -65,7 +63,7 @@ function distanceToSegment(center, vertex1, vertex2) {
 	var dot = A * C + B * D
 	var len_sq = sqr(C) + sqr(D)
 	var param = -1
-	if (len_sq != 0)
+	if (len_sq !== 0)
 		//in case of 0 length line
 		param = dot / len_sq
 
