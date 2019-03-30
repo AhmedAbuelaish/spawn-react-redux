@@ -10,19 +10,38 @@ class ShapeContainer extends Component {
 		super(props)
 		this.handleClick = this.handleClick.bind(this)
 		this.createProcessingLoop = this.createProcessingLoop.bind(this)
+		this.startWebWorker = this.startWebWorker.bind(this)
 	}
 
 	componentDidMount() {
 		this.props.createRoot()
 		requestAnimationFrame(this.createAnimationLoop)
-		// setInterval(this.createProcessingLoop,50)
+		this.startWebWorker()
 	}
 
 	createAnimationLoop = timestamp => {
 		this.props.renderNodes()
 		// console.log('frame')
-		this.createProcessingLoop()
+		// this.createProcessingLoop()
 		requestAnimationFrame(this.createAnimationLoop)
+	}
+
+	startWebWorker = () => {
+		var w
+		if (typeof Worker !== 'undefined') {
+			// Yes! Web worker support!
+			if (typeof w == 'undefined') {
+				w = new Worker('../utils/fragment.js')
+			}
+			w.postMessage([flatten(this.props.leaves), this.props.settings, this.props.obstacles])
+			w.onmessage = function(event) {
+				console.log('message received from worker')
+				this.props.createLeaves(event.data[0], event.data[1])
+			}
+		} else {
+			// Sorry! No Web Worker support..
+			console.log("Your browser doesn't support web workers.")
+		}
 	}
 
 	createProcessingLoop = () => {
@@ -31,7 +50,7 @@ class ShapeContainer extends Component {
 			// console.log('start run number:', i)
 			// console.log(JSON.stringify(processedLeaves.slice()))
 			console.log(processedLeaves.slice().length)
-			if ((processedLeaves.slice().length === 0)) {
+			if (processedLeaves.slice().length === 0) {
 				break
 			} else {
 				let leafIndex = Math.floor(Math.random() * processedLeaves.length)

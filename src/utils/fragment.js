@@ -1,6 +1,7 @@
 import { totalizeAngleRange, angleSpread, degToRad, radToDeg } from './angleFunctions'
 import { flatten } from './arrayFunctions'
 import randomSpread from './randomSpread'
+import doLeavesIntersectObstacles from './collisions'
 
 // ~~~~~~~~~~~ CREATE FRAGMENTED ARRAY ~~~~~~~~~~~~~~~//
 function createFragmentedArray(parentsArr, settings) {
@@ -9,6 +10,26 @@ function createFragmentedArray(parentsArr, settings) {
 	})
 	allChildrenArray = flatten(allChildrenArray)
 	return allChildrenArray
+}
+
+// ~~~~~~~~~~~ FRAGMENT WORKER LOOP~~~~~~~~~~~~~~~//
+onmessage = function fragmentWorkerLoop(e) {
+	console.log('received message from container')
+	let leaves = e.data[0]
+	let settings = e.data[1]
+	let obstacles = e.data[2]
+	console.log('in frag worker')
+	let processedLeaves = flatten(leaves)
+	while (leaves.length !== 0) {
+		// console.log(JSON.stringify(processedLeaves.slice()))
+		console.log(processedLeaves.slice().length)
+		let leafIndex = Math.floor(Math.random() * processedLeaves.length)
+		let tempNodesArr = distributeParentValue(processedLeaves[leafIndex], settings)
+		tempNodesArr = doLeavesIntersectObstacles(tempNodesArr, obstacles)
+		processedLeaves[leafIndex] = tempNodesArr
+		processedLeaves = flatten(processedLeaves)
+		postMessage([tempNodesArr, processedLeaves])
+	}
 }
 
 // ~~~~~~~~~~~~~~ DISTRIBUTE VALUE ~~~~~~~~~~~~~~~~~~~//
@@ -40,7 +61,7 @@ function distributeParentValue(parent, settings) {
 					coordX: parent.coordX,
 					coordY: parent.coordY,
 					angle: myAngle,
-					color: `210, ${mySize*20}, ${mySize*40}` // rgb values
+					color: `210, ${mySize * 20}, ${mySize * 40}` // rgb values
 				})
 				// console.log(currentChildrenArray.slice(),siblingCounter)
 				siblingCounter += 1
@@ -66,7 +87,7 @@ function distributeParentValue(parent, settings) {
 	return positionedChildrenArray
 }
 
-export {createFragmentedArray, distributeParentValue}
+export { createFragmentedArray, distributeParentValue }
 
 //
 //
