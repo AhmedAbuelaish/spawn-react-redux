@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 class ShapeContainer extends Component {
 	componentDidMount() {
 		this.handlePlantSeed()
-		requestAnimationFrame(this.loopCreatAnimation)
+		requestAnimationFrame(this.createAnimationLoop)
 	}
 
-	loopCreatAnimation = (timestamp) => {
+	createAnimationLoop = (timestamp) => {
 		this.handleCreateShape()
-		requestAnimationFrame(this.loopCreatAnimation)
+		requestAnimationFrame(this.createAnimationLoop)
 	}
 
 	handlePlantSeed = () => {
