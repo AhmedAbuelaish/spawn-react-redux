@@ -4,43 +4,36 @@ import { createFragmentedArray, distributeParentValue } from '../utils/fragment'
 import calcNewZoom from '../utils/stageSetup'
 import doLeavesIntersectObstacles from '../utils/collisions'
 import { flatten } from '../utils/arrayFunctions'
+import worker from '../utils/worker.js'
+import WebWorker from '../utils/workerSetup'
 
 class ShapeContainer extends Component {
 	constructor(props) {
 		super(props)
 		this.handleClick = this.handleClick.bind(this)
-		this.createProcessingLoop = this.createProcessingLoop.bind(this)
 		this.startWebWorker = this.startWebWorker.bind(this)
 	}
 
 	componentDidMount() {
 		this.props.createRoot()
 		requestAnimationFrame(this.createAnimationLoop)
-		this.startWebWorker()
+		this.worker = new WebWorker(worker)
+
 	}
 
 	createAnimationLoop = timestamp => {
 		this.props.renderNodes()
 		// console.log('frame')
-		// this.createProcessingLoop()
 		requestAnimationFrame(this.createAnimationLoop)
 	}
 
 	startWebWorker = () => {
-		var w
-		if (typeof Worker !== 'undefined') {
-			// Yes! Web worker support!
-			if (typeof w == 'undefined') {
-				w = new Worker('../utils/fragment.js')
-			}
-			w.postMessage([flatten(this.props.leaves), this.props.settings, this.props.obstacles])
-			w.onmessage = function(event) {
-				console.log('message received from worker')
-				this.props.createLeaves(event.data[0], event.data[1])
-			}
-		} else {
-			// Sorry! No Web Worker support..
-			console.log("Your browser doesn't support web workers.")
+		console.log('starting webworker')
+		this.worker.postMessage([this.props.leaves, this.props.settings, this.props.obstacles])
+		this.worker.onmessage = (event) => {
+			console.log('recieved message from worker')
+			console.log(event)
+			this.props.createLeaves(event.data[0], event.data[1])
 		}
 	}
 
@@ -65,7 +58,8 @@ class ShapeContainer extends Component {
 	}
 
 	handleClick = () => {
-		this.createProcessingLoop()
+		this.startWebWorker()
+		// this.createProcessingLoop()
 	}
 
 	render() {

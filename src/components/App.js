@@ -12,7 +12,7 @@ class App extends Component {
 		super(props)
 		this.state = this.props.viewportDims
 		this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
-		console.log('viewport', this.state)
+		// console.log('viewport', this.state)
 	}
 
 	componentDidMount() {
@@ -34,7 +34,7 @@ class App extends Component {
 			<div className='App'>
 				<header className='App-header'>
 					<div className='stage' style={{ transform: `scale(${this.props.stage.zoom})`, position: 'relative' }}>
-						<ObstacleContainer />
+						{/* <ObstacleContainer /> */}
 						<ShapeContainer />
 						{/* <Canvas /> */}
 					</div>

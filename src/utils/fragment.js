@@ -12,26 +12,6 @@ function createFragmentedArray(parentsArr, settings) {
 	return allChildrenArray
 }
 
-// ~~~~~~~~~~~ FRAGMENT WORKER LOOP~~~~~~~~~~~~~~~//
-onmessage = function fragmentWorkerLoop(e) {
-	console.log('received message from container')
-	let leaves = e.data[0]
-	let settings = e.data[1]
-	let obstacles = e.data[2]
-	console.log('in frag worker')
-	let processedLeaves = flatten(leaves)
-	while (leaves.length !== 0) {
-		// console.log(JSON.stringify(processedLeaves.slice()))
-		console.log(processedLeaves.slice().length)
-		let leafIndex = Math.floor(Math.random() * processedLeaves.length)
-		let tempNodesArr = distributeParentValue(processedLeaves[leafIndex], settings)
-		tempNodesArr = doLeavesIntersectObstacles(tempNodesArr, obstacles)
-		processedLeaves[leafIndex] = tempNodesArr
-		processedLeaves = flatten(processedLeaves)
-		postMessage([tempNodesArr, processedLeaves])
-	}
-}
-
 // ~~~~~~~~~~~~~~ DISTRIBUTE VALUE ~~~~~~~~~~~~~~~~~~~//
 function distributeParentValue(parent, settings) {
 	let mySize = 0
