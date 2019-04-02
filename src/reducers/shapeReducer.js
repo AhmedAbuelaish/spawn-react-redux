@@ -9,7 +9,7 @@ const initialState = {
 	viewportDims: { width: window.innerWidth, height: window.innerHeight },
 	stage: { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 1 },
 	settings: {
-		angleRange: [[-100, -70], [-45, 45], [70, 100]], // Range: -180 to 180
+		angleRange: [[-45, 45]], // Range: -180 to 180
 		maxAngleRanges: 4,
 		minSize: 4,
 		multiplier: 130,
@@ -23,7 +23,7 @@ const initialState = {
 	nodes: [],
 	leaves: [],
 	obstacles: [
-		[{ x: 0, y: 0 }, { x: window.innerWidth, y: 0 }, { x: window.innerWidth, y: 50 }, { x: 0, y: 50 }],
+		[{ x: 0, y: 0 }, { x: window.innerWidth*0.4, y: 0 }, { x: window.innerWidth*0.4, y: 50 }, { x: 0, y: 50 }],
 		[
 			{ x: window.innerWidth - 350, y: 300 },
 			{ x: window.innerWidth - 300, y: 300 },
@@ -31,10 +31,10 @@ const initialState = {
 			{ x: window.innerWidth - 350, y: 600 }
 		],
 		[
-			{ x: 0, y: window.innerHeight - 300 },
-			{ x: window.innerWidth, y: window.innerHeight - 300 },
-			{ x: window.innerWidth, y: window.innerHeight - 250 },
-			{ x: 0, y: window.innerHeight - 250 }
+			{ x: 0, y: window.innerHeight - 50 },
+			{ x: window.innerWidth*0.4, y: window.innerHeight - 50 },
+			{ x: window.innerWidth*0.4, y: window.innerHeight},
+			{ x: 0, y: window.innerHeight }
 		],
 		[{ x: 0, y: 0 }, { x: 50, y: 0 }, { x: 50, y: window.innerHeight }, { x: 0, y: window.innerHeight }]
 	] // Draw obstacles clockwise

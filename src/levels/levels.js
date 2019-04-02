@@ -16,7 +16,7 @@ const levelStates = {
 			rootSize: 100
 		},
 		obstacles: [
-			[{ x: 0, y: 0 }, { x: wWidth, y: 0 }, { x: wWidth, y: 50 }, { x: 0, y: 50 }],
+			[{ x: 0, y: 0 }, { x: wWidth * 0.4, y: 0 }, { x: wWidth * 0.4, y: 50 }, { x: 0, y: 50 }],
 			[
 				{ x: wWidth - 350, y: 300 },
 				{ x: wWidth - 300, y: 300 },
@@ -24,10 +24,10 @@ const levelStates = {
 				{ x: wWidth - 350, y: 600 }
 			],
 			[
-				{ x: 0, y: wHeight - 300 },
-				{ x: wWidth, y: wHeight - 300 },
-				{ x: wWidth, y: wHeight - 250 },
-				{ x: 0, y: wHeight - 250 }
+				{ x: 0, y: wHeight - 50 },
+				{ x: wWidth * 0.4, y: wHeight - 50 },
+				{ x: wWidth * 0.4, y: wHeight },
+				{ x: 0, y: wHeight }
 			],
 			[{ x: 0, y: 0 }, { x: 50, y: 0 }, { x: 50, y: wHeight }, { x: 0, y: wHeight }]
 		] // Draw obstacles clockwise
