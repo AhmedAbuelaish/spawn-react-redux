@@ -1,6 +1,7 @@
 import createFragmentedArray from '../utils/fragment'
 import calcNewZoom from '../utils/stageSetup'
 import doLeavesIntersectObstacles from '../utils/collisions'
+// import highlightWinningPath from '../utils/winningPath'
 
 // This reducer references/holds the main store
 // It modifies the main state of the app
@@ -72,6 +73,9 @@ const shapeReducer = (state = initialState, action) => {
 			newLeaves = doLeavesIntersectObstacles(newLeaves, state.targets, 'win')
 			Array.prototype.push.apply(newNodes, newLeaves)
 			return { ...state, nodes: newNodes, leaves: newLeaves, stage: newStage }
+		// case 'GET_WINNING_PATH':
+		// 	newNodes = highlightWinningPath(newNodes)
+		// 	return {...state,nodes:newNodes}
 		case 'UPDATE_SETTINGS':
 			newSettings = action.settings
 			return { ...state, settings: newSettings }
