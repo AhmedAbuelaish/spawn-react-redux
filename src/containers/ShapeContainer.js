@@ -2,6 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 class ShapeContainer extends Component {
+	constructor(props) {
+	  super(props)
+	  this.state = {
+		 	animating:true
+	  }
+	}
+	
+
 	componentDidMount() {
 		this.props.createRoot()
 		requestAnimationFrame(this.loopCreatAnimation)
@@ -10,6 +18,28 @@ class ShapeContainer extends Component {
 	loopCreatAnimation = (timestamp) => {
 		this.props.createNodes()
 		requestAnimationFrame(this.loopCreatAnimation)
+	}
+
+	increaseRootSize = () => {
+		console.log('root')
+	}
+
+	onMouseDown = e => {
+		if (e.button !== 0) return
+		this.setState({
+			animating: false
+		})
+		e.stopPropagation()
+		e.preventDefault()
+	}
+
+	onMouseUp = e => {
+		if (e.button !== 0) return
+		this.setState({
+			animating: true
+		})
+		e.stopPropagation()
+		e.preventDefault()
 	}
 
 	render() {
@@ -36,7 +66,7 @@ class ShapeContainer extends Component {
 						position: 'absolute',
 						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`
 					}
-					return <div style={styles} key={i} />
+					return <div style={styles} key={i}/>
 				})}
 			</div>
 		)

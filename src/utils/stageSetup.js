@@ -21,7 +21,7 @@ function calcNewZoom(leaves, stage, viewport) {
 			min: -deltaY,
 			max: viewport.height + deltaY
 		},
-		zoom: Math.trunc(10000 * 0.9 / Math.max(1 + (2 * deltaX) / viewport.width, 1 + (2 * deltaY) / viewport.height))/10000
+		zoom: Math.trunc(10000 * 1 / Math.max(1 + (2 * deltaX) / viewport.width, 1 + (2 * deltaY) / viewport.height))/10000
 	}
 
 	return newStage
