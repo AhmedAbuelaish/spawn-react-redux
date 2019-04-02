@@ -1,6 +1,7 @@
 import createFragmentedArray from '../utils/fragment'
 import calcNewZoom from '../utils/stageSetup'
 import doLeavesIntersectObstacles from '../utils/collisions'
+import {levelStates} from '../levels/levels'
 // import highlightWinningPath from '../utils/winningPath'
 
 // This reducer references/holds the main store
@@ -40,7 +41,8 @@ const initialState = {
 			{ x: window.innerWidth - 300, y: 600 },
 			{ x: window.innerWidth - 350, y: 600 }
 		]
-	]
+	],
+	gameMode: 'targetPractice'
 }
 
 const shapeReducer = (state = initialState, action) => {
@@ -50,6 +52,7 @@ const shapeReducer = (state = initialState, action) => {
 	var newViewportDims = { ...state.viewportDims }
 	var newStage = state.stage
 	var newGameMode = state.gameMode
+	var newLevel
 	switch (action.type) {
 		case 'RESET':
 			var defaultStage = { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 1 }
@@ -84,8 +87,25 @@ const shapeReducer = (state = initialState, action) => {
 			newViewportDims = action.viewportDims
 			return { ...state, viewportDims: newViewportDims }
 		case 'TOGGLE_GAME_MODE':
-			(newGameMode=='targetPractice')?newGameMode='sandbox':newGameMode='targetPractice'
-			return {...state,gameMode:newGameMode}
+			if (newGameMode == 'targetPractice') {
+				newGameMode = 'sandbox'
+				newLevel = levelStates[0]
+			} else {
+				newGameMode = 'targetPractice'
+				newLevel = levelStates[1]
+			}
+			newNodes = [
+				{
+					id: 0,
+					radius: newLevel.settings.rootSize,
+					coordX: newLevel.settings.rootCoords.coordX,
+					coordY: newLevel.settings.rootCoords.coordY,
+					angle: newLevel.settings.rootAngle,
+					color: `210, ${150 * 20}, ${150 * 40}` // rgb values
+				}
+			]
+			newLeaves = newNodes
+			return { ...state, gameMode: newGameMode, settings:newLevel.settings,obstacles:newLevel.obstacles,targets:newLevel.targets,nodes: newNodes, leaves: newLeaves,  }
 		default:
 			return state
 	}
