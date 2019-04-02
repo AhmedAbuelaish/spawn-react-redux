@@ -55,7 +55,7 @@ class ShapeContainer extends Component {
 						position: 'absolute',
 						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`
 					}
-					return <div style={styles} key={i} onClick={this.toggleAnimation} />
+					return <div className='cell' style={styles} key={i} onClick={this.toggleAnimation} />
 				})}
 			</div>
 		)

@@ -5,7 +5,7 @@ class ScoreCounter extends Component {
   render() {
     return (
         <div className='score'>
-        {this.props.nodes.length}
+        Score: {this.props.nodes.length-1}
       </div>
     )
   }

@@ -12,37 +12,18 @@ class SettingsForm extends Component {
 	}
 
 	handleFormChange = (value, targetProp, i) => {
-		console.log('input:', value, 'i', i)
 		if(i === undefined){
 			this.setState({ [targetProp]: value })
 		} else if(i===0){
 			this.setState({ [targetProp]: [[value, this.state.angleRange[0][1]]] })
-			console.log(this.state.angleRange, 'i', i)
 		} else if(i===1){
 			this.setState({ [targetProp]: [[this.state.angleRange[0][0],value]] })
-			console.log(this.state.angleRange, 'i', i)
 		}
 	}
 
 	handleFormSubmission = e => {
 		e.preventDefault()
 		this.props.updateSettings(this.state)
-		// this.props.reset()
-		// this.plantSeed()
-		// const intId = setInterval(() => {
-		// 	this.handleCreateShape()
-		// }, 50)
-		// setTimeout(() => {
-		// 	clearInterval(intId)
-		// }, 10000)
-	}
-
-	plantSeed = () => {
-		this.props.createRoot()
-	}
-
-	handleCreateShape = () => {
-		this.props.createNodes()
 	}
 
 	render() {
