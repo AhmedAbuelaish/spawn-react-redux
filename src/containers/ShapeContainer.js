@@ -4,7 +4,7 @@ import { createFragmentedArray, distributeParentValue } from '../utils/fragment'
 import calcNewZoom from '../utils/stageSetup'
 import doLeavesIntersectObstacles from '../utils/collisions'
 import { flatten } from '../utils/arrayFunctions'
-import worker from '../utils/worker.js'
+import worker from '../utils/worker'
 import WebWorker from '../utils/workerSetup'
 
 class ShapeContainer extends Component {
@@ -12,6 +12,7 @@ class ShapeContainer extends Component {
 		super(props)
 		this.handleClick = this.handleClick.bind(this)
 		this.startWebWorker = this.startWebWorker.bind(this)
+		this.state = {leaves:this.props.leaves}
 	}
 
 	componentDidMount() {
@@ -24,6 +25,7 @@ class ShapeContainer extends Component {
 	createAnimationLoop = timestamp => {
 		this.props.renderNodes()
 		// console.log('frame')
+		this.props.createLeaves(this.state.leaves)
 		requestAnimationFrame(this.createAnimationLoop)
 	}
 
@@ -32,8 +34,9 @@ class ShapeContainer extends Component {
 		this.worker.postMessage([this.props.leaves, this.props.settings, this.props.obstacles])
 		this.worker.onmessage = (event) => {
 			console.log('recieved message from worker')
-			console.log(event)
-			this.props.createLeaves(event.data[0], event.data[1])
+			// console.log(event)
+			// this.props.createLeaves(event.data[0], event.data[1])
+			this.setState({leaves:this.state.leaves.slice().push(event.data[1])})
 		}
 	}
 
@@ -42,7 +45,7 @@ class ShapeContainer extends Component {
 		for (var i = 0; i < 5; i++) {
 			// console.log('start run number:', i)
 			// console.log(JSON.stringify(processedLeaves.slice()))
-			console.log(processedLeaves.slice().length)
+			// console.log(processedLeaves.slice().length)
 			if (processedLeaves.slice().length === 0) {
 				break
 			} else {

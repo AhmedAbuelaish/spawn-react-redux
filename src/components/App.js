@@ -34,7 +34,7 @@ class App extends Component {
 			<div className='App'>
 				<header className='App-header'>
 					<div className='stage' style={{ transform: `scale(${this.props.stage.zoom})`, position: 'relative' }}>
-						{/* <ObstacleContainer /> */}
+						<ObstacleContainer />
 						<ShapeContainer />
 						{/* <Canvas /> */}
 					</div>
