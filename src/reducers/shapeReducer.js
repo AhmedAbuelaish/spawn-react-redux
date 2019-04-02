@@ -49,6 +49,7 @@ const shapeReducer = (state = initialState, action) => {
 	var newSettings = { ...state.settings }
 	var newViewportDims = { ...state.viewportDims }
 	var newStage = state.stage
+	var newGameMode = state.gameMode
 	switch (action.type) {
 		case 'RESET':
 			var defaultStage = { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 1 }
@@ -82,6 +83,9 @@ const shapeReducer = (state = initialState, action) => {
 		case 'UPDATE_VIEWPORT':
 			newViewportDims = action.viewportDims
 			return { ...state, viewportDims: newViewportDims }
+		case 'TOGGLE_GAME_MODE':
+			(newGameMode=='targetPractice')?newGameMode='sandbox':newGameMode='targetPractice'
+			return {...state,gameMode:newGameMode}
 		default:
 			return state
 	}

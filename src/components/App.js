@@ -7,6 +7,7 @@ import SettingsForm from './SettingsForm'
 import RadialControl from './RadialControl'
 import ObstacleContainer from '../containers/ObstacleContainer'
 import ScoreCounter from './ScoreCounter'
+import ModeSelector from './ModeSelector'
 
 class App extends Component {
 	constructor(props) {
@@ -39,6 +40,7 @@ class App extends Component {
 						<ShapeContainer />
 						{/* <Canvas /> */}
 					</div>
+					<ModeSelector />
 					<ScoreCounter />
 					<RadialControl radius={0.08 * this.state.width} />
 					<SettingsForm />
