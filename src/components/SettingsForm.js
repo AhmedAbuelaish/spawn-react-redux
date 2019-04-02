@@ -27,14 +27,14 @@ class SettingsForm extends Component {
 	handleFormSubmission = e => {
 		e.preventDefault()
 		this.props.updateSettings(this.state)
-		this.props.reset()
-		this.plantSeed()
-		const intId = setInterval(() => {
-			this.handleCreateShape()
-		}, 50)
-		setTimeout(() => {
-			clearInterval(intId)
-		}, 10000)
+		// this.props.reset()
+		// this.plantSeed()
+		// const intId = setInterval(() => {
+		// 	this.handleCreateShape()
+		// }, 50)
+		// setTimeout(() => {
+		// 	clearInterval(intId)
+		// }, 10000)
 	}
 
 	plantSeed = () => {
@@ -89,7 +89,7 @@ class SettingsForm extends Component {
 						fieldChange={this.handleFormChange}
 						formSubmit={this.handleFormSubmission}
 					/>
-					<input className='reset-button' type='submit' value='Reset' />
+					<input className='reset-button' type='submit' value='Reset' style={{visibility:'hidden'}}/>
 				</form>
 			</div>
 		)

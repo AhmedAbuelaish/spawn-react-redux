@@ -3,43 +3,32 @@ import { connect } from 'react-redux'
 
 class ShapeContainer extends Component {
 	constructor(props) {
-	  super(props)
-	  this.state = {
-		 	animating:true
-	  }
+		super(props)
+		this.state = {
+			animating: false
+		}
 	}
-	
 
 	componentDidMount() {
 		this.props.createRoot()
-		requestAnimationFrame(this.loopCreatAnimation)
+		// this.frame = requestAnimationFrame(this.loopCreatAnimation)
 	}
 
-	loopCreatAnimation = (timestamp) => {
+	loopCreatAnimation = timestamp => {
 		this.props.createNodes()
-		requestAnimationFrame(this.loopCreatAnimation)
+		this.frame = requestAnimationFrame(this.loopCreatAnimation)
 	}
 
-	increaseRootSize = () => {
-		console.log('root')
-	}
-
-	onMouseDown = e => {
-		if (e.button !== 0) return
-		this.setState({
-			animating: false
-		})
-		e.stopPropagation()
-		e.preventDefault()
-	}
-
-	onMouseUp = e => {
-		if (e.button !== 0) return
-		this.setState({
-			animating: true
-		})
-		e.stopPropagation()
-		e.preventDefault()
+	toggleAnimation = () => {
+		if (this.state.animating) {
+			cancelAnimationFrame(this.frame)
+			this.state.animating = !this.state.animating
+		} else {
+			this.props.reset()
+			this.props.createRoot()
+			this.frame = requestAnimationFrame(this.loopCreatAnimation)
+			this.state.animating = !this.state.animating
+		}
 	}
 
 	render() {
@@ -66,7 +55,7 @@ class ShapeContainer extends Component {
 						position: 'absolute',
 						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`
 					}
-					return <div style={styles} key={i}/>
+					return <div style={styles} key={i} onClick={this.toggleAnimation} />
 				})}
 			</div>
 		)
@@ -83,7 +72,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	createRoot: () => dispatch({ type: 'CREATE_ROOT' }),
-	createNodes: () => dispatch({ type: 'CREATE_NODES' })
+	createNodes: () => dispatch({ type: 'CREATE_NODES' }),
+	reset: () => dispatch({ type: 'RESET' }),
 })
 
 export default connect(

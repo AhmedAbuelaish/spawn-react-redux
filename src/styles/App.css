@@ -14,6 +14,13 @@
 	color: white;
 }
 
+.score{
+	position: absolute;
+	margin: 10px;
+	top: 0vh;
+	right: 0vw;
+}
+
 .stage {
 	/* -webkit-transition: all 0.2s ease-out;
 	-moz-transition: all 0.2s ease-out;
