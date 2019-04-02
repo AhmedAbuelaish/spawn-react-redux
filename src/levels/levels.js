@@ -2,6 +2,9 @@ const wWidth = window.innerWidth
 const wHeight = window.innerHeight
 
 const levelStates = {
+	0: {
+
+	},
 	1: {
 		settings: {
 			angleRange: [[-45, 45]], // Range: -180 to 180
