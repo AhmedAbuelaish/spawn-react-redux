@@ -23,6 +23,9 @@ class ShapeContainer extends Component {
 		if (this.state.animating) {
 			cancelAnimationFrame(this.frame)
 			this.state.animating = !this.state.animating
+			this.props.reset()
+			this.props.createRoot()
+			this.frame = requestAnimationFrame(this.loopCreatAnimation)
 		} else {
 			this.props.reset()
 			this.props.createRoot()

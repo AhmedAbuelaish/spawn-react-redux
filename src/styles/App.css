@@ -16,7 +16,7 @@
 
 .score{
 	position: absolute;
-	margin: 10px;
+	margin: 20px;
 	top: 0vh;
 	right: 0vw;
 	font-size: 2rem;
@@ -25,7 +25,7 @@
 
 .gameModeButton{
 	position: absolute;
-	margin: 10px;
+	margin: 20px;
 	top: 0vh;
 	left: 0vw;
 	font-size: 2rem;

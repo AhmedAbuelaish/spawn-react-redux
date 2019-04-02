@@ -42,7 +42,7 @@ class App extends Component {
 					</div>
 					<ModeSelector />
 					<ScoreCounter />
-					<RadialControl radius={0.08 * this.state.width} />
+					<RadialControl radius={0.05 * this.state.width} />
 					<SettingsForm />
 				</header>
 			</div>
