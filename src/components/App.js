@@ -6,6 +6,7 @@ import ShapeContainer from '../containers/ShapeContainer'
 import SettingsForm from './SettingsForm'
 import RadialControl from './RadialControl'
 import ObstacleContainer from '../containers/ObstacleContainer'
+import ScoreCounter from './ScoreCounter'
 
 class App extends Component {
 	constructor(props) {
@@ -34,10 +35,11 @@ class App extends Component {
 			<div className='App'>
 				<header className='App-header'>
 					<div className='stage' style={{ transform: `scale(${this.props.stage.zoom})`, position: 'relative' }}>
-						<ShapeContainer />
 						<ObstacleContainer />
+						<ShapeContainer />
 						{/* <Canvas /> */}
 					</div>
+					<ScoreCounter />
 					<RadialControl radius={0.08 * this.state.width} />
 					<SettingsForm />
 				</header>

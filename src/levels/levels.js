@@ -18,19 +18,21 @@ const levelStates = {
 		obstacles: [
 			[{ x: 0, y: 0 }, { x: wWidth * 0.4, y: 0 }, { x: wWidth * 0.4, y: 50 }, { x: 0, y: 50 }],
 			[
+				{ x: 0, y: window.innerHeight - 50 },
+				{ x: wWidth * 0.4, y: window.innerHeight - 50 },
+				{ x: wWidth * 0.4, y: window.innerHeight },
+				{ x: 0, y: window.innerHeight }
+			],
+			[{ x: 0, y: 0 }, { x: 50, y: 0 }, { x: 50, y: window.innerHeight }, { x: 0, y: window.innerHeight }]
+		], // Draw obstacles clockwise
+		targets: [
+			[
 				{ x: wWidth - 350, y: 300 },
 				{ x: wWidth - 300, y: 300 },
 				{ x: wWidth - 300, y: 600 },
 				{ x: wWidth - 350, y: 600 }
-			],
-			[
-				{ x: 0, y: wHeight - 50 },
-				{ x: wWidth * 0.4, y: wHeight - 50 },
-				{ x: wWidth * 0.4, y: wHeight },
-				{ x: 0, y: wHeight }
-			],
-			[{ x: 0, y: 0 }, { x: 50, y: 0 }, { x: 50, y: wHeight }, { x: 0, y: wHeight }]
-		] // Draw obstacles clockwise
+			]
+		]
 	},
 	2: {
 		settings: {
@@ -60,7 +62,15 @@ const levelStates = {
 				{ x: 0, y: wHeight - 250 }
 			],
 			[{ x: 0, y: 0 }, { x: 50, y: 0 }, { x: 50, y: wHeight }, { x: 0, y: wHeight }]
-		] // Draw obstacles clockwise
+		], // Draw obstacles clockwise
+		targets: [
+			[
+				{ x: wWidth - 350, y: 300 },
+				{ x: wWidth - 300, y: 300 },
+				{ x: wWidth - 300, y: 600 },
+				{ x: wWidth - 350, y: 600 }
+			]
+		]
 	},
 	3: {
 		settings: {
@@ -90,6 +100,14 @@ const levelStates = {
 				{ x: 0, y: wHeight - 250 }
 			],
 			[{ x: 0, y: 0 }, { x: 50, y: 0 }, { x: 50, y: wHeight }, { x: 0, y: wHeight }]
-		] // Draw obstacles clockwise
+		], // Draw obstacles clockwise
+		targets: [
+			[
+				{ x: wWidth - 350, y: 300 },
+				{ x: wWidth - 300, y: 300 },
+				{ x: wWidth - 300, y: 600 },
+				{ x: wWidth - 350, y: 600 }
+			]
+		]
 	}
 }

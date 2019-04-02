@@ -1,8 +1,6 @@
 import { flatten, pluck, multiPluck } from '../utils/arrayFunctions'
 
-function doLeavesIntersectObstacles(leaves, obstacles) {
-	let leavesXYR = multiPluck(leaves, ['coordX', 'coordY', 'radius'])
-
+function doLeavesIntersectObstacles(leaves, obstacles, status) {
 	let collisionLeaves = leaves.map((currentLeaf, index) => {
 		for (var i = 0; i < obstacles.length; i++) {
 			for (var j = 0; j < obstacles[i].length; j++) {
@@ -21,10 +19,17 @@ function doLeavesIntersectObstacles(leaves, obstacles) {
 					)
 				) {
 					// true
-					let modLeaf = currentLeaf
-					modLeaf.color = `0, 0, 0`
-					modLeaf.radius = 0
-					return modLeaf // rgb values
+					if (status == 'lose') {
+						let modLeaf = currentLeaf
+						modLeaf.color = `0, 0, 0` // rgb values
+						modLeaf.radius = 0
+						return modLeaf
+					} else if (status == 'win') {
+						let modLeaf = currentLeaf
+						modLeaf.color = `210, 50, 50` // rgb values
+						modLeaf.status = 'win'
+						return modLeaf
+					}
 				}
 			}
 		}
