@@ -12,7 +12,6 @@ class ShapeContainer extends Component {
 		super(props)
 		this.handleClick = this.handleClick.bind(this)
 		this.startWebWorker = this.startWebWorker.bind(this)
-		this.state = {leaves:this.props.leaves}
 	}
 
 	componentDidMount() {
@@ -25,7 +24,6 @@ class ShapeContainer extends Component {
 	createAnimationLoop = timestamp => {
 		this.props.renderNodes()
 		// console.log('frame')
-		this.props.createLeaves(this.state.leaves)
 		requestAnimationFrame(this.createAnimationLoop)
 	}
 
@@ -35,8 +33,7 @@ class ShapeContainer extends Component {
 		this.worker.onmessage = (event) => {
 			console.log('recieved message from worker')
 			// console.log(event)
-			// this.props.createLeaves(event.data[0], event.data[1])
-			this.setState({leaves:this.state.leaves.slice().push(event.data[1])})
+			this.props.createLeaves(event.data[0], event.data[1])
 		}
 	}
 
