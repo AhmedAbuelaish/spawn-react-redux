@@ -23,9 +23,9 @@ The main driver for this project was to generate a large amount of data to test 
 
 ### Results
 
--The main performance limitation was the logic/javascript, which can be imporved by setting an upper limit/time limit on the size of the array created
+-The main performance limitation was the logic/javascript, which still has some room for improvement for smoother animation and handling larger number of nodes (current limit ~50,000 nodes)
 
--Using a webworker may work but what limited the performance of the webworker was react-redux's buffering of setState
+-Using a webworker may work but what limited the performance of the webworker seemed to be react-redux's buffering of setState
 
 ### Bonus
 ![alt text](https://github.com/AhmedAbuelaish/spawn-react-redux/blob/master/images/Capture.PNG?raw=true)
