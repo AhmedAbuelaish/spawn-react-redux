@@ -7,7 +7,7 @@ The main driver for this project was to generate a large amount of data to test 
 
 2. Use DOM elements unless rendering limits performance then switch to canvas
 
-3. Create a random set of nodes then try to control them by adding settings to 'control the chaos'
+3. Create a random set of nodes by using a set of user-defined settings to 'control the chaos'
 
 ### Dependencies
 
