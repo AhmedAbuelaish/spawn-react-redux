@@ -1,5 +1,5 @@
 # Spawn [![Build Status](https://travis-ci.com/AhmedAbuelaish/spawn-react-redux.svg?branch=master)](https://travis-ci.com/AhmedAbuelaish/spawn-react-redux)
-The main driver for this project was to generate a large amount of data to test the limits of the browser and along the way create something that resembles art.
+The main driver for this project was to generate a large amount of data to test the limits of React, Redux, and the browser and along the way create something that resembles art.
 
 ## Requirements
 
