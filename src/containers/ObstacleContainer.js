@@ -15,6 +15,7 @@ class ObstacleContainer extends Component {
 					height: this.props.viewportDims.height
 				}}>
 				{this.props.obstacles.map((currentObstacle, i) => {
+					// if(!currentObstacle){return}
 					const styles = {
 						width: currentObstacle[2].x-currentObstacle[0].x,
 						height: currentObstacle[2].y-currentObstacle[0].y,
@@ -26,6 +27,7 @@ class ObstacleContainer extends Component {
 					return <div style={styles} key={i} />
 				})}
 				{this.props.targets.map((currentTarget, i) => {
+					// if(!currentTarget){return}
 					const styles = {
 						width: currentTarget[2].x-currentTarget[0].x,
 						height: currentTarget[2].y-currentTarget[0].y,

@@ -16,11 +16,22 @@
 
 .score{
 	position: absolute;
-	margin: 10px;
+	margin: 20px;
 	top: 0vh;
 	right: 0vw;
 	font-size: 2rem;
 	cursor: pointer;
+}
+
+.gameModeButton{
+	position: absolute;
+	margin: 20px;
+	top: 0vh;
+	left: 0vw;
+	font-size: 2rem;
+	cursor: pointer;
+	opacity: 0.5;
+	border-radius: 50%;
 }
 
 .cell{
