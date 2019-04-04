@@ -28,11 +28,12 @@ The main driver for this project was to generate a large amount of data to test 
 -Using a webworker may work but what limited the performance of the webworker seemed to be react-redux's handling of multiple consecutive triggers of *setState*
 
 ### Bonus
-![alt text](https://github.com/AhmedAbuelaish/spawn-react-redux/blob/master/images/Capture.PNG?raw=true)
-![alt text](https://github.com/AhmedAbuelaish/spawn-react-redux/blob/master/images/Capture2.PNG?raw=true)
-![alt text](https://github.com/AhmedAbuelaish/spawn-react-redux/blob/master/images/1%200%20100%200%20-60%2090.PNG?raw=true)
-![alt text](https://github.com/AhmedAbuelaish/spawn-react-redux/blob/master/images/1%200%20100%200%20-60%2090%20(1).PNG?raw=true)
-![alt text](https://github.com/AhmedAbuelaish/spawn-react-redux/blob/master/images/Image%203-9-19%20at%203.08%20PM.jpg?raw=true)
+![minSize01](https://github.com/AhmedAbuelaish/spawn-react-redux/blob/master/images/Capture.PNG?raw=true)
+![minSize04](https://github.com/AhmedAbuelaish/spawn-react-redux/blob/master/images/Capture2.PNG?raw=true)
+![red03](https://github.com/AhmedAbuelaish/spawn-react-redux/blob/master/images/1%200%20100%200%20-60%2090.PNG?raw=true)
+![red02](https://github.com/AhmedAbuelaish/spawn-react-redux/blob/master/images/1%200%20100%200%20-60%2090%20(1).PNG?raw=true)
+![red01](https://github.com/AhmedAbuelaish/spawn-react-redux/blob/master/images/Image%203-9-19%20at%203.08%20PM.jpg?raw=true)
+![performance](https://github.com/AhmedAbuelaish/spawn-react-redux/blob/master/DOMProfile/Profile3-25.PNG?raw=true_
 
 
 
