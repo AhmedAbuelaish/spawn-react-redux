@@ -13,7 +13,7 @@ const initialState = {
 		maxAngleRanges: 4,
 		minSize: 4,
 		multiplier: 130,
-		multiplierPrecision: 80, // Higher Levels, precision -> 100%
+		multiplierPrecision: 20, // Higher Levels, precision -> 100%
 		decay: 95,
 		decayPrecision: 40, // Higher Levels, precision -> 100%
 		rootAngle: 200
@@ -21,27 +21,10 @@ const initialState = {
 	nodes: [],
 	tempNodes: [],
 	leaves: [],
-	obstacles: [
-		[{ x: 0, y: 0 }, { x: window.innerWidth, y: 0 }, { x: window.innerWidth, y: 50 }, { x: 0, y: 50 }],
-		[
-			{ x: window.innerWidth - 400, y: 300 },
-			{ x: window.innerWidth - 300, y: 300 },
-			{ x: window.innerWidth - 300, y: 600 },
-			{ x: window.innerWidth - 400, y: 600 }
-		],
-		[
-			{ x: 0, y: window.innerHeight - 300 },
-			{ x: window.innerWidth, y: window.innerHeight - 300 },
-			{ x: window.innerWidth, y: window.innerHeight - 250 },
-			{ x: 0, y: window.innerHeight - 250 }
-		],
-		[{ x: 0, y: 300 }, { x: 50, y: 300 }, { x: 50, y: 600 }, { x: 0, y: 600 }]
-	] // Draw obstacles clockwise
 }
 
 const shapeReducer = (state = initialState, action) => {
 	var newNodes = state.nodes.slice()
-	var newTempNodes = state.tempNodes.slice()
 	var newLeaves = state.leaves.slice()
 	var newSettings = { ...state.settings }
 	var newViewportDims = { ...state.viewportDims }
@@ -49,7 +32,7 @@ const shapeReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'RESET':
 			var defaultStage = { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 1 }
-			return { ...state, nodes: [], tempNodes: [], leaves: [], stage: defaultStage }
+			return { ...state, nodes: [], leaves: [], stage: defaultStage }
 		case 'CREATE_ROOT':
 			newNodes = [
 				{
@@ -64,13 +47,11 @@ const shapeReducer = (state = initialState, action) => {
 			newLeaves = newNodes
 			return { ...state, nodes: newNodes, leaves: newLeaves }
 		case 'RENDER_NODES':
-			Array.prototype.push.apply(newNodes, newTempNodes)
-			newStage = calcNewZoom(newTempNodes, state.stage, state.viewportDims)
-			return { ...state, nodes: newNodes, tempNodes: [], stage: newStage }
+			return { ...state, nodes: newNodes, stage: newStage }
 		case 'CREATE_LEAVES':
-			newLeaves = action.newLeaves
-			Array.prototype.push.apply(newTempNodes, action.singleTempNodes)
-			return { ...state, tempNodes: newTempNodes, leaves: newLeaves }
+			Array.prototype.push.apply(newNodes, action.tempNodesArr)
+			newStage = calcNewZoom(action.tempNodesArr, state.stage, state.viewportDims)
+			return { ...state, nodes: newNodes, leaves: action.leavesArr, stage: newStage }
 		case 'UPDATE_SETTINGS':
 			newSettings = action.settings
 			return { ...state, settings: newSettings }

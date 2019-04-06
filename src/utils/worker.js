@@ -9,14 +9,14 @@ export default () => {
 		let leaves = e.data[0]
 		let settings = e.data[1]
 		let obstacles = e.data[2]
-		let maxNodeCount = 1000
+		let maxNodeCount = 10000
 		let nodeCount = 0
 		while (leaves.length !== [] && nodeCount<maxNodeCount ) {
       // console.log(JSON.stringify(leaves.slice()))
 			console.log(leaves.slice().length)
 			let leafIndex = Math.floor(Math.random() * leaves.length)
 			let tempNodesArr = distributeParentValue(leaves[leafIndex], settings)
-			tempNodesArr = doLeavesIntersectObstacles(tempNodesArr, obstacles)
+			// tempNodesArr = doLeavesIntersectObstacles(tempNodesArr, obstacles)
 			leaves[leafIndex] = tempNodesArr
 			leaves = flatten(leaves)
 			postMessage([tempNodesArr, leaves])

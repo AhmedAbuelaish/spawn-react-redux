@@ -12,54 +12,59 @@ class ShapeContainer extends Component {
 		super(props)
 		this.handleClick = this.handleClick.bind(this)
 		this.startWebWorker = this.startWebWorker.bind(this)
+		this.leavesArr = []
+		this.tempNodesArr = []
 	}
 
 	componentDidMount() {
 		this.props.createRoot()
-		requestAnimationFrame(this.createAnimationLoop)
 		this.worker = new WebWorker(worker)
-
 	}
 
 	createAnimationLoop = timestamp => {
-		this.props.renderNodes()
+		this.props.createLeaves(this.tempNodesArr, this.leavesArr)
+		this.tempNodesArr = []
 		// console.log('frame')
 		requestAnimationFrame(this.createAnimationLoop)
 	}
 
 	startWebWorker = () => {
 		console.log('starting webworker')
-		this.worker.postMessage([this.props.leaves, this.props.settings, this.props.obstacles])
-		this.worker.onmessage = (event) => {
+		this.worker.postMessage([this.leavesArr, this.props.settings, this.props.obstacles])
+		this.worker.onmessage = event => {
 			console.log('recieved message from worker')
-			// console.log(event)
-			this.props.createLeaves(event.data[0], event.data[1])
+			Array.prototype.push.apply(this.tempNodesArr, event.data[0])
+			this.leavesArr = event.data[1]
 		}
 	}
 
-	createProcessingLoop = () => {
-		let processedLeaves = flatten(this.props.leaves)
-		for (var i = 0; i < 5; i++) {
-			// console.log('start run number:', i)
-			// console.log(JSON.stringify(processedLeaves.slice()))
-			// console.log(processedLeaves.slice().length)
-			if (processedLeaves.slice().length === 0) {
-				break
-			} else {
-				let leafIndex = Math.floor(Math.random() * processedLeaves.length)
-				let tempNodesArr = distributeParentValue(processedLeaves[leafIndex], this.props.settings)
-				tempNodesArr = doLeavesIntersectObstacles(tempNodesArr, this.props.obstacles)
-				processedLeaves[leafIndex] = tempNodesArr
-				processedLeaves = flatten(processedLeaves)
-				this.props.createLeaves(tempNodesArr, processedLeaves)
-				// console.log('complete run number:', i)
-			}
-		}
-	}
+	// createProcessingLoop = () => {
+	// 	let processedLeaves = flatten(this.props.leaves)
+	// 	for (var i = 0; i < 5; i++) {
+	// 		// console.log('start run number:', i)
+	// 		// console.log(JSON.stringify(processedLeaves.slice()))
+	// 		// console.log(processedLeaves.slice().length)
+	// 		if (processedLeaves.slice().length === 0) {
+	// 			break
+	// 		} else {
+	// 			let leafIndex = Math.floor(Math.random() * processedLeaves.length)
+	// 			let tempNodesArr = distributeParentValue(processedLeaves[leafIndex], this.props.settings)
+	// 			tempNodesArr = doLeavesIntersectObstacles(tempNodesArr, this.props.obstacles)
+	// 			processedLeaves[leafIndex] = tempNodesArr
+	// 			processedLeaves = flatten(processedLeaves)
+	// 			this.props.createLeaves(tempNodesArr, processedLeaves)
+	// 			// console.log('complete run number:', i)
+	// 		}
+	// 	}
+	// }
 
 	handleClick = () => {
+		this.props.reset()
+		this.props.createRoot()
+		this.leavesArr = this.props.leaves
+		this.tempNodesArr = []
+		requestAnimationFrame(this.createAnimationLoop)
 		this.startWebWorker()
-		// this.createProcessingLoop()
 	}
 
 	render() {
@@ -107,8 +112,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	createRoot: () => dispatch({ type: 'CREATE_ROOT' }),
 	renderNodes: () => dispatch({ type: 'RENDER_NODES' }),
-	createLeaves: (tempNodeArr, newLeavesArr) =>
-		dispatch({ type: 'CREATE_LEAVES', singleTempNodes: tempNodeArr, newLeaves: newLeavesArr })
+	reset: () => dispatch({ type: 'RESET' }),
+	createLeaves: (newTempNodesArr, newLeavesArr) =>
+		dispatch({ type: 'CREATE_LEAVES', tempNodesArr: newTempNodesArr, leavesArr: newLeavesArr })
 })
 
 export default connect(

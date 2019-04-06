@@ -14,7 +14,7 @@ class ObstacleContainer extends Component {
 					width: this.props.viewportDims.width,
 					height: this.props.viewportDims.height
 				}}>
-				{this.props.obstacles.map((currentObstacle, i) => {
+				{/* {this.props.obstacles.map((currentObstacle, i) => {
 					const styles = {
 						width: currentObstacle[2].x-currentObstacle[0].x,
 						height: currentObstacle[2].y-currentObstacle[0].y,
@@ -24,7 +24,7 @@ class ObstacleContainer extends Component {
 						position: 'absolute'
 					}
 					return <div style={styles} key={i} />
-				})}
+				})} */}
 			</div>
 		)
 	}
