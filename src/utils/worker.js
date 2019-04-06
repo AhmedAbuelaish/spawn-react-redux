@@ -16,7 +16,7 @@ export default () => {
 			console.log(leaves.slice().length)
 			let leafIndex = Math.floor(Math.random() * leaves.length)
 			let tempNodesArr = distributeParentValue(leaves[leafIndex], settings)
-			// tempNodesArr = doLeavesIntersectObstacles(tempNodesArr, obstacles)
+			tempNodesArr = doLeavesIntersectObstacles(tempNodesArr, obstacles)
 			leaves[leafIndex] = tempNodesArr
 			leaves = flatten(leaves)
 			postMessage([tempNodesArr, leaves])

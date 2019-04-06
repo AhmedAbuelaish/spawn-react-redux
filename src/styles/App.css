@@ -34,9 +34,54 @@
 	border-radius: 50%;
 }
 
+/* ~~~~~~~~~~~CELLS~~~~~~~~~~ */
 .cell{
 	cursor: pointer;
+	animation: fadein 200ms ease-in;
+    -moz-animation: fadein 200ms ease-in;
+    /* Firefox */
+    -webkit-animation: fadein 200ms ease-in;
+    /* Safari and Chrome */
+    -o-animation: fadein 200ms ease-in;
+    /* Opera */
 }
+
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-moz-keyframes fadein {
+    /* Firefox */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-webkit-keyframes fadein {
+    /* Safari and Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-o-keyframes fadein {
+    /* Opera */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+/* ~~~~~~~~~~~~~~~~~~~~~~~ */
 
 .stage {
 	-webkit-transition: all 0.2s ease-out;

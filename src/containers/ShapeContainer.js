@@ -10,11 +10,10 @@ import WebWorker from '../utils/workerSetup'
 class ShapeContainer extends Component {
 	constructor(props) {
 		super(props)
-  		this.state = {
+		this.state = {
 			animating: false
 		}
-	}
-		this.handleClick = this.handleClick.bind(this)
+		this.toggleAnimation = this.toggleAnimation.bind(this)
 		this.startWebWorker = this.startWebWorker.bind(this)
 		this.leavesArr = []
 		this.tempNodesArr = []
@@ -46,15 +45,13 @@ class ShapeContainer extends Component {
 			cancelAnimationFrame(this.frame)
 			this.state.animating = !this.state.animating
 		}
-    		this.props.reset()
-		this.props.createRoot()
+		// this.props.reset()
+		// this.props.createRoot()
 		this.leavesArr = this.props.leaves
 		this.tempNodesArr = []
 		requestAnimationFrame(this.createAnimationLoop)
-    this.state.animating = !this.state.animating
+		this.state.animating = !this.state.animating
 		this.startWebWorker()
-			
-		}
 	}
 
 	render() {
@@ -70,6 +67,7 @@ class ShapeContainer extends Component {
 				}}>
 				{this.props.nodes.map((currentShape, i) => {
 					const styles = {
+						opactiy:0,
 						width: currentShape.radius * 2,
 						height: currentShape.radius * 2,
 						left: currentShape.coordX,
@@ -102,7 +100,8 @@ const mapDispatchToProps = dispatch => ({
 	createRoot: () => dispatch({ type: 'CREATE_ROOT' }),
 	createNodes: () => dispatch({ type: 'CREATE_NODES' }),
 	reset: () => dispatch({ type: 'RESET' }),
-    	createLeaves: (newTempNodesArr, newLeavesArr) =>	dispatch({ type: 'CREATE_LEAVES', tempNodesArr: newTempNodesArr, leavesArr: newLeavesArr })
+	createLeaves: (newTempNodesArr, newLeavesArr) =>
+		dispatch({ type: 'CREATE_LEAVES', tempNodesArr: newTempNodesArr, leavesArr: newLeavesArr })
 })
 
 export default connect(
