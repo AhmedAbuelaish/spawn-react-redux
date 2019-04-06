@@ -1,7 +1,7 @@
 import createFragmentedArray from '../utils/fragment'
 import calcNewZoom from '../utils/stageSetup'
 import doLeavesIntersectObstacles from '../utils/collisions'
-import {levelStates} from '../levels/levels'
+import { levelStates } from '../levels/levels'
 // import highlightWinningPath from '../utils/winningPath'
 
 // This reducer references/holds the main store
@@ -9,40 +9,13 @@ import {levelStates} from '../levels/levels'
 
 const initialState = {
 	viewportDims: { width: window.innerWidth, height: window.innerHeight },
-	stage: { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 1 },
-	settings: {
-		angleRange: [[-100, -70], [-45, 45], [70, 100]], // Range: -180 to 180
-		maxAngleRanges: 4,
-		minSize: 4,
-		multiplier: 130,
-		multiplierPrecision: 80, // Higher Levels, precision -> 100%
-		decay: 90,
-		decayPrecision: 40, // Higher Levels, precision -> 100%
-		rootAngle: 0,
-		rootCoords: { coordX: window.innerWidth * 0.2, coordY: window.innerHeight * 0.5 },
-		rootSize: 100
-	},
+	stage: levelStates[1].stage,
+	settings: levelStates[1].settings,
 	nodes: [],
 	leaves: [],
-	obstacles: [
-		[{ x: 0, y: 0 }, { x: window.innerWidth * 0.4, y: 0 }, { x: window.innerWidth * 0.4, y: 50 }, { x: 0, y: 50 }],
-		[
-			{ x: 0, y: window.innerHeight - 50 },
-			{ x: window.innerWidth * 0.4, y: window.innerHeight - 50 },
-			{ x: window.innerWidth * 0.4, y: window.innerHeight },
-			{ x: 0, y: window.innerHeight }
-		],
-		[{ x: 0, y: 0 }, { x: 50, y: 0 }, { x: 50, y: window.innerHeight }, { x: 0, y: window.innerHeight }]
-	], // Draw obstacles clockwise
-	targets: [
-		[
-			{ x: window.innerWidth - 350, y: 300 },
-			{ x: window.innerWidth - 300, y: 300 },
-			{ x: window.innerWidth - 300, y: 600 },
-			{ x: window.innerWidth - 350, y: 600 }
-		]
-	],
-	gameMode: 'targetPractice'
+	obstacles: levelStates[1].obstacles, // Draw obstacles clockwise
+	targets: levelStates[1].targets,
+	gameMode: 'breakOut'
 }
 
 const shapeReducer = (state = initialState, action) => {
@@ -55,8 +28,7 @@ const shapeReducer = (state = initialState, action) => {
 	var newLevel
 	switch (action.type) {
 		case 'RESET':
-			var defaultStage = { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 1 }
-			return { ...state, nodes: [], leaves: [], stage: defaultStage }
+			return { ...state, nodes: [], leaves: [], stage: levelStates[1].stage }
 		case 'CREATE_ROOT':
 			newNodes = [
 				{
@@ -87,11 +59,11 @@ const shapeReducer = (state = initialState, action) => {
 			newViewportDims = action.viewportDims
 			return { ...state, viewportDims: newViewportDims }
 		case 'TOGGLE_GAME_MODE':
-			if (newGameMode == 'targetPractice') {
+			if (newGameMode == 'breakOut') {
 				newGameMode = 'sandbox'
 				newLevel = levelStates[0]
 			} else {
-				newGameMode = 'targetPractice'
+				newGameMode = 'breakOut'
 				newLevel = levelStates[1]
 			}
 			newNodes = [
@@ -105,7 +77,16 @@ const shapeReducer = (state = initialState, action) => {
 				}
 			]
 			newLeaves = newNodes
-			return { ...state, gameMode: newGameMode, settings:newLevel.settings,obstacles:newLevel.obstacles,targets:newLevel.targets,nodes: newNodes, leaves: newLeaves,  }
+			return {
+				...state,
+				gameMode: newGameMode,
+				stage: newLevel.stage,
+				settings: newLevel.settings,
+				obstacles: newLevel.obstacles,
+				targets: newLevel.targets,
+				nodes: newNodes,
+				leaves: newLeaves
+			}
 		default:
 			return state
 	}

@@ -11,7 +11,7 @@ handleclick = () =>{
 
   render() {
       var icon
-    (this.props.gameMode=='targetPractice')?icon=faFlask:icon=faBullseye
+    (this.props.gameMode=='breakOut')?icon=faFlask:icon=faBullseye
     return (
       <div className="gameModeButton" onClick={this.handleclick}>
         <FontAwesomeIcon icon={icon} />

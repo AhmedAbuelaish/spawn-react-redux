@@ -14,7 +14,6 @@ class App extends Component {
 		super(props)
 		this.state = this.props.viewportDims
 		this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
-		console.log('viewport', this.state)
 	}
 
 	componentDidMount() {
