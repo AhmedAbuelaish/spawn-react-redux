@@ -5,7 +5,7 @@ import randomSpread from './randomSpread'
 // ~~~~~~~~~~~ CREATE FRAGMENTED ARRAY ~~~~~~~~~~~~~~~//
 function createFragmentedArray(parentsArr, settings) {
 	var allChildrenArray = parentsArr.map((currentParent, index) => {
-		return distributeParentValue(currentParent, settings)
+			return distributeParentValue(currentParent, settings)
 	})
 	allChildrenArray = flatten(allChildrenArray)
 	return allChildrenArray
@@ -40,7 +40,7 @@ function distributeParentValue(parent, settings) {
 					coordX: parent.coordX,
 					coordY: parent.coordY,
 					angle: myAngle,
-					color: `210, ${mySize*20}, ${mySize*40}` // rgb values
+					color: `210, ${mySize * 20}, ${mySize * 40}` // rgb values
 				})
 				siblingCounter += 1
 				myAngle += tempAngle // Setup for next center
