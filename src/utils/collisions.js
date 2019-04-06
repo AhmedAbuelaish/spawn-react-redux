@@ -26,6 +26,7 @@ function doLeavesIntersectObstacles(leaves, obstacles, status) {
 						return modLeaf
 					} else if (status == 'win') {
 						let modLeaf = currentLeaf
+						modLeaf.radius = modLeaf.radius + 30 // Size boost at target
 						modLeaf.color = `210, 50, 50` // rgb values
 						modLeaf.status = 'win'
 						return modLeaf
