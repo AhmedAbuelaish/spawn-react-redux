@@ -87,7 +87,7 @@ const mapDispatchToProps = dispatch => ({
 	updateSettings: settingsObj => dispatch({ type: 'UPDATE_SETTINGS', settings: settingsObj }),
 	reset: () => dispatch({ type: 'RESET' }),
 	createRoot: () => dispatch({ type: 'CREATE_ROOT' }),
-	createNodes: () => dispatch({ type: 'CREATE_NODES' })
+	createNodes: () => dispatch({ type: 'RENDER_NODES' })
 })
 
 export default connect(

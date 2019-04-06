@@ -1,4 +1,4 @@
-import createFragmentedArray from '../utils/fragment'
+import { createFragmentedArray, distributeParentValue } from '../utils/fragment'
 import calcNewZoom from '../utils/stageSetup'
 import doLeavesIntersectObstacles from '../utils/collisions'
 import { levelStates } from '../levels/levels'
@@ -12,6 +12,7 @@ const initialState = {
 	stage: levelStates[1].stage,
 	settings: levelStates[1].settings,
 	nodes: [],
+	tempNodes: [],
 	leaves: [],
 	obstacles: levelStates[1].obstacles, // Draw obstacles clockwise
 	targets: levelStates[1].targets,
@@ -52,6 +53,10 @@ const shapeReducer = (state = initialState, action) => {
 		// case 'GET_WINNING_PATH':
 		// 	newNodes = highlightWinningPath(newNodes)
 		// 	return {...state,nodes:newNodes}
+		case 'CREATE_LEAVES':
+			Array.prototype.push.apply(newNodes, action.tempNodesArr)
+			newStage = calcNewZoom(action.tempNodesArr, state.stage, state.viewportDims)
+			return { ...state, nodes: newNodes, leaves: action.leavesArr, stage: newStage }
 		case 'UPDATE_SETTINGS':
 			newSettings = action.settings
 			return { ...state, settings: newSettings }
@@ -93,3 +98,5 @@ const shapeReducer = (state = initialState, action) => {
 }
 
 export default shapeReducer
+
+// type: 'CREATE_LEAVES', singleTempNode: tempNodeArr, newLeaves: newLeavesArr })

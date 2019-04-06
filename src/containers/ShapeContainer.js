@@ -1,43 +1,66 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { createFragmentedArray, distributeParentValue } from '../utils/fragment'
+import calcNewZoom from '../utils/stageSetup'
+import doLeavesIntersectObstacles from '../utils/collisions'
+import { flatten } from '../utils/arrayFunctions'
+import worker from '../utils/worker'
+import WebWorker from '../utils/workerSetup'
 
 class ShapeContainer extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {
+  		this.state = {
 			animating: false
 		}
+	}
+		this.handleClick = this.handleClick.bind(this)
+		this.startWebWorker = this.startWebWorker.bind(this)
+		this.leavesArr = []
+		this.tempNodesArr = []
 	}
 
 	componentDidMount() {
 		this.props.createRoot()
-		// this.frame = requestAnimationFrame(this.loopCreatAnimation)
+		this.worker = new WebWorker(worker)
 	}
 
-	loopCreatAnimation = timestamp => {
-		this.props.createNodes()
-		this.frame = requestAnimationFrame(this.loopCreatAnimation)
+	createAnimationLoop = timestamp => {
+		this.props.createLeaves(this.tempNodesArr, this.leavesArr)
+		this.tempNodesArr = []
+		requestAnimationFrame(this.createAnimationLoop)
+	}
+
+	startWebWorker = () => {
+		console.log('starting webworker')
+		this.worker.postMessage([this.leavesArr, this.props.settings, this.props.obstacles])
+		this.worker.onmessage = event => {
+			console.log('recieved message from worker')
+			Array.prototype.push.apply(this.tempNodesArr, event.data[0])
+			this.leavesArr = event.data[1]
+		}
 	}
 
 	toggleAnimation = () => {
 		if (this.state.animating) {
 			cancelAnimationFrame(this.frame)
 			this.state.animating = !this.state.animating
-			this.props.reset()
-			this.props.createRoot()
-			this.frame = requestAnimationFrame(this.loopCreatAnimation)
-		} else {
-			this.props.reset()
-			this.props.createRoot()
-			this.frame = requestAnimationFrame(this.loopCreatAnimation)
-			this.state.animating = !this.state.animating
+		}
+    		this.props.reset()
+		this.props.createRoot()
+		this.leavesArr = this.props.leaves
+		this.tempNodesArr = []
+		requestAnimationFrame(this.createAnimationLoop)
+    this.state.animating = !this.state.animating
+		this.startWebWorker()
+			
 		}
 	}
 
 	render() {
-		// console.log('zoom', this.props.stage.zoom)
 		return (
 			<div
+				className='cells'
 				style={{
 					position: 'relative',
 					left: 0,
@@ -69,14 +92,17 @@ const mapStateToProps = state => ({
 	viewportDims: state.viewportDims,
 	settings: state.settings,
 	nodes: state.nodes,
+	tempNodes: state.tempNodes,
 	leaves: state.leaves,
-	stage: state.stage
+	stage: state.stage,
+	obstacles: state.obstacles
 })
 
 const mapDispatchToProps = dispatch => ({
 	createRoot: () => dispatch({ type: 'CREATE_ROOT' }),
 	createNodes: () => dispatch({ type: 'CREATE_NODES' }),
 	reset: () => dispatch({ type: 'RESET' }),
+    	createLeaves: (newTempNodesArr, newLeavesArr) =>	dispatch({ type: 'CREATE_LEAVES', tempNodesArr: newTempNodesArr, leavesArr: newLeavesArr })
 })
 
 export default connect(
