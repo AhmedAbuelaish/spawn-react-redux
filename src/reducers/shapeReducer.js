@@ -26,20 +26,19 @@ const shapeReducer = (state = initialState, action) => {
 	var newStage = state.stage
 	var newGameMode = state.gameMode
 	var newLevel
+	var rootZero = {
+		id: 0,
+		radius: state.settings.rootSize,
+		coordX: state.settings.rootCoords.coordX,
+		coordY: state.settings.rootCoords.coordY,
+		angle: state.settings.rootAngle,
+		color: `210, ${150 * 20}, ${150 * 40}` // rgb values
+	}
 	switch (action.type) {
 		case 'RESET':
 			return { ...state, nodes: [], leaves: [], stage: levelStates[1].stage }
 		case 'CREATE_ROOT':
-			newNodes = [
-				{
-					id: 0,
-					radius: state.settings.rootSize,
-					coordX: state.settings.rootCoords.coordX,
-					coordY: state.settings.rootCoords.coordY,
-					angle: state.settings.rootAngle,
-					color: `210, ${150 * 20}, ${150 * 40}` // rgb values
-				}
-			]
+			newNodes = [rootZero]
 			newLeaves = newNodes
 			return { ...state, nodes: newNodes, leaves: newLeaves }
 		case 'CREATE_NODES':
@@ -66,16 +65,7 @@ const shapeReducer = (state = initialState, action) => {
 				newGameMode = 'breakOut'
 				newLevel = levelStates[1]
 			}
-			newNodes = [
-				{
-					id: 0,
-					radius: newLevel.settings.rootSize,
-					coordX: newLevel.settings.rootCoords.coordX,
-					coordY: newLevel.settings.rootCoords.coordY,
-					angle: newLevel.settings.rootAngle,
-					color: `210, ${150 * 20}, ${150 * 40}` // rgb values
-				}
-			]
+			newNodes = [rootZero]
 			newLeaves = newNodes
 			return {
 				...state,
