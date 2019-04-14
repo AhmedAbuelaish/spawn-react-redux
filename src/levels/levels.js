@@ -22,7 +22,7 @@ export const levelStates = {
 			angleRange: [[-100, -70], [-45, 45], [70, 100]], // Range: -180 to 180
 			maxAngleRanges: 4,
 			minSize: 4,
-			multiplier: 130,
+			multiplier: 100,
 			multiplierPrecision: 80, // Higher Levels, precision -> 100%
 			decay: 90,
 			decayPrecision: 50, // Higher Levels, precision -> 100%
