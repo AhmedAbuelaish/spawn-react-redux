@@ -1,6 +1,6 @@
 export const levelStates = {
 	0: {
-		stage: { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 0.7 },
+		stage: { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 0.3 },
 		settings: {
 			angleRange: [[-100, -70], [-45, 45], [70, 100]], // Range: -180 to 180
 			maxAngleRanges: 4,
@@ -17,7 +17,7 @@ export const levelStates = {
 		targets: []
 	},
 	1: {
-		stage: { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 0.7 },
+		stage: { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 0.3 },
 		settings: {
 			angleRange: [[-100, -70], [-45, 45], [70, 100]], // Range: -180 to 180
 			maxAngleRanges: 4,

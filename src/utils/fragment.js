@@ -19,19 +19,18 @@ function distributeParentValue(parent, settings) {
 	let currentChildrenArray = []
 	let siblingCounter = 0
 
-	let minAngle = Math.atan(settings.minSize / myDistance)
 	let remainder = randomSpread(parent.radius, settings.multiplier, settings.multiplierPrecision, 50, 2)
 
 	if (parent.radius <= settings.minSize || parent.id.length === 40) {
 		return currentChildrenArray
 	} else {
 		while (remainder >= settings.minSize) {
+			// As long as there is a remainder, create new leaves
 			mySize = randomSpread(remainder * Math.random(), settings.decay, settings.decayPrecision, 100, 2)
-			// mySize = Math.trunc(remainder * Math.random() * 1000) / 1000
 			let tempAngle = Math.atan(mySize / myDistance)
 			remainder -= mySize
 			if (mySize >= settings.minSize) {
-				// retotalizer += mySize
+				// Create the new leaf as long as it is greater than minSize
 				myAngle += tempAngle // Find my center
 				currentChildrenArray.push({
 					id: parent.id + '' + siblingCounter,

@@ -4,19 +4,18 @@ import doLeavesIntersectObstacles from '../utils/collisions'
 import { levelStates } from '../levels/levels'
 // import highlightWinningPath from '../utils/winningPath'
 
-// This reducer references/holds the main store
-// It modifies the main state of the app
-
 const initialState = {
 	viewportDims: { width: window.innerWidth, height: window.innerHeight },
-	stage: levelStates[1].stage,
+	stage: { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 1 },
 	settings: levelStates[1].settings,
 	nodes: [],
 	leaves: [],
-	obstacles: levelStates[1].obstacles, // Draw obstacles clockwise
+	obstacles: levelStates[1].obstacles,
 	targets: levelStates[1].targets,
 	gameMode: 'breakOut'
 }
+
+initialState.stage = levelStates[1].stage
 
 const shapeReducer = (state = initialState, action) => {
 	var newNodes = state.nodes.slice()
