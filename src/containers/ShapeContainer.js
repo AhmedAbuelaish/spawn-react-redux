@@ -11,7 +11,6 @@ class ShapeContainer extends Component {
 
 	componentDidMount() {
 		this.props.createRoot()
-		// this.frame = requestAnimationFrame(this.loopCreatAnimation)
 	}
 
 	loopCreatAnimation = timestamp => {
@@ -38,7 +37,6 @@ class ShapeContainer extends Component {
 	}
 
 	render() {
-		// console.log('zoom', this.props.stage.zoom)
 		return (
 			<div
 				style={{
