@@ -15,7 +15,7 @@ class ShapeContainer extends Component {
 	}
 
 	loopCreatAnimation = timestamp => {
-		if (this.props.leaves.length > 0 || this.props.nodes.length > 10000) {
+		if (this.props.leaves.length > 0) {
 			this.props.createNodes()
 			this.frame = requestAnimationFrame(this.loopCreatAnimation)
 		} else {
