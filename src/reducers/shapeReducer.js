@@ -7,15 +7,15 @@ import { levelStates } from '../levels/levels'
 const initialState = {
 	viewportDims: { width: window.innerWidth, height: window.innerHeight },
 	stage: { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 1 },
-	settings: levelStates[1].settings,
+	settings: levelStates[2].settings,
 	nodes: [],
 	leaves: [],
-	obstacles: levelStates[1].obstacles,
-	targets: levelStates[1].targets,
+	obstacles: levelStates[2].obstacles,
+	targets: levelStates[2].targets,
 	gameMode: 'breakOut'
 }
 
-initialState.stage = levelStates[1].stage
+initialState.stage = levelStates[2].stage
 
 const shapeReducer = (state = initialState, action) => {
 	var newNodes = state.nodes.slice()
@@ -35,7 +35,7 @@ const shapeReducer = (state = initialState, action) => {
 	}
 	switch (action.type) {
 		case 'RESET':
-			return { ...state, nodes: [], leaves: [], stage: levelStates[1].stage }
+			return { ...state, nodes: [], leaves: [], stage: levelStates[2].stage }
 		case 'CREATE_ROOT':
 			newNodes = [rootZero]
 			newLeaves = newNodes
@@ -62,7 +62,7 @@ const shapeReducer = (state = initialState, action) => {
 				newLevel = levelStates[0]
 			} else {
 				newGameMode = 'breakOut'
-				newLevel = levelStates[1]
+				newLevel = levelStates[2]
 			}
 			newNodes = [rootZero]
 			newLeaves = newNodes

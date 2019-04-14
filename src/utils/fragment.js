@@ -23,20 +23,20 @@ function distributeParentValue(parent, settings) {
 		let rangeSizeArr = calcRangeSize(settings.angleRange)
 		let rangeToSpreadOver = totalizeAngleRange(rangeSizeArr)
 		let remainder = randomSpread(
-			rangeToSpreadOver,
+			parent.radius,
 			settings.multiplier,
 			settings.multiplierPrecision,
-			0.5 * rangeToSpreadOver,
+			0.5 * parent.radius,
 			2
 		)
-		remainder = degToRad(remainder)
+		// remainder = degToRad(remainder)
 
-		while (remainder >= minAngle) {
+		while (remainder >= settings.minSize) {
 			// As long as there is a remainder, create new leaves
-			mySize = randomSpread(parent.radius * Math.random(), settings.decay, settings.decayPrecision, parent.radius, -1)
+			mySize = randomSpread(parent.radius * Math.random(), 100-settings.decay, settings.decayPrecision, parent.radius, -1)
 
 			let myAngleSpan = 2 * Math.atan(mySize / myDistance)
-			remainder -= myAngleSpan
+			remainder -= Math.max(mySize,0)
 
 			// Create the new leaf as long as it is greater than minSize
 			if (mySize >= settings.minSize) {

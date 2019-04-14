@@ -44,9 +44,9 @@ class SettingsForm extends Component {
 						formSubmit={this.handleFormSubmission}
 					/>
 					<InputField
-						propName={'multiplierPrecision'}
-						propLabel={'x Precision'}
-						propValue={this.state.multiplierPrecision}
+						propName={'anglePrecision'}
+						propLabel={'Angle Prec.'}
+						propValue={this.state.anglePrecision}
 						propMin={0}
 						propMax={100}
 						fieldChange={this.handleFormChange}
@@ -56,8 +56,8 @@ class SettingsForm extends Component {
 						propName={'decay'}
 						propLabel={'Decay'}
 						propValue={this.state.decay}
-						propMin={10}
-						propMax={100}
+						propMin={0}
+						propMax={90}
 						fieldChange={this.handleFormChange}
 						formSubmit={this.handleFormSubmission}
 					/>
