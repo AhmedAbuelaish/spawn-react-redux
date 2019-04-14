@@ -9,6 +9,7 @@ export const levelStates = {
 			multiplierPrecision: 80, // Higher Levels, precision -> 100%
 			decay: 90,
 			decayPrecision: 40, // Higher Levels, precision -> 100%
+			anglePrecision: 50,
 			rootAngle: -90,
 			rootCoords: { coordX: window.innerWidth * 0.5, coordY: window.innerHeight * 0.5 },
 			rootSize: 100
@@ -26,6 +27,7 @@ export const levelStates = {
 			multiplierPrecision: 80, // Higher Levels, precision -> 100%
 			decay: 90,
 			decayPrecision: 50, // Higher Levels, precision -> 100%
+			anglePrecision: 100,
 			rootAngle: 0,
 			rootCoords: { coordX: window.innerWidth * 0.4, coordY: window.innerHeight * 0.5 },
 			rootSize: 100
@@ -58,5 +60,5 @@ export const levelStates = {
 				{ x: window.innerWidth * 0.8 - 50, y: window.innerHeight * 0.9 - 50 }
 			]
 		]
-	},
+	}
 }

@@ -5,30 +5,58 @@ function createFragmentedArray(parentsArr, settings) {
 	})
 	allChildrenArray = flatten(allChildrenArray)
 	return allChildrenArray
-}	
+}
 
 // ~~~~~~~~~~~~~~ DISTRIBUTE VALUE ~~~~~~~~~~~~~~~~~~~//
 function distributeParentValue(parent, settings) {
-	let mySize = 0
 	let myAngle = 0
-	let myDistance = parent.radius + 5 // Adjust this to move children off of circumferance
+	let mySize = 0
+	let myRange = 0
 	let currentChildrenArray = []
+	let myDistance = parent.radius + 5 // Adjust this to move children off of circumferance
 	let siblingCounter = 0
-	
-	let rangeToSpreadOver = totalizeAngleRange(settings.angleRange)
-	let remainder = randomSpread(rangeToSpreadOver, settings.multiplier, settings.multiplierPrecision, 50, 2)
 
 	if (parent.radius <= settings.minSize || parent.id.length === 40) {
 		return currentChildrenArray
 	} else {
-		while (remainder >= 0) {
+		let minAngle = Math.atan(settings.minSize / myDistance)
+		let rangeSizeArr = calcRangeSize(settings.angleRange)
+		let rangeToSpreadOver = totalizeAngleRange(rangeSizeArr)
+		let remainder = randomSpread(
+			rangeToSpreadOver,
+			settings.multiplier,
+			settings.multiplierPrecision,
+			0.5 * rangeToSpreadOver,
+			2
+		)
+		remainder = degToRad(remainder)
+
+		while (remainder >= minAngle) {
 			// As long as there is a remainder, create new leaves
-			mySize = randomSpread(parent.radius, settings.decay, settings.decayPrecision, 100, -1)
-			let tempAngle = Math.atan(mySize / myDistance)
-			remainder -= mySize
+			mySize = randomSpread(parent.radius, settings.decay, settings.decayPrecision, parent.radius, -1)
+
+			let myAngleSpan = 2 * Math.atan(mySize / myDistance)
+			remainder -= myAngleSpan
+
+			// Create the new leaf as long as it is greater than minSize
 			if (mySize >= settings.minSize) {
-				// Create the new leaf as long as it is greater than minSize
-				myAngle += tempAngle // Find my center
+				// Place leaf in range if it fits
+				for (var r = 0; r < rangeSizeArr.length; r++) {
+					console.log('mySpan',radToDeg(myAngleSpan),'rangeSize',rangeSizeArr[myRange])
+					if (radToDeg(myAngleSpan) <= rangeSizeArr[myRange]) {
+						break
+					} else {
+						myRange++
+						myRange >= rangeSizeArr.length ? (myRange = 0) : (myRange = myRange)
+					}
+				}
+				myAngle = degToRad(randomSpread(
+					(settings.angleRange[myRange][1] - settings.angleRange[myRange][0]) / 2,
+					100,
+					settings.anglePrecision,
+					rangeSizeArr[myRange],
+					2
+				))
 				currentChildrenArray.push({
 					id: parent.id + '' + siblingCounter,
 					radius: mySize,
@@ -39,7 +67,6 @@ function distributeParentValue(parent, settings) {
 					color: `210, ${mySize * 20}, ${mySize * 40}` // rgb values
 				})
 				siblingCounter += 1
-				myAngle += tempAngle // Setup for next center
 			}
 		}
 	}
@@ -70,9 +97,9 @@ function randomSpread(originalValue, percentOfOriginal, precision, spread, direc
 	// percentOfOriginal= % of originalValue
 	// precision= 0%:least precise, 100%:most precise
 	// originalValue: starting value
-	// spread= range as % of originalValue to randomize around
+	// spread= range of values around the originalValue to pick from
 	// direction= 2: centered around percentOfOriginal. 1:Positive bias. -1:negative bias
-	let range = originalValue * (percentOfOriginal / 100) * (spread / 100)
+
 	let randomizer = 0
 
 	if (direction === 2) {
@@ -82,7 +109,11 @@ function randomSpread(originalValue, percentOfOriginal, precision, spread, direc
 	} else {
 		direction = -1
 	}
-	return (percentOfOriginal / 100) * originalValue + (randomizer * range * (100 - precision)) / 100
+	return (percentOfOriginal / 100) * originalValue + (randomizer * spread * (100 - precision)) / 100
+}
+
+function noise(min, max) {
+	return min + Math.random() * (max - min)
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -93,17 +124,22 @@ function flatten(arr, val) {
 	return arr.reduce((acc, val) => acc.concat(val), [])
 }
 
-function totalizeAngleRange(angleArr) {
-	let totalAngleArr = angleArr.map((currentRangeArr, index) => {
+function calcRangeSize(angleArr) {
+	let rangeSizeArr = angleArr.map((currentRangeArr, index) => {
 		return currentRangeArr[1] - currentRangeArr[0]
 	})
+	return rangeSizeArr
+}
+
+function totalizeAngleRange(totalAngleArr) {
 	let totalAngle = totalAngleArr.reduce((partial_sum, a) => partial_sum + a)
 	return totalAngle
 }
 
 function angleSpread(arrayToSpread, rangeToSpread, arrayToSpreadOver, parentAngle) {
 	// adds equal sized spaces between the circles to spread them apart
-	let rangeToSpreadOver = totalizeAngleRange(arrayToSpreadOver)
+	let rangeSizeArr = calcRangeSize(arrayToSpreadOver)
+	let rangeToSpreadOver = totalizeAngleRange(rangeSizeArr)
 	let numberOfRanges = arrayToSpreadOver.length
 	let emptySpace = rangeToSpreadOver - rangeToSpread
 	let spaceBetween
@@ -161,7 +197,6 @@ function shiftEntireArray(arrayToShift, refArr, i) {
 
 function findMatchingRange(ranges, checkValue) {
 	function checkRange(range) {
-		// console.log('checkValue', checkValue, 'range[0]', range[0], 'range[1]', range[1])
 		return checkValue >= range[0] && checkValue <= range[1]
 	}
 	return ranges.findIndex(checkRange)
