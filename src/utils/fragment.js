@@ -33,7 +33,7 @@ function distributeParentValue(parent, settings) {
 
 		while (remainder >= minAngle) {
 			// As long as there is a remainder, create new leaves
-			mySize = randomSpread(parent.radius, settings.decay, settings.decayPrecision, parent.radius, -1)
+			mySize = randomSpread(parent.radius * Math.random(), settings.decay, settings.decayPrecision, parent.radius, -1)
 
 			let myAngleSpan = 2 * Math.atan(mySize / myDistance)
 			remainder -= myAngleSpan
@@ -42,7 +42,7 @@ function distributeParentValue(parent, settings) {
 			if (mySize >= settings.minSize) {
 				// Place leaf in range if it fits
 				for (var r = 0; r < rangeSizeArr.length; r++) {
-					console.log('mySpan',radToDeg(myAngleSpan),'rangeSize',rangeSizeArr[myRange])
+					// console.log('mySpan', radToDeg(myAngleSpan), 'rangeSize', rangeSizeArr[myRange])
 					if (radToDeg(myAngleSpan) <= rangeSizeArr[myRange]) {
 						break
 					} else {
@@ -50,19 +50,19 @@ function distributeParentValue(parent, settings) {
 						myRange >= rangeSizeArr.length ? (myRange = 0) : (myRange = myRange)
 					}
 				}
-				myAngle = degToRad(randomSpread(
-					(settings.angleRange[myRange][1] - settings.angleRange[myRange][0]) / 2,
-					100,
-					settings.anglePrecision,
-					rangeSizeArr[myRange],
-					2
-				))
+				myAngle = parent.angle + randomSpread(
+						(settings.angleRange[myRange][1] + settings.angleRange[myRange][0]) / 2,
+						100,
+						settings.anglePrecision,
+						rangeSizeArr[myRange],
+						2
+					)
 				currentChildrenArray.push({
 					id: parent.id + '' + siblingCounter,
 					radius: mySize,
 					distance: myDistance,
-					coordX: parent.coordX,
-					coordY: parent.coordY,
+					coordX: parent.coordX + myDistance * Math.cos(degToRad(myAngle)),
+					coordY: parent.coordY + myDistance * Math.sin(degToRad(myAngle)),
 					angle: myAngle,
 					color: `210, ${mySize * 20}, ${mySize * 40}` // rgb values
 				})
@@ -71,22 +71,24 @@ function distributeParentValue(parent, settings) {
 		}
 	}
 
-	// Spread Angle of children over angle range
-	let distributedChildrenArray = angleSpread(
-		currentChildrenArray,
-		Math.abs(radToDeg(myAngle)),
-		settings.angleRange,
-		radToDeg(parent.angle) % 360
-	)
+	return currentChildrenArray
 
-	let positionedChildrenArray = distributedChildrenArray.map((el, index) => {
-		let newEl = Object.assign({}, el)
-		newEl.coordX = newEl.coordX + newEl.distance * Math.cos(newEl.angle)
-		newEl.coordY = newEl.coordY + newEl.distance * Math.sin(newEl.angle)
-		return newEl
-	})
+	// // Spread Angle of children over angle range
+	// let distributedChildrenArray = angleSpread(
+	// 	currentChildrenArray,
+	// 	Math.abs(radToDeg(myAngle)),
+	// 	settings.angleRange,
+	// 	radToDeg(parent.angle) % 360
+	// )
 
-	return positionedChildrenArray
+	// let positionedChildrenArray = distributedChildrenArray.map((el, index) => {
+	// 	let newEl = Object.assign({}, el)
+	// 	newEl.coordX = newEl.coordX + newEl.distance * Math.cos(newEl.angle)
+	// 	newEl.coordY = newEl.coordY + newEl.distance * Math.sin(newEl.angle)
+	// 	return newEl
+	// })
+
+	// return positionedChildrenArray
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

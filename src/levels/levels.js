@@ -27,7 +27,7 @@ export const levelStates = {
 			multiplierPrecision: 80, // Higher Levels, precision -> 100%
 			decay: 90,
 			decayPrecision: 50, // Higher Levels, precision -> 100%
-			anglePrecision: 100,
+			anglePrecision: 60,
 			rootAngle: 0,
 			rootCoords: { coordX: window.innerWidth * 0.4, coordY: window.innerHeight * 0.5 },
 			rootSize: 100
