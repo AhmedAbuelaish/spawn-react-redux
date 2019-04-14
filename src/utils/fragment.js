@@ -50,7 +50,9 @@ function distributeParentValue(parent, settings) {
 						myRange >= rangeSizeArr.length ? (myRange = 0) : (myRange = myRange)
 					}
 				}
-				myAngle = parent.angle + randomSpread(
+				myAngle =
+					parent.angle +
+					randomSpread(
 						(settings.angleRange[myRange][1] + settings.angleRange[myRange][0]) / 2,
 						100,
 						settings.anglePrecision,
@@ -67,6 +69,8 @@ function distributeParentValue(parent, settings) {
 					color: `210, ${mySize * 20}, ${mySize * 40}` // rgb values
 				})
 				siblingCounter += 1
+				myRange++
+				myRange >= rangeSizeArr.length ? (myRange = 0) : (myRange = myRange)
 			}
 		}
 	}
