@@ -46,7 +46,7 @@ class SettingsForm extends Component {
 					<InputField
 						propName={'anglePrecision'}
 						propLabel={'Angle Prec.'}
-						propValue={this.state.anglePrecision}
+						propValue={this.props.settings.anglePrecision}
 						propMin={0}
 						propMax={100}
 						fieldChange={this.handleFormChange}
@@ -85,8 +85,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	updateSettings: settingsObj => dispatch({ type: 'UPDATE_SETTINGS', settings: settingsObj }),
-	reset: () => dispatch({ type: 'RESET' }),
-	createRoot: () => dispatch({ type: 'CREATE_ROOT' }),
 	createNodes: () => dispatch({ type: 'CREATE_NODES' })
 })
 

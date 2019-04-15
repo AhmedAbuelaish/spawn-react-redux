@@ -10,7 +10,7 @@ class ShapeContainer extends Component {
 	}
 
 	componentDidMount() {
-		this.props.createRoot()
+		this.props.resetRoot()
 	}
 
 	loopCreatAnimation = timestamp => {
@@ -30,8 +30,8 @@ class ShapeContainer extends Component {
 			console.log('cancelled animation')
 			this.state.animating = false
 		}
-		this.props.reset()
-		this.props.createRoot()
+		// this.props.reset()
+		this.props.resetRoot()
 		this.state.animating = true
 		this.frame = requestAnimationFrame(this.loopCreatAnimation)
 	}
@@ -75,9 +75,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-	createRoot: () => dispatch({ type: 'CREATE_ROOT' }),
+	resetRoot: () => dispatch({ type: 'RESET_ROOT' }),
 	createNodes: () => dispatch({ type: 'CREATE_NODES' }),
-	reset: () => dispatch({ type: 'RESET' })
 })
 
 export default connect(

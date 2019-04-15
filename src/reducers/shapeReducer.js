@@ -4,18 +4,19 @@ import doLeavesIntersectObstacles from '../utils/collisions'
 import { levelStates } from '../levels/levels'
 // import highlightWinningPath from '../utils/winningPath'
 
+const defaultLevel = 1
+
 const initialState = {
 	viewportDims: { width: window.innerWidth, height: window.innerHeight },
-	stage: { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 1 },
-	settings: levelStates[2].settings,
 	nodes: [],
 	leaves: [],
-	obstacles: levelStates[2].obstacles,
-	targets: levelStates[2].targets,
-	gameMode: 'breakOut'
+	gameMode: 'breakOut',
+	level: defaultLevel,
+	stage: levelStates[defaultLevel].stage,
+	settings: levelStates[defaultLevel].settings,
+	obstacles: levelStates[defaultLevel].obstacles,
+	targets: levelStates[defaultLevel].targets
 }
-
-initialState.stage = levelStates[2].stage
 
 const shapeReducer = (state = initialState, action) => {
 	var newNodes = state.nodes.slice()
@@ -34,12 +35,8 @@ const shapeReducer = (state = initialState, action) => {
 		color: `210, ${150 * 20}, ${150 * 40}` // rgb values
 	}
 	switch (action.type) {
-		case 'RESET':
-			return { ...state, nodes: [], leaves: [], stage: levelStates[2].stage }
-		case 'CREATE_ROOT':
-			newNodes = [rootZero]
-			newLeaves = newNodes
-			return { ...state, nodes: newNodes, leaves: newLeaves }
+		case 'RESET_ROOT':
+			return { ...state, nodes: [rootZero], leaves: [rootZero], stage: levelStates[state.level].stage }
 		case 'CREATE_NODES':
 			newLeaves = createFragmentedArray(newLeaves, newSettings)
 			newStage = calcNewZoom(newLeaves, state.stage, state.viewportDims)
@@ -62,10 +59,8 @@ const shapeReducer = (state = initialState, action) => {
 				newLevel = levelStates[0]
 			} else {
 				newGameMode = 'breakOut'
-				newLevel = levelStates[2]
+				newLevel = levelStates[state.level]
 			}
-			newNodes = [rootZero]
-			newLeaves = newNodes
 			return {
 				...state,
 				gameMode: newGameMode,
@@ -73,8 +68,6 @@ const shapeReducer = (state = initialState, action) => {
 				settings: newLevel.settings,
 				obstacles: newLevel.obstacles,
 				targets: newLevel.targets,
-				nodes: newNodes,
-				leaves: newLeaves
 			}
 		default:
 			return state

@@ -117,7 +117,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	updateSettings: settingsObj => dispatch({ type: 'UPDATE_SETTINGS', settings: settingsObj }),
-	reset: () => dispatch({ type: 'RESET' })
 })
 
 export default connect(
