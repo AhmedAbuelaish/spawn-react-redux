@@ -11,13 +11,19 @@ class SettingsForm extends Component {
 		this.handleFormSubmission = this.handleFormSubmission.bind(this)
 	}
 
+	componentDidUpdate(prevProps) {
+		if (prevProps.settings !== this.props.settings) {
+			this.setState(this.props.settings)
+		}
+	}
+
 	handleFormChange = (value, targetProp, i) => {
-		if(i === undefined){
+		if (i === undefined) {
 			this.setState({ [targetProp]: value })
-		} else if(i===0){
+		} else if (i === 0) {
 			this.setState({ [targetProp]: [[value, this.state.angleRange[0][1]]] })
-		} else if(i===1){
-			this.setState({ [targetProp]: [[this.state.angleRange[0][0],value]] })
+		} else if (i === 1) {
+			this.setState({ [targetProp]: [[this.state.angleRange[0][0], value]] })
 		}
 	}
 
@@ -46,7 +52,7 @@ class SettingsForm extends Component {
 					<InputField
 						propName={'anglePrecision'}
 						propLabel={'Angle Prec.'}
-						propValue={this.props.settings.anglePrecision}
+						propValue={this.state.anglePrecision}
 						propMin={0}
 						propMax={100}
 						fieldChange={this.handleFormChange}
@@ -70,7 +76,7 @@ class SettingsForm extends Component {
 						fieldChange={this.handleFormChange}
 						formSubmit={this.handleFormSubmission}
 					/>
-					<input className='reset-button' type='submit' value='Reset' style={{visibility:'hidden'}}/>
+					<input className='reset-button' type='submit' value='Reset' style={{ visibility: 'hidden' }} />
 				</form>
 			</div>
 		)

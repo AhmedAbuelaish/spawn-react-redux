@@ -24,6 +24,22 @@ class RadialControl extends Component {
 		this.createPieData = this.createPieData.bind(this)
 	}
 
+	// componentDidUpdate(prevProps) {
+	// 	if (prevProps.settings !== this.props.settings) {
+	// 		this.setState({
+	// 			angleRange: this.props.settings.angleRange,
+	// 			maxAngleRanges: this.props.settings.maxAngleRanges,
+	// 			radius: this.props.radius,
+	// 			rootAngle: this.props.settings.rootAngle
+	// 		})
+	// 		this.setState({
+	// 			...this.state,
+	// 			minMax: this.calcAllMinMax(),
+	// 			pad: 10
+	// 		})
+	// 	}
+	// }
+
 	handleFormChange = (value, targetProp, i) => {
 		this.setState({ [targetProp]: value })
 		this.setState({ minMax: this.calcAllMinMax() })

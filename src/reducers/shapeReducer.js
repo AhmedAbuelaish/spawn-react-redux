@@ -48,8 +48,7 @@ const shapeReducer = (state = initialState, action) => {
 		// 	newNodes = highlightWinningPath(newNodes)
 		// 	return {...state,nodes:newNodes}
 		case 'UPDATE_SETTINGS':
-			newSettings = action.settings
-			return { ...state, settings: newSettings }
+			return { ...state, settings: action.settings }
 		case 'UPDATE_VIEWPORT':
 			newViewportDims = action.viewportDims
 			return { ...state, viewportDims: newViewportDims }

@@ -2,7 +2,7 @@ export const levelStates = {
 	0: {
 		stage: { x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight }, zoom: 0.3 },
 		settings: {
-			angleRange: [[-100, -70], [-45, 45], [70, 100]], // Range: -180 to 180
+			angleRange: [[-180, 180]], // Range: -180 to 180
 			maxAngleRanges: 4,
 			minSize: 4,
 			multiplier: 130,
@@ -27,7 +27,7 @@ export const levelStates = {
 			multiplierPrecision: 80, // Higher Levels, precision -> 100%
 			decay: 10,
 			decayPrecision: 50, // Higher Levels, precision -> 100%
-			anglePrecision: 100,
+			anglePrecision: 0,
 			rootAngle: 0,
 			rootCoords: { coordX: window.innerWidth * 0.4, coordY: window.innerHeight * 0.5 },
 			rootSize: 100
