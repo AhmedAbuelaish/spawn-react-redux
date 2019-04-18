@@ -37,6 +37,18 @@ const shapeReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'RESET_ROOT':
 			return { ...state, nodes: [rootZero], leaves: [rootZero], stage: levelStates[state.level].stage }
+		case 'NEW_ROOT':
+			var newRootIndex = state.nodes.findIndex(function(node) {
+				return node.id === action.id
+			})
+			var newRoot = state.nodes[newRootIndex]
+			var burstId = newRoot.id.toString().split('x')[0]
+			console.log(burstId)
+			newRoot.id.toString().split('x')[1]
+				? (newRoot.id = burstId + '1x' + newRoot.id.toString().split('x')[1])
+				: (newRoot.id = '1x' + newRoot.id)
+			console.log(action.id, newRoot)
+			return { ...state, leaves: [newRoot] }
 		case 'CREATE_NODES':
 			newLeaves = createFragmentedArray(newLeaves, newSettings)
 			newStage = calcNewZoom(newLeaves, state.stage, state.viewportDims)

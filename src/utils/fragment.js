@@ -19,9 +19,7 @@ function distributeParentValue(parent, settings) {
 	if (parent.radius <= settings.minSize || parent.id.length === 40) {
 		return currentChildrenArray
 	} else {
-		let minAngle = Math.atan(settings.minSize / myDistance)
 		let rangeSizeArr = calcRangeSize(settings.angleRange)
-		let rangeToSpreadOver = totalizeAngleRange(rangeSizeArr)
 		let remainder = randomSpread(
 			parent.radius,
 			settings.multiplier,
@@ -42,7 +40,6 @@ function distributeParentValue(parent, settings) {
 			if (mySize >= settings.minSize) {
 				// Place leaf in range if it fits
 				for (var r = 0; r < rangeSizeArr.length; r++) {
-					// console.log('mySpan', radToDeg(myAngleSpan), 'rangeSize', rangeSizeArr[myRange])
 					if (radToDeg(myAngleSpan) <= rangeSizeArr[myRange]) {
 						break
 					} else {
@@ -76,23 +73,6 @@ function distributeParentValue(parent, settings) {
 	}
 
 	return currentChildrenArray
-
-	// // Spread Angle of children over angle range
-	// let distributedChildrenArray = angleSpread(
-	// 	currentChildrenArray,
-	// 	Math.abs(radToDeg(myAngle)),
-	// 	settings.angleRange,
-	// 	radToDeg(parent.angle) % 360
-	// )
-
-	// let positionedChildrenArray = distributedChildrenArray.map((el, index) => {
-	// 	let newEl = Object.assign({}, el)
-	// 	newEl.coordX = newEl.coordX + newEl.distance * Math.cos(newEl.angle)
-	// 	newEl.coordY = newEl.coordY + newEl.distance * Math.sin(newEl.angle)
-	// 	return newEl
-	// })
-
-	// return positionedChildrenArray
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -135,77 +115,6 @@ function calcRangeSize(angleArr) {
 		return currentRangeArr[1] - currentRangeArr[0]
 	})
 	return rangeSizeArr
-}
-
-function totalizeAngleRange(totalAngleArr) {
-	let totalAngle = totalAngleArr.reduce((partial_sum, a) => partial_sum + a)
-	return totalAngle
-}
-
-function angleSpread(arrayToSpread, rangeToSpread, arrayToSpreadOver, parentAngle) {
-	// adds equal sized spaces between the circles to spread them apart
-	let rangeSizeArr = calcRangeSize(arrayToSpreadOver)
-	let rangeToSpreadOver = totalizeAngleRange(rangeSizeArr)
-	let numberOfRanges = arrayToSpreadOver.length
-	let emptySpace = rangeToSpreadOver - rangeToSpread
-	let spaceBetween
-
-	if (emptySpace < 0) {
-		emptySpace = 0
-	}
-	if (arrayToSpread.length === 0) {
-		spaceBetween = 0
-	} else {
-		spaceBetween = degToRad(emptySpace / (arrayToSpread.length * 2))
-	}
-
-	let cummAngle = degToRad(arrayToSpreadOver[0][0])
-	let rangeNumber = 0
-	let resultArray = []
-	let initialArray = arrayToSpread
-	let initSpreadArray = []
-	for (var i = 0; i < arrayToSpreadOver.length; i++) {
-		initSpreadArray = shiftEntireArray(initialArray, arrayToSpreadOver, i)
-		for (var j = 0; j < initialArray.length; j++) {
-			let newEl = Object.assign({}, initSpreadArray[j])
-			let tempAngle = newEl.angle + (2 * j + 1) * spaceBetween
-			rangeNumber = findMatchingRange(arrayToSpreadOver, radToDeg(tempAngle))
-			if (rangeNumber === -1) {
-				break
-			} else {
-				newEl.angle = tempAngle
-				resultArray.push(newEl)
-				initialArray.splice(0, j)
-			}
-		}
-	}
-
-	let filteredArray = resultArray.filter(function(el) {
-		return el != null
-	})
-
-	let finalPositionedArray = filteredArray.map((el, index) => {
-		let newEl = Object.assign({}, el)
-		newEl.angle += degToRad(parentAngle)
-		return newEl
-	})
-	return finalPositionedArray
-}
-
-function shiftEntireArray(arrayToShift, refArr, i) {
-	return arrayToShift.map((el, index) => {
-		let newEl = Object.assign({}, el)
-		newEl.angle += degToRad(refArr[i][0])
-		// console.log(radToDeg(el.angle), '+', refArr[i][0], '-->', radToDeg(newEl.angle))
-		return newEl
-	})
-}
-
-function findMatchingRange(ranges, checkValue) {
-	function checkRange(range) {
-		return checkValue >= range[0] && checkValue <= range[1]
-	}
-	return ranges.findIndex(checkRange)
 }
 
 function radToDeg(angle) {
