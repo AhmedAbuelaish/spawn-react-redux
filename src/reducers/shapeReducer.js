@@ -34,6 +34,11 @@ const shapeReducer = (state = initialState, action) => {
 		angle: state.settings.rootAngle,
 		color: `210, ${150 * 20}, ${150 * 40}` // rgb values
 	}
+	if (state == initialState) {
+		setInterval(() => {
+			console.log(state.settings.angleRange.toString())
+		}, 1000)
+	}
 	switch (action.type) {
 		case 'RESET_ROOT':
 			return { ...state, nodes: [rootZero], leaves: [rootZero], stage: levelStates[state.level].stage }
@@ -66,7 +71,7 @@ const shapeReducer = (state = initialState, action) => {
 				stage: newLevel.stage,
 				settings: newLevel.settings,
 				obstacles: newLevel.obstacles,
-				targets: newLevel.targets,
+				targets: newLevel.targets
 			}
 		default:
 			return state

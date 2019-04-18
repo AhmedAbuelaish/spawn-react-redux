@@ -5,7 +5,7 @@ function doLeavesIntersectObstacles(leaves, obstacles, status) {
 		for (var i = 0; i < obstacles.length; i++) {
 			for (var j = 0; j < obstacles[i].length; j++) {
 				var nextVert
-				if (j == obstacles[i].length - 1) {
+				if (j === obstacles[i].length - 1) {
 					nextVert = obstacles[i][0]
 				} else {
 					nextVert = obstacles[i][j + 1]
@@ -19,12 +19,12 @@ function doLeavesIntersectObstacles(leaves, obstacles, status) {
 					)
 				) {
 					// true
-					if (status == 'lose') {
+					if (status === 'lose') {
 						let modLeaf = currentLeaf
 						modLeaf.color = `0, 0, 0` // rgb values
 						modLeaf.radius = 0
 						return modLeaf
-					} else if (status == 'win') {
+					} else if (status === 'win') {
 						let modLeaf = currentLeaf
 						modLeaf.radius = modLeaf.radius * 1.1 // Size boost at target
 						modLeaf.color = `210, 50, 50` // rgb values
@@ -71,7 +71,7 @@ function distanceToSegment(center, vertex1, vertex2) {
 	var dot = A * C + B * D
 	var len_sq = sqr(C) + sqr(D)
 	var param = -1
-	if (len_sq != 0)
+	if (len_sq !== 0)
 		//in case of 0 length line
 		param = dot / len_sq
 

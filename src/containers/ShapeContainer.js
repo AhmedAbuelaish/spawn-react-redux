@@ -19,7 +19,7 @@ class ShapeContainer extends Component {
 			this.frame = requestAnimationFrame(this.loopCreatAnimation)
 		} else {
 			cancelAnimationFrame(this.frame)
-			this.state.animating = false
+			this.setState({ animating: false })
 			console.log('end of animation')
 		}
 	}
@@ -28,11 +28,11 @@ class ShapeContainer extends Component {
 		if (this.state.animating) {
 			cancelAnimationFrame(this.frame)
 			console.log('cancelled animation')
-			this.state.animating = false
+			this.setState({ animating: false })
 		}
 		// this.props.reset()
 		this.props.resetRoot()
-		this.state.animating = true
+		this.setState({ animating: true })
 		this.frame = requestAnimationFrame(this.loopCreatAnimation)
 	}
 
@@ -76,7 +76,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	resetRoot: () => dispatch({ type: 'RESET_ROOT' }),
-	createNodes: () => dispatch({ type: 'CREATE_NODES' }),
+	createNodes: () => dispatch({ type: 'CREATE_NODES' })
 })
 
 export default connect(

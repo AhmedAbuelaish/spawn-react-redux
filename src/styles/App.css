@@ -3,8 +3,7 @@
 }
 
 .App-header {
-	/* background-color: #282c34; */
-	background-image: radial-gradient(#20293b, #071024);
+	background-image: radial-gradient(farthest-corner at 10% 10%, #20293b, #071024);
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
@@ -14,7 +13,7 @@
 	color: white;
 }
 
-.score{
+.score {
 	position: absolute;
 	margin: 20px;
 	top: 0vh;
@@ -23,7 +22,7 @@
 	cursor: pointer;
 }
 
-.gameModeButton{
+.gameModeButton {
 	position: absolute;
 	margin: 20px;
 	top: 0vh;
@@ -34,7 +33,7 @@
 	border-radius: 50%;
 }
 
-.cell{
+.cell {
 	cursor: pointer;
 }
 

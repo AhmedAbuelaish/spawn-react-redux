@@ -65,27 +65,28 @@ class RadialControl extends Component {
 
 	createPieData = (arr, initial) => {
 		return flatten(
-		arr.map((currentRange, i, allRanges) => {
-			let nextRangeStart = 0
-			if (i >= allRanges.length - 1) {
-				nextRangeStart = initial + 360
-			} else {
-				nextRangeStart = allRanges[i + 1][0]
-			}
-			let sectionData = {
-				title: `${i}`,
-				value: (parseFloat(currentRange[1]) % 360) - (parseFloat(currentRange[0]) % 360),
-				color: `rgba(210, 77, 87, 0.7)`
-			}
-			let emptyValue = nextRangeStart - (parseFloat(currentRange[1]) % 360)
-			let emptySectionData = {
-				title: `blank${i}`,
-				value: emptyValue,
-				color: emptyValue <= this.state.pad ? `rgba(255,255,255,0.8)` : `rgba(0,0,0,0.2)`,
-			}
-			return [sectionData, emptySectionData]
-		})
-	)}
+			arr.map((currentRange, i, allRanges) => {
+				let nextRangeStart = 0
+				if (i >= allRanges.length - 1) {
+					nextRangeStart = initial + 360
+				} else {
+					nextRangeStart = allRanges[i + 1][0]
+				}
+				let sectionData = {
+					title: `${i}`,
+					value: (parseFloat(currentRange[1]) % 360) - (parseFloat(currentRange[0]) % 360),
+					color: `rgba(210, 77, 87, 0.7)`
+				}
+				let emptyValue = nextRangeStart - (parseFloat(currentRange[1]) % 360)
+				let emptySectionData = {
+					title: `blank${i}`,
+					value: emptyValue,
+					color: emptyValue <= this.state.pad ? `rgba(255,255,255,0.8)` : `rgba(0,0,0,0.2)`
+				}
+				return [sectionData, emptySectionData]
+			})
+		)
+	}
 
 	render() {
 		let angleRanges = this.state.angleRange
@@ -115,7 +116,7 @@ class RadialControl extends Component {
 				})}
 				<PieChart
 					data={this.createPieData(angleRanges, initAngle)}
-					style={{ width: `${controllerRadius * 2}px`}}
+					style={{ width: `${controllerRadius * 2}px` }}
 					segmentsStyle={{ transition: 'stroke .3s' }}
 					startAngle={parseFloat(angleRanges[0][0]) % 360}
 					totalValue={360}
@@ -128,11 +129,11 @@ class RadialControl extends Component {
 }
 
 const mapStateToProps = state => ({
-	settings: state.settings,
+	settings: state.settings
 })
 
 const mapDispatchToProps = dispatch => ({
-	updateSettings: settingsObj => dispatch({ type: 'UPDATE_SETTINGS', settings: settingsObj }),
+	updateSettings: settingsObj => dispatch({ type: 'UPDATE_SETTINGS', settings: settingsObj })
 })
 
 export default connect(

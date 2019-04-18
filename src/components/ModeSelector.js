@@ -12,7 +12,7 @@ class ModeSelector extends Component {
 
 	render() {
 		var icon,icon2
-    this.props.gameMode == 'breakOut' ? (icon = faFlask) : ([icon,icon2] = [faBullseye,faCaretDown])
+    this.props.gameMode === 'breakOut' ? (icon = faFlask) : ([icon,icon2] = [faBullseye,faCaretDown])
     
 
 		return (
