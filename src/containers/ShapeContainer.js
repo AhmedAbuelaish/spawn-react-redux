@@ -6,7 +6,8 @@ class ShapeContainer extends Component {
 		super(props)
 		this.state = {
 			animating: false,
-			burstIntensity: 10
+			burstIntensity: 6,
+			burstStart: 0
 		}
 	}
 
@@ -26,14 +27,20 @@ class ShapeContainer extends Component {
 		}
 	}
 
+	mouseDown = () => {
+		this.setState({ burstStart: Date.now() })
+	}
+
 	toggleAnimation = id => {
 		if (this.state.animating) {
 			cancelAnimationFrame(this.frame)
 			console.log('cancelled animation')
 			this.setState({ animating: false })
 		}
-		this.props.createNewRoot(id)
-		this.setState({ animating: true, burstIntensity: 5 })
+		var holdTime = (Date.now() - this.state.burstStart)/200
+		console.log(holdTime)
+		this.props.createNewRoot(id, 1+holdTime/50)
+		this.setState({ animating: true, burstIntensity: holdTime })
 		this.frame = requestAnimationFrame(this.loopCreatAnimation)
 	}
 
@@ -60,7 +67,15 @@ class ShapeContainer extends Component {
 						position: 'absolute',
 						transform: `translate(-${currentShape.radius}px, -${currentShape.radius}px)`
 					}
-					return <div className='cell' style={styles} key={i} onClick={() => this.toggleAnimation(currentShape.id)} />
+					return (
+						<div
+							className='cell'
+							style={styles}
+							key={i}
+							onMouseDown={this.mouseDown}
+							onMouseUp={() => this.toggleAnimation(currentShape.id)}
+						/>
+					)
 				})}
 			</div>
 		)
@@ -78,7 +93,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	resetRoot: () => dispatch({ type: 'RESET_ROOT' }),
 	createNodes: () => dispatch({ type: 'CREATE_NODES' }),
-	createNewRoot: currId => dispatch({ type: 'NEW_ROOT', id: currId })
+	createNewRoot: (currId, currBoost) => dispatch({ type: 'NEW_ROOT', id: currId, boost: currBoost })
 })
 
 export default connect(
