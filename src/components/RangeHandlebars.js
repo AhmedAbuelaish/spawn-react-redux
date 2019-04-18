@@ -127,7 +127,6 @@ class RangeHandlebars extends Component {
 		this.fromAngleToRange()
 		this.props.handleChange(this.state.angleRange, 'angleRange', this.state.id)
 		this.setState({ minMax: this.props.minMax })
-		console.log('end',this.state.angleRange.toString())
 	}
 
 	render() {
