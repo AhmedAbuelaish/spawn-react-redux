@@ -37,9 +37,9 @@ class ShapeContainer extends Component {
 			console.log('cancelled animation')
 			this.setState({ animating: false })
 		}
-		var holdTime = (Date.now() - this.state.burstStart) / 200
+		var holdTime = (Date.now() - this.state.burstStart) / 100
 		console.log(holdTime)
-		this.props.createNewRoot(id, 2 * holdTime)
+		this.props.createNewRoot(id, 5 * holdTime)
 		this.setState({ animating: true, burstIntensity: holdTime })
 		this.frame = requestAnimationFrame(this.loopCreatAnimation)
 	}
@@ -93,7 +93,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	resetRoot: () => dispatch({ type: 'RESET_ROOT' }),
 	createNodes: () => dispatch({ type: 'CREATE_NODES' }),
-	createNewRoot: (currId, currBoost) => dispatch({ type: 'NEW_ROOT', id: currId, boost: currBoost })
+	createNewRoot: (currId, currBurst) => dispatch({ type: 'NEW_ROOT', id: currId, burst: currBurst })
 })
 
 export default connect(
