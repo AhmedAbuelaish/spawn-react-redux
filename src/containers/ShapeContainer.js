@@ -37,9 +37,9 @@ class ShapeContainer extends Component {
 			console.log('cancelled animation')
 			this.setState({ animating: false })
 		}
-		var holdTime = (Date.now() - this.state.burstStart)/200
+		var holdTime = (Date.now() - this.state.burstStart) / 200
 		console.log(holdTime)
-		this.props.createNewRoot(id, 1+holdTime/50)
+		this.props.createNewRoot(id, 2 * holdTime)
 		this.setState({ animating: true, burstIntensity: holdTime })
 		this.frame = requestAnimationFrame(this.loopCreatAnimation)
 	}
