@@ -4,18 +4,18 @@ import doLeavesIntersectObstacles from '../utils/collisions'
 import { levelStates } from '../levels/levels'
 // import highlightWinningPath from '../utils/winningPath'
 
-// This reducer references/holds the main store
-// It modifies the main state of the app
+const defaultLevel = 1
 
 const initialState = {
 	viewportDims: { width: window.innerWidth, height: window.innerHeight },
-	stage: levelStates[1].stage,
-	settings: levelStates[1].settings,
 	nodes: [],
 	leaves: [],
-	obstacles: levelStates[1].obstacles, // Draw obstacles clockwise
-	targets: levelStates[1].targets,
-	gameMode: 'breakOut'
+	gameMode: 'breakOut',
+	level: defaultLevel,
+	stage: levelStates[defaultLevel].stage,
+	settings: levelStates[defaultLevel].settings,
+	obstacles: levelStates[defaultLevel].obstacles,
+	targets: levelStates[defaultLevel].targets
 }
 
 const shapeReducer = (state = initialState, action) => {
@@ -26,22 +26,17 @@ const shapeReducer = (state = initialState, action) => {
 	var newStage = state.stage
 	var newGameMode = state.gameMode
 	var newLevel
+	var rootZero = {
+		id: 0,
+		radius: state.settings.rootSize,
+		coordX: state.settings.rootCoords.coordX,
+		coordY: state.settings.rootCoords.coordY,
+		angle: state.settings.rootAngle,
+		color: `210, ${150 * 20}, ${150 * 40}` // rgb values
+	}
 	switch (action.type) {
-		case 'RESET':
-			return { ...state, nodes: [], leaves: [], stage: levelStates[1].stage }
-		case 'CREATE_ROOT':
-			newNodes = [
-				{
-					id: 0,
-					radius: state.settings.rootSize,
-					coordX: state.settings.rootCoords.coordX,
-					coordY: state.settings.rootCoords.coordY,
-					angle: state.settings.rootAngle,
-					color: `210, ${150 * 20}, ${150 * 40}` // rgb values
-				}
-			]
-			newLeaves = newNodes
-			return { ...state, nodes: newNodes, leaves: newLeaves }
+		case 'RESET_ROOT':
+			return { ...state, nodes: [rootZero], leaves: [rootZero], stage: levelStates[state.level].stage }
 		case 'CREATE_NODES':
 			newLeaves = createFragmentedArray(newLeaves, newSettings)
 			newStage = calcNewZoom(newLeaves, state.stage, state.viewportDims)
@@ -53,8 +48,7 @@ const shapeReducer = (state = initialState, action) => {
 		// 	newNodes = highlightWinningPath(newNodes)
 		// 	return {...state,nodes:newNodes}
 		case 'UPDATE_SETTINGS':
-			newSettings = action.settings
-			return { ...state, settings: newSettings }
+			return { ...state, settings: action.settings }
 		case 'UPDATE_VIEWPORT':
 			newViewportDims = action.viewportDims
 			return { ...state, viewportDims: newViewportDims }
@@ -64,19 +58,8 @@ const shapeReducer = (state = initialState, action) => {
 				newLevel = levelStates[0]
 			} else {
 				newGameMode = 'breakOut'
-				newLevel = levelStates[1]
+				newLevel = levelStates[state.level]
 			}
-			newNodes = [
-				{
-					id: 0,
-					radius: newLevel.settings.rootSize,
-					coordX: newLevel.settings.rootCoords.coordX,
-					coordY: newLevel.settings.rootCoords.coordY,
-					angle: newLevel.settings.rootAngle,
-					color: `210, ${150 * 20}, ${150 * 40}` // rgb values
-				}
-			]
-			newLeaves = newNodes
 			return {
 				...state,
 				gameMode: newGameMode,
@@ -84,8 +67,6 @@ const shapeReducer = (state = initialState, action) => {
 				settings: newLevel.settings,
 				obstacles: newLevel.obstacles,
 				targets: newLevel.targets,
-				nodes: newNodes,
-				leaves: newLeaves
 			}
 		default:
 			return state

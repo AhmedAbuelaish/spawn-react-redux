@@ -1,14 +1,13 @@
 
-console.log(randomSpread(130,60,50,100,2))
+console.log(randomSpread(0,100,100,90,2))
 
 function randomSpread(originalValue, percentOfOriginal, precision, spread, direction){
 	// percentOfOriginal= % of originalValue
 	// precision= 0%:least precise, 100%:most precise
 	// originalValue: starting value
-	// spread= range as % of originalValue to randomize around
+	// spread= range of values around the originalValue to pick from
 	// direction= 2: centered around percentOfOriginal. 1:Positive bias. -1:negative bias
 
-	let range = originalValue * (percentOfOriginal/100) * (spread/100)
 	let randomizer = 0
 	let result = []
 
@@ -20,7 +19,7 @@ function randomSpread(originalValue, percentOfOriginal, precision, spread, direc
 		} else {
 			direction = -1
 		}
-		let values = (percentOfOriginal/100) * originalValue + Math.trunc(randomizer * range * (100 - precision)/100)
+		let values = (percentOfOriginal/100) * originalValue + Math.trunc(randomizer * spread * (100 - precision)/100)
 		result.push(values)
 	}
 
@@ -31,7 +30,7 @@ function randomSpread(originalValue, percentOfOriginal, precision, spread, direc
 		counts[num] = counts[num] ? counts[num] + 1 : 1
 	}
 
-	for (var i = originalValue * 2; i > -originalValue; i--) {
+	for (var i = originalValue * (percentOfOriginal/100) + spread *2; i > originalValue * (percentOfOriginal/100) - spread * 2; i--) {
 		console.log(i, marker(counts[i]))
 	}
 	return '------Done-------'

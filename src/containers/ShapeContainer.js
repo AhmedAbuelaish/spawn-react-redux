@@ -10,32 +10,33 @@ class ShapeContainer extends Component {
 	}
 
 	componentDidMount() {
-		this.props.createRoot()
-		// this.frame = requestAnimationFrame(this.loopCreatAnimation)
+		this.props.resetRoot()
 	}
 
 	loopCreatAnimation = timestamp => {
-		this.props.createNodes()
-		this.frame = requestAnimationFrame(this.loopCreatAnimation)
+		if (this.props.leaves.length > 0) {
+			this.props.createNodes()
+			this.frame = requestAnimationFrame(this.loopCreatAnimation)
+		} else {
+			cancelAnimationFrame(this.frame)
+			this.state.animating = false
+			console.log('end of animation')
+		}
 	}
 
 	toggleAnimation = () => {
 		if (this.state.animating) {
 			cancelAnimationFrame(this.frame)
-			this.state.animating = !this.state.animating
-			this.props.reset()
-			this.props.createRoot()
-			this.frame = requestAnimationFrame(this.loopCreatAnimation)
-		} else {
-			this.props.reset()
-			this.props.createRoot()
-			this.frame = requestAnimationFrame(this.loopCreatAnimation)
-			this.state.animating = !this.state.animating
+			console.log('cancelled animation')
+			this.state.animating = false
 		}
+		// this.props.reset()
+		this.props.resetRoot()
+		this.state.animating = true
+		this.frame = requestAnimationFrame(this.loopCreatAnimation)
 	}
 
 	render() {
-		// console.log('zoom', this.props.stage.zoom)
 		return (
 			<div
 				style={{
@@ -74,9 +75,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-	createRoot: () => dispatch({ type: 'CREATE_ROOT' }),
+	resetRoot: () => dispatch({ type: 'RESET_ROOT' }),
 	createNodes: () => dispatch({ type: 'CREATE_NODES' }),
-	reset: () => dispatch({ type: 'RESET' }),
 })
 
 export default connect(

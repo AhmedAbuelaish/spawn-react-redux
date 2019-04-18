@@ -2,22 +2,26 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFlask, faBullseye } from '@fortawesome/free-solid-svg-icons'
+import { faFlask, faBullseye, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 
 class ModeSelector extends Component {
-handleclick = () =>{
-    this.props.changeGameMode()
-}
+	handleclick = () => {
+		this.props.changeGameMode()
+		this.props.resetRoot()
+	}
 
-  render() {
-      var icon
-    (this.props.gameMode=='breakOut')?icon=faFlask:icon=faBullseye
-    return (
-      <div className="gameModeButton" onClick={this.handleclick}>
-        <FontAwesomeIcon icon={icon} />
-      </div>
-    )
-  }
+	render() {
+		var icon,icon2
+    this.props.gameMode == 'breakOut' ? (icon = faFlask) : ([icon,icon2] = [faBullseye,faCaretDown])
+    
+
+		return (
+			<div className='gameModeButton' onClick={this.handleclick}>
+				<FontAwesomeIcon icon={icon} />
+        {/* <FontAwesomeIcon icon={icon2}/> */}
+			</div>
+		)
+	}
 }
 
 const mapStateToProps = state => ({
@@ -25,7 +29,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-	changeGameMode: () => dispatch({ type: 'TOGGLE_GAME_MODE' })
+	changeGameMode: () => dispatch({ type: 'TOGGLE_GAME_MODE' }),
+	resetRoot: () => dispatch({ type: 'RESET_ROOT' }),
 })
 
 export default connect(

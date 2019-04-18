@@ -11,13 +11,19 @@ class SettingsForm extends Component {
 		this.handleFormSubmission = this.handleFormSubmission.bind(this)
 	}
 
+	componentDidUpdate(prevProps) {
+		if (prevProps.settings !== this.props.settings) {
+			this.setState(this.props.settings)
+		}
+	}
+
 	handleFormChange = (value, targetProp, i) => {
-		if(i === undefined){
+		if (i === undefined) {
 			this.setState({ [targetProp]: value })
-		} else if(i===0){
+		} else if (i === 0) {
 			this.setState({ [targetProp]: [[value, this.state.angleRange[0][1]]] })
-		} else if(i===1){
-			this.setState({ [targetProp]: [[this.state.angleRange[0][0],value]] })
+		} else if (i === 1) {
+			this.setState({ [targetProp]: [[this.state.angleRange[0][0], value]] })
 		}
 	}
 
@@ -44,9 +50,9 @@ class SettingsForm extends Component {
 						formSubmit={this.handleFormSubmission}
 					/>
 					<InputField
-						propName={'multiplierPrecision'}
-						propLabel={'x Precision'}
-						propValue={this.state.multiplierPrecision}
+						propName={'anglePrecision'}
+						propLabel={'Angle Prec.'}
+						propValue={this.state.anglePrecision}
 						propMin={0}
 						propMax={100}
 						fieldChange={this.handleFormChange}
@@ -56,8 +62,8 @@ class SettingsForm extends Component {
 						propName={'decay'}
 						propLabel={'Decay'}
 						propValue={this.state.decay}
-						propMin={10}
-						propMax={100}
+						propMin={0}
+						propMax={90}
 						fieldChange={this.handleFormChange}
 						formSubmit={this.handleFormSubmission}
 					/>
@@ -70,7 +76,7 @@ class SettingsForm extends Component {
 						fieldChange={this.handleFormChange}
 						formSubmit={this.handleFormSubmission}
 					/>
-					<input className='reset-button' type='submit' value='Reset' style={{visibility:'hidden'}}/>
+					<input className='reset-button' type='submit' value='Reset' style={{ visibility: 'hidden' }} />
 				</form>
 			</div>
 		)
@@ -85,8 +91,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	updateSettings: settingsObj => dispatch({ type: 'UPDATE_SETTINGS', settings: settingsObj }),
-	reset: () => dispatch({ type: 'RESET' }),
-	createRoot: () => dispatch({ type: 'CREATE_ROOT' }),
 	createNodes: () => dispatch({ type: 'CREATE_NODES' })
 })
 

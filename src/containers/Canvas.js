@@ -14,7 +14,7 @@ class Canvas extends Component {
 	}
 
 	handlePlantSeed = () => {
-		this.props.createRoot()
+		this.props.resetRoot()
 	}
 
 	handleCreateShape = () => {
@@ -80,7 +80,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-	createRoot: () => dispatch({ type: 'CREATE_ROOT' }),
+	resetRoot: () => dispatch({ type: 'RESET_ROOT' }),
 	createNodes: () => dispatch({ type: 'CREATE_NODES' })
 })
 
