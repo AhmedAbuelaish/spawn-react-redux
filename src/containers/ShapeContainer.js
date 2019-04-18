@@ -17,7 +17,6 @@ class ShapeContainer extends Component {
 	loopCreatAnimation = timestamp => {
 		if (this.props.leaves.length > 0 && this.state.burstIntensity > 0) {
 			this.props.createNodes()
-			console.log(this.state.burstIntensity)
 			this.setState({ burstIntensity: this.state.burstIntensity - 1 })
 			this.frame = requestAnimationFrame(this.loopCreatAnimation)
 		} else {

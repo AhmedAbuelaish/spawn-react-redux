@@ -43,11 +43,9 @@ const shapeReducer = (state = initialState, action) => {
 			})
 			var newRoot = state.nodes[newRootIndex]
 			var burstId = newRoot.id.toString().split('x')[0]
-			console.log(burstId)
 			newRoot.id.toString().split('x')[1]
 				? (newRoot.id = burstId + '1x' + newRoot.id.toString().split('x')[1])
 				: (newRoot.id = '1x' + newRoot.id)
-			console.log(action.id, newRoot)
 			return { ...state, leaves: [newRoot] }
 		case 'CREATE_NODES':
 			newLeaves = createFragmentedArray(newLeaves, newSettings)
